@@ -30,16 +30,18 @@ import numpy as np
 from matplotlib import font_manager
 from matplotlib.patches import Patch
 
-# 与前端一致的 8 朝代色板（Okabe-Ito 系，色盲友好）
+# 与前端一致的 10 档朝代色板：相近历史时期使用相近色系。
 DYNASTY_COLORS = {
-    "春秋战国": "#0072B2",
-    "秦汉": "#E69F00",
-    "魏晋南北朝": "#009E73",
-    "隋唐": "#CC79A7",
-    "宋": "#56B4E9",
-    "元": "#D55E00",
-    "明": "#F0E442",
-    "清": "#8C564B",
+    "春秋战国": "#2F5D8C",
+    "秦汉": "#477EAA",
+    "魏晋南北朝": "#7099BB",
+    "隋唐": "#347D72",
+    "五代十国": "#6AA697",
+    "宋": "#A87845",
+    "辽金西夏": "#C39A67",
+    "元": "#735E9B",
+    "明": "#A85F70",
+    "清": "#577B91",
 }
 
 FONT_SANS = "/System/Library/Fonts/Hiragino Sans GB.ttc"
