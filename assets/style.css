@@ -157,12 +157,12 @@ body {
   border-radius: 7px; background: var(--bg); color: var(--text); font-size: 12px;
 }
 body.dark {
-  --bg: #0b1020; --panel: #11182b; --text: #e8edf7; --muted: #9aa8c0;
-  --border: #293650; --accent: #70b7ff; --shadow: 0 2px 16px rgba(0,0,0,.32);
+  --bg: #05070b; --panel: #0c1118; --text: #e8edf7; --muted: #9aa8b5;
+  --border: #202933; --accent: #70b7ff; --shadow: 0 2px 16px rgba(0,0,0,.48);
 }
-body.dark #graph { background: #0b1020; }
+body.dark #graph { background: #05070b; }
 body.dark #legend, body.dark #tooltip, body.dark #loading, body.dark #hint {
-  background: rgba(17,24,43,.94); color: var(--text);
+  background: rgba(12,17,24,.96); color: var(--text);
 }
 
 /* ---------- 加载中 ---------- */

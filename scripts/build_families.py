@@ -69,27 +69,43 @@ def build(db: Path, network_path: Path, output: Path) -> None:
         label = "、".join(names[:3]) + (" 等" if len(names) > 3 else "")
         families.append({"id": f"family-{index}", "label": f"{label}（{len(members)}人）", "members": members})
 
-    seen_edges = set()
-    edges = []
+    # Collapse reciprocal CBDB records and multiple kin codes into one
+    # directed parent -> descendant edge. Keeping kin_code in the key here
+    # used to render the same pair more than once in the family view.
+    pair_candidates = collections.defaultdict(list)
     for left, right, kin_code, upstep, dwnstep in rows:
-        key = (min(left, right), max(left, right), kin_code)
-        if key not in seen_edges:
-            seen_edges.add(key)
-            # c_upstep means the related person is an ancestor of c_personid;
-            # c_dwnstep means the related person is a descendant.
-            if upstep and not dwnstep:
-                source, target = right, left
-            elif dwnstep and not upstep:
-                source, target = left, right
-            else:
-                source, target = key[0], key[1]
-            edges.append({
-                "source": source,
-                "target": target,
-                "kin_code": kin_code,
-                "generation_gap": int(upstep or dwnstep or 0),
-                "direction": "ancestor" if upstep and not dwnstep else "descendant" if dwnstep and not upstep else "undirected",
-            })
+        pair = (min(left, right), max(left, right))
+        # c_upstep means right is an ancestor of left; c_dwnstep means
+        # right is a descendant of left.
+        if upstep and not dwnstep:
+            source, target = right, left
+        elif dwnstep and not upstep:
+            source, target = left, right
+        else:
+            source, target = pair
+        pair_candidates[pair].append((source, target, int(upstep or dwnstep or 0), kin_code))
+
+    edges = []
+    for pair, candidates in pair_candidates.items():
+        counts = collections.Counter((source, target) for source, target, *_ in candidates)
+        best_direction, _ = counts.most_common(1)[0]
+        matching = [row for row in candidates if row[:2] == best_direction]
+        source, target = best_direction
+        gap = min((row[2] for row in matching if row[2]), default=0)
+        kin_code = min((row[3] for row in matching), key=str)
+        # If direction is not evidenced, prefer the older person as source.
+        if not gap:
+            source_year = node[source].get("birth_year") or 99999
+            target_year = node[target].get("birth_year") or 99999
+            if source_year > target_year:
+                source, target = target, source
+        edges.append({
+            "source": source,
+            "target": target,
+            "kin_code": kin_code,
+            "generation_gap": gap,
+            "direction": "ancestor" if gap else "undirected",
+        })
 
     payload = {
         "metadata": {

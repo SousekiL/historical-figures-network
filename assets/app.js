@@ -59,6 +59,7 @@
   var activeRelGroups = {};// 关系大类 -> bool
   var FAMILY_DATA = null;
   var familyMode = '';
+  var familyLabelSet = {};
   var networkSet = {};     // 仅保留最大连通分量，去掉与主网络断开的外围散点
   var activeNodes = [];    // 经朝代筛选后的节点引用
   var activeEdges = [];    // 两端都在 activeNodes 内的边引用
@@ -193,9 +194,21 @@
       .filter(Boolean);
     activeSet = {};
     activeNodes.forEach(function (n) { activeSet[String(n.id)] = true; });
+    var seenPairs = {};
     activeEdges = (FAMILY_DATA.edges || []).filter(function (e) {
       return activeSet[String(e.source)] && activeSet[String(e.target)];
+    }).filter(function (e) {
+      var a = String(e.source), b = String(e.target);
+      var key = a < b ? a + ':' + b : b + ':' + a;
+      if (seenPairs[key]) return false;
+      seenPairs[key] = true;
+      return true;
     });
+    familyLabelSet = {};
+    activeNodes.slice().sort(function (a, b) { return (b.degree || 0) - (a.degree || 0); })
+      .slice(0, Math.min(28, activeNodes.length)).forEach(function (n) {
+        familyLabelSet[String(n.id)] = true;
+      });
     focus = null;
     updateStats();
     dirty = true;
@@ -220,29 +233,57 @@
 
   function layoutFamily() {
     if (!activeNodes.length) return;
-    var ordered = activeNodes.slice().sort(function (a, b) {
-      return (a.birth_year || 99999) - (b.birth_year || 99999) ||
-        String(a.name).localeCompare(String(b.name));
+    var byId = {};
+    activeNodes.forEach(function (n) {
+      byId[String(n.id)] = n;
+      n._familyDepth = 0;
+      n._familyLeaf = null;
     });
-    var rowCount = Math.max(2, Math.min(14, Math.ceil(Math.sqrt(ordered.length / 2))));
-    var knownYears = ordered.map(function (n) { return n.birth_year; }).filter(function (y) { return !!y; });
-    var minYear = knownYears.length ? Math.min.apply(null, knownYears) : 0;
-    var maxYear = knownYears.length ? Math.max.apply(null, knownYears) : 0;
-    var rows = Array.from({ length: rowCount }, function () { return []; });
-    ordered.forEach(function (n, i) {
-      var row;
-      if (n.birth_year && maxYear > minYear) {
-        row = Math.min(rowCount - 2, Math.floor((n.birth_year - minYear) / (maxYear - minYear) * (rowCount - 1)));
-      } else {
-        row = knownYears.length ? rowCount - 1 : Math.floor(i / Math.ceil(ordered.length / rowCount));
-      }
-      rows[row].push(n);
+    var children = {}, incoming = {};
+    activeEdges.forEach(function (e) {
+      var source = String(e.source), target = String(e.target);
+      if (!byId[source] || !byId[target] || source === target) return;
+      (children[source] || (children[source] = [])).push({ id: target, gap: e.generation_gap || 1 });
+      incoming[target] = (incoming[target] || 0) + 1;
     });
-    rows.forEach(function (items, row) {
-      items.forEach(function (n, col) {
-        n.x = (col + 0.5) / items.length;
-        n.y = (row + 0.5) / rowCount;
+    var roots = activeNodes.filter(function (n) { return !incoming[String(n.id)]; });
+    if (!roots.length) roots = [activeNodes.slice().sort(function (a, b) {
+      return (a.birth_year || 99999) - (b.birth_year || 99999);
+    })[0]];
+    roots.sort(function (a, b) { return (a.birth_year || 99999) - (b.birth_year || 99999); });
+    var visited = {}, leafCursor = 0;
+    function layoutTree(node, depth) {
+      var id = String(node.id);
+      if (visited[id]) return { min: leafCursor, max: leafCursor };
+      visited[id] = true;
+      node._familyDepth = depth;
+      var kids = (children[id] || []).filter(function (child) { return !visited[child.id]; });
+      kids.sort(function (a, b) {
+        return (byId[a.id].birth_year || 99999) - (byId[b.id].birth_year || 99999);
       });
+      if (!kids.length) {
+        node._familyLeaf = leafCursor++;
+        node._familyBranchOffset = (leafCursor % 2 ? -0.12 : 0.12);
+        return { min: node._familyLeaf, max: node._familyLeaf };
+      }
+      var bounds = kids.map(function (child) {
+        return layoutTree(byId[child.id], depth + Math.max(1, child.gap));
+      });
+      node._familyLeaf = bounds.reduce(function (sum, item) {
+        return sum + (item.min + item.max) / 2;
+      }, 0) / bounds.length;
+      return { min: bounds[0].min, max: bounds[bounds.length - 1].max };
+    }
+    roots.forEach(function (root) { layoutTree(root, 0); });
+    // Cycles or disconnected records become separate trees rather than vanish.
+    activeNodes.forEach(function (n) { if (!visited[String(n.id)]) layoutTree(n, 0); });
+    var maxDepth = Math.max.apply(null, activeNodes.map(function (n) { return n._familyDepth || 0; })) || 1;
+    var maxLeaf = Math.max(leafCursor - 1, 1);
+    activeNodes.forEach(function (n) {
+      var leaf = n._familyLeaf == null ? 0 : n._familyLeaf;
+      var jitter = n._familyBranchOffset || 0;
+      n.x = 0.08 + 0.84 * (leaf / maxLeaf) + jitter / Math.max(maxLeaf, 4);
+      n.y = 0.08 + 0.84 * ((n._familyDepth || 0) / maxDepth);
     });
     fitToActive();
     dirty = true;
@@ -585,7 +626,7 @@
     dirty = false;
 
     ctx.clearRect(0, 0, W, H);
-    ctx.fillStyle = document.body.classList.contains('dark') ? '#0b1020' : '#fafafa';
+    ctx.fillStyle = document.body.classList.contains('dark') ? '#05070b' : '#fafafa';
     ctx.fillRect(0, 0, W, H);
 
     var margin = 40;
@@ -610,12 +651,23 @@
         var sa = String(a.id), sb = String(b.id);
         if (focusNb[sa] || focusNb[sb]) alpha = 0.35; else alpha = 0.05;
       }
-      ctx.strokeStyle = familyMode ? '#d6a938' : (EDGE_COLORS[e.type] || '#ccc');
+      ctx.strokeStyle = familyMode ? (e.direction === 'ancestor' ? '#c8a96b' : '#9f8962') : (EDGE_COLORS[e.type] || '#ccc');
       ctx.globalAlpha = alpha;
       ctx.beginPath();
       ctx.moveTo(ax, ay);
       ctx.lineTo(bx, by);
       ctx.stroke();
+      if (familyMode && e.direction === 'ancestor') {
+        var angle = Math.atan2(by - ay, bx - ax);
+        var arrowSize = 5;
+        ctx.beginPath();
+        ctx.moveTo(bx, by);
+        ctx.lineTo(bx - arrowSize * Math.cos(angle - Math.PI / 6), by - arrowSize * Math.sin(angle - Math.PI / 6));
+        ctx.lineTo(bx - arrowSize * Math.cos(angle + Math.PI / 6), by - arrowSize * Math.sin(angle + Math.PI / 6));
+        ctx.closePath();
+        ctx.fillStyle = ctx.strokeStyle;
+        ctx.fill();
+      }
     }
     ctx.globalAlpha = 1;
 
@@ -628,6 +680,8 @@
       var r = familyMode ? 4.2 : 1.6 + 9 * Math.sqrt(deg / maxDeg);
       var alpha = familyMode ? 0.9 : 0.28 + 0.72 * Math.pow(deg / maxDeg, 0.3);
       var color = DYNASTY_COLORS[n.dynasty_tier] || '#999';
+      var intensity = Math.pow(Math.min(1, deg / maxDeg), 0.45);
+      color = mixColor(color, '#ffffff', 0.08 + 0.34 * intensity);
 
       if (focus) {
         var id = String(n.id);
@@ -641,6 +695,14 @@
       }
 
       ctx.globalAlpha = alpha;
+      if (!familyMode && intensity > 0.55) {
+        ctx.globalAlpha = alpha * 0.18;
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.arc(px, py, r + 4 + 5 * intensity, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.globalAlpha = alpha;
+      }
       ctx.fillStyle = color;
       if (n.gender === '女') {
         // 女性：上三角
@@ -682,6 +744,7 @@
         if (!familyMode && drawn > 4000) break; // 单帧标签上限，保证流畅
         var m = activeNodes[k];
         if ((m.degree || 0) < thr) continue; // 度数不足不显示
+        if (familyMode && activeNodes.length > 36 && !familyLabelSet[String(m.id)]) continue;
         var lx = sx(m.x), ly = sy(m.y);
         if (lx < 4 || lx > W - 40 || ly < 8 || ly > H - 8) continue;
         var ck = Math.floor(lx / cellW) + '_' + Math.floor(ly / cellH);
@@ -694,6 +757,14 @@
       }
       ctx.globalAlpha = 1;
     }
+  }
+
+  function mixColor(hex, target, amount) {
+    var a = hex.replace('#', ''), b = target.replace('#', '');
+    var ar = parseInt(a.slice(0, 2), 16), ag = parseInt(a.slice(2, 4), 16), ab = parseInt(a.slice(4, 6), 16);
+    var br = parseInt(b.slice(0, 2), 16), bg = parseInt(b.slice(2, 4), 16), bb = parseInt(b.slice(4, 6), 16);
+    var mix = function (x, y) { return Math.round(x + (y - x) * amount).toString(16).padStart(2, '0'); };
+    return '#' + mix(ar, br) + mix(ag, bg) + mix(ab, bb);
   }
 
   function loop() {
