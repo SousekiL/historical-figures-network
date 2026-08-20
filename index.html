@@ -11,7 +11,7 @@
   <header id="topbar">
     <div id="title-block">
       <h1 id="title">历代历史文化名人关系网络</h1>
-      <p id="subtitle">数据来源：CBDB 中国历代人物传记资料库 · 全量人物</p>
+      <p id="subtitle">数据来源：CBDB 中国历代人物传记资料库 · 关系主网络</p>
     </div>
     <div id="search-wrap">
       <input id="search" type="search" placeholder="搜索人物姓名 / 字 / 号…" autocomplete="off">
@@ -21,6 +21,7 @@
       <div class="stat"><span class="stat-num" id="stat-edges">–</span><span class="stat-label">关系</span></div>
       <div class="stat"><span class="stat-num" id="stat-dynasties">–</span><span class="stat-label">朝代</span></div>
     </div>
+    <button id="theme-toggle" class="chip chip-action" type="button" aria-label="切换明暗主题">暗色</button>
   </header>
 
   <!-- 朝代筛选 + 标签滑杆 -->
@@ -39,6 +40,10 @@
   <div id="rel-filter-bar">
     <span class="filter-label">关系：</span>
     <div id="rel-chips"></div>
+    <label class="family-select-wrap" for="family-select">
+      <span class="filter-label">亲缘谱系：</span>
+      <select id="family-select" aria-label="选择直系亲缘家族"><option value="">加载家族候选…</option></select>
+    </label>
   </div>
 
   <!-- 图例 -->

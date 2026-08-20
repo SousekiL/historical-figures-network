@@ -74,6 +74,7 @@
 
 - `data/dictionaries/dynasty_tiers.json`：朝代档位 → CBDB `c_dy` 代码列表（扩展朝代时改这里）
 - `data/dictionaries/relationship_codes.json`：简化关系类型 → 中文说明
+- `data/families.json`：亲缘谱系候选。`families[].members` 为当前网络中的人物 ID；`edges[]` 为 CBDB `KIN_DATA` 直系亲缘边，重建后的边另含 `kin_code`、`generation_gap` 与 `direction`。
 
 ## CSV 字段
 
