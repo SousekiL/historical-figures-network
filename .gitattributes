@@ -1,0 +1,7 @@
+# 统一换行符，避免 CSV 等文件在 Windows/macOS 间反复提示 CRLF
+*.csv text eol=lf
+*.json text eol=lf
+*.js text eol=lf
+*.html text eol=lf
+*.css text eol=lf
+*.md text eol=lf
