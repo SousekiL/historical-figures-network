@@ -161,7 +161,7 @@ body.dark {
   --border: #202933; --accent: #70b7ff; --shadow: 0 2px 16px rgba(0,0,0,.48);
 }
 body.dark #graph { background: #05070b; }
-body.dark #legend, body.dark #tooltip, body.dark #loading, body.dark #hint {
+body.dark #legend, body.dark #tooltip, body.dark #loading {
   background: rgba(12,17,24,.96); color: var(--text);
 }
 
@@ -202,21 +202,6 @@ body.dark #legend, body.dark #tooltip, body.dark #loading, body.dark #hint {
 #container { position: relative; flex: 1 1 auto; min-height: 0; }
 #graph { position: absolute; inset: 0; display: block; touch-action: none; cursor: grab; }
 #graph:active { cursor: grabbing; }
-#hint {
-  position: absolute;
-  left: 50%;
-  bottom: 10px;
-  transform: translateX(-50%);
-  margin: 0;
-  font-size: 11px;
-  color: var(--muted);
-  background: rgba(255,255,255,0.7);
-  padding: 3px 10px;
-  border-radius: 999px;
-  pointer-events: none;
-  white-space: nowrap;
-}
-
 /* ---------- 详情面板 ---------- */
 #detail {
   position: absolute;
@@ -292,7 +277,6 @@ body.dark #legend, body.dark #tooltip, body.dark #loading, body.dark #hint {
   #rel-filter-bar { padding: 6px 10px; }
   .chip { padding: 4px 9px; font-size: 12px; }
   #legend { display: none; }
-  #hint { display: none; }
   #detail { width: 100vw; max-width: 100vw; }
   .family-select-wrap { margin-left: 0; width: 100%; }
   #family-select { max-width: none; flex: 1; }
