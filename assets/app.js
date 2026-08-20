@@ -733,10 +733,10 @@
     // --- 标签（按度数阈值 + 视口裁剪 + 防重叠） ---
     var thr = familyMode ? 0 : labelThresholds[labelLevel];
     if (thr !== Infinity) {
-      var cellW = 120, cellH = 22;
+      var cellW = familyMode ? 150 : 135, cellH = familyMode ? 30 : 27;
       var occupied = {};
-      ctx.font = familyMode ? '15px -apple-system, "PingFang SC", "Hiragino Sans GB", sans-serif'
-        : '14px -apple-system, "PingFang SC", "Hiragino Sans GB", sans-serif';
+      ctx.font = familyMode ? '19px -apple-system, "PingFang SC", "Hiragino Sans GB", sans-serif'
+        : '17px -apple-system, "PingFang SC", "Hiragino Sans GB", sans-serif';
       ctx.textAlign = 'left';
       ctx.textBaseline = 'middle';
       var drawn = 0;
@@ -752,7 +752,12 @@
         occupied[ck] = true;
         drawn++;
         ctx.globalAlpha = focus && !focusNb[String(m.id)] ? 0.3 : 0.9;
-        ctx.fillStyle = document.body.classList.contains('dark') ? '#edf3ff' : '#333';
+        var darkTheme = document.body.classList.contains('dark');
+        // 暗色主题使用暖白而非纯白，并加背景描边，避免标签融入节点与边。
+        ctx.fillStyle = darkTheme ? '#f4ead5' : '#2b2f35';
+        ctx.strokeStyle = darkTheme ? '#05070b' : '#fafafa';
+        ctx.lineWidth = 3;
+        ctx.strokeText(m.name, lx + 5, ly);
         ctx.fillText(m.name, lx + 5, ly);
       }
       ctx.globalAlpha = 1;
