@@ -25,6 +25,18 @@
     '唱和': '#56B4E9',
     '交往': '#9AA0A6'
   };
+  // 关系大类分组（7 类细类 → 4 大类），用于关系类型筛选
+  var REL_GROUPS = {
+    '文学交往': ['唱和', '師生'],
+    '政治关系': ['同僚', '政敵'],
+    '私人关系': ['好友', '家族'],
+    '一般交往': ['交往']
+  };
+  var REL_GROUP_ORDER = ['文学交往', '政治关系', '私人关系', '一般交往'];
+  var relTypeToGroup = {};   // 细类 type -> 大类
+  REL_GROUP_ORDER.forEach(function (g) {
+    REL_GROUPS[g].forEach(function (t) { relTypeToGroup[t] = g; });
+  });
   // 标签滑杆档位文案与度数阈值（阈值在加载数据后按分位数计算）
   var LABEL_LEVEL_NAMES = ['无', '极少', '较少', '中等', '较多', '全部'];
   var LABEL_LEVEL_PCT = [Infinity, 0.995, 0.98, 0.92, 0.75, 1]; // 0 档永远不显示
@@ -41,6 +53,7 @@
   var labelThresholds = [];// 每档标签的度数阈值
 
   var activeTiers = {};    // tier -> bool
+  var activeRelGroups = {};// 关系大类 -> bool
   var activeNodes = [];    // 经朝代筛选后的节点引用
   var activeEdges = [];    // 两端都在 activeNodes 内的边引用
   var activeSet = {};      // String(id) -> bool
@@ -77,7 +90,10 @@
         (META.dynasty_tiers || Object.keys(DYNASTY_COLORS)).forEach(function (t) {
           activeTiers[t] = true;
         });
+        activeRelGroups = {};
+        REL_GROUP_ORDER.forEach(function (g) { activeRelGroups[g] = true; });
         buildChips();
+        buildRelChips();
         buildLegend();
         setupCanvas();
         setupEvents();
@@ -120,6 +136,25 @@
     });
   }
 
+  function buildRelChips() {
+    var wrap = $('rel-chips');
+    if (!wrap) return;
+    wrap.innerHTML = '';
+    REL_GROUP_ORDER.forEach(function (g) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'chip active';
+      b.textContent = g + '（' + REL_GROUPS[g].join('·') + '）';
+      b.addEventListener('click', function () {
+        activeRelGroups[g] = !activeRelGroups[g];
+        b.classList.toggle('active', activeRelGroups[g]);
+        rebuildActive();
+        render();
+      });
+      wrap.appendChild(b);
+    });
+  }
+
   function buildLegend() {
     var el = $('legend');
     var html = '<div class="legend-title">朝代（节点颜色）</div>';
@@ -130,6 +165,11 @@
     html += '<div class="legend-title" style="margin-top:6px">性别（节点形状）</div>';
     html += '<div class="legend-row"><svg class="legend-shape" viewBox="-6 -6 12 12"><circle r="5" fill="#666"/></svg>男</div>';
     html += '<div class="legend-row"><svg class="legend-shape" viewBox="-6 -6 12 12"><path d="M0,-5 L5,4 L-5,4 Z" fill="#666"/></svg>女</div>';
+    html += '<div class="legend-title" style="margin-top:6px">关系类型（边颜色）</div>';
+    Object.keys(EDGE_COLORS).forEach(function (t) {
+      html += '<div class="legend-row"><span class="legend-dot" style="background:' +
+        EDGE_COLORS[t] + '"></span>' + t + '</div>';
+    });
     el.innerHTML = html;
   }
 
@@ -179,7 +219,7 @@
       });
       var matchList = Object.keys(matchIds);
       if (matchList.length) {
-        // 聚焦首个匹配人物及其一阶邻居
+        // 聚焦首个匹配人物及其一阶邻居（邻居计算用全部边，不受关系筛选影响）
         var first = matchList[0];
         var neighbors = {};
         neighbors[first] = true;
@@ -200,8 +240,15 @@
       }
     } else {
       focus = null;
+      // 关系筛选：先算「至少一条被选中类型边」的节点集合，用于去孤立
+      var hasEdge = {};
+      EDGES.forEach(function (e) {
+        if (!edgeTypeOk(e)) return;
+        hasEdge[String(e.source)] = true;
+        hasEdge[String(e.target)] = true;
+      });
       NODES.forEach(function (n) {
-        if (activeTiersCheck(n)) {
+        if (activeTiersCheck(n) && hasEdge[String(n.id)]) {
           activeNodes.push(n);
           activeSet[String(n.id)] = true;
         }
@@ -214,15 +261,20 @@
       var nb = focus.neighbors;
       EDGES.forEach(function (e) {
         var s = String(e.source), t = String(e.target);
-        if ((nb[s] || nb[t]) && activeSet[s] && activeSet[t]) activeEdges.push(e);
+        if ((nb[s] || nb[t]) && activeSet[s] && activeSet[t] && edgeTypeOk(e)) activeEdges.push(e);
       });
     } else {
       EDGES.forEach(function (e) {
-        if (activeSet[String(e.source)] && activeSet[String(e.target)]) activeEdges.push(e);
+        if (edgeTypeOk(e) && activeSet[String(e.source)] && activeSet[String(e.target)]) activeEdges.push(e);
       });
     }
     updateStats();
     dirty = true;
+  }
+
+  function edgeTypeOk(e) {
+    var g = relTypeToGroup[e.type];
+    return g ? activeRelGroups[g] : true;
   }
 
   function activeTiersCheck(n) {

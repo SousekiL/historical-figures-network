@@ -81,6 +81,19 @@ body {
 .filter-label { font-size: 13px; color: var(--muted); white-space: nowrap; }
 #dynasty-chips { display: flex; gap: 6px; flex-wrap: wrap; flex: 1 1 auto; }
 
+/* ---------- 关系类型筛选 ---------- */
+#rel-filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+  z-index: 18;
+  flex-wrap: wrap;
+}
+#rel-chips { display: flex; gap: 6px; flex-wrap: wrap; flex: 1 1 auto; }
+
 .chip {
   padding: 5px 12px;
   font-size: 13px;
@@ -261,6 +274,7 @@ body {
   #stats { margin-left: 0; padding: 6px 10px; gap: 10px; }
   .stat-num { font-size: 15px; }
   #filter-bar { padding: 6px 10px; }
+  #rel-filter-bar { padding: 6px 10px; }
   .chip { padding: 4px 9px; font-size: 12px; }
   #legend { display: none; }
   #hint { display: none; }
