@@ -6,38 +6,36 @@
 {
   "nodes": [
     {
-      "id": 32540,
-      "name": "李白",
-      "courtesy_name": "太白",
-      "style_name": "青蓮居士",
-      "dynasty_tier": "隋唐",
-      "dynasty_tiers": ["隋唐"],
-      "dynasty": "唐",
-      "birth_year": 701,
-      "death_year": 762,
-      "index_year": 701,
+      "id": 3257,
+      "name": "朱熹",
+      "dynasty_tier": "宋",
+      "dynasty_tiers": ["宋"],
+      "gender": "男",
+      "birth_year": 1130,
+      "death_year": 1200,
+      "courtesy_name": "仲晦、元晦",
+      "style_name": "晦庵、晦翁",
+      "dynasty": "宋",
       "category": "文學家",
-      "bio": "字太白，號青蓮居士。生701年，卒762年。",
-      "degree": 35
+      "degree": 1543,
+      "x": 0.545314,
+      "y": 0.480858
     }
   ],
   "edges": [
     {
-      "source": 3915,
-      "target": 32540,
-      "type": "唱和",
-      "subtype": "贈詩、文",
-      "direction": "A",
-      "source_text": "唐五代人交往詩索引",
-      "source_pages": "1112",
-      "year": null,
-      "assoc_code": 437
+      "source": 29603,
+      "target": 127437,
+      "type": "交往",
+      "text_id": 0,
+      "source_pages": "lgid=65712"
     }
   ],
   "metadata": {
-    "node_count": 189,
-    "edge_count": 2902,
-    "dynasty_tiers": ["春秋战国", "秦汉", "魏晋南北朝", "隋唐", "宋", "元", "明", "清"],
+    "node_count": 40263,
+    "edge_count": 72925,
+    "dynasty_tiers": ["春秋战国", "秦汉", "魏晋南北朝", "隋唐", "五代十国", "宋", "辽金西夏", "元", "明", "清"],
+    "texts": ["江南通志", "宋人傳記資料索引(電子版)", "…"],
     "source": "CBDB (中国历代人物传记资料库) cbdb202409.db"
   }
 }
@@ -49,30 +47,28 @@
 |------|------|------|
 | `id` | int | CBDB 人物 ID（`BIOG_MAIN.c_personid`） |
 | `name` | str | 中文姓名 |
-| `courtesy_name` | str | 字（`ALTNAME_DATA` 类型 4） |
-| `style_name` | str | 号 / 室名（`ALTNAME_DATA` 类型 5） |
-| `dynasty_tier` | str | 主朝代档位（CBDB `c_dy` 所属，8 档之一，用于节点配色） |
+| `dynasty_tier` | str | 主朝代档位（CBDB `c_dy` 所属，用于节点配色） |
 | `dynasty_tiers` | list[str] | 全部所属档位（含跨朝代；朝代筛选以此为准） |
-| `dynasty` | str | CBDB 原朝代名 |
-| `birth_year` | int | 出生年（可空） |
-| `death_year` | int | 卒年（可空） |
-| `index_year` | int | CBDB 索引年 |
+| `gender` | str | 性别（`c_female`：1=女、0=男；0 含不详） |
+| `birth_year` | int | 出生年（0/缺失时不出现） |
+| `death_year` | int | 卒年（0/缺失时不出现） |
+| `courtesy_name` | str | 字（`ALTNAME_DATA` 类型 4；空时不出现） |
+| `style_name` | str | 号 / 室名（`ALTNAME_DATA` 类型 5；空时不出现） |
+| `dynasty` | str | CBDB 原朝代名（空时不出现） |
 | `category` | str | 类别（推断值，见 methodology） |
-| `bio` | str | 由字 / 号 / 生卒年拼合的简述 |
 | `degree` | int | 入选网络内的度数（度中心性） |
+| `x` / `y` | float | 预计算布局坐标（igraph DrL，归一化到 [0,1]） |
 
 ## 关系字段（edges[]）
 
 | 字段 | 类型 | 说明 |
 |------|------|------|
-| `source` / `target` | int | 人物对（CBDB 人物 ID） |
+| `source` / `target` | int | 人物对（CBDB 人物 ID），无方向 |
 | `type` | str | 简化关系类型（師生/好友/家族/同僚/政敵/唱和/交往） |
-| `subtype` | str | CBDB 原始关系描述（如「贈詩、文」「友」「墓誌銘由Y所作」） |
-| `direction` | str | CBDB 关系方向（A=主动 / P=被动 / M=相互） |
-| `source_text` | str | 史料出处（书名） |
-| `source_pages` | str | 出处页码 |
-| `year` | int | 关系年份（可空） |
-| `assoc_code` | int | CBDB 关系类型代码 |
+| `text_id` | int | 史料出处书名在 `metadata.texts` 中的下标 |
+| `source_pages` | str | 出处页码（空时不出现） |
+
+> 原始关系描述 `subtype` 与出处书名原文保留在 `data/processed/relationships.csv`；JSON 中为减小体积，书名经 `text_id` → `metadata.texts` 压缩存储。
 
 ## 数据字典文件
 
@@ -81,4 +77,4 @@
 
 ## CSV 字段
 
-`data/processed/people.csv` 与 `data/processed/relationships.csv` 为 `network.json` 的扁平化导出，字段与上表对应。
+`data/processed/people.csv` 与 `data/processed/relationships.csv` 为 `network.json` 的扁平化导出（relationships.csv 额外含 `subtype` / `source_text` 原始字段）。

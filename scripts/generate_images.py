@@ -105,8 +105,9 @@ def overview_16x9(G: nx.Graph, out: Path, fam: dict[str, str]) -> None:
     ax = fig.add_axes([0.015, 0.045, 0.97, 0.86])  # 留出标题与底部来源空间
     ax.set_facecolor("#FAFAFA")
 
-    pos = normalize_pos(nx.spring_layout(G, k=1.6, iterations=240, seed=42, weight=None))
-
+    # 使用 data/network.json 中预计算的 DrL 布局坐标（避免对全量图跑 O(n^2) 的 spring_layout）
+    pos = {n: (float(G.nodes[n]["x"]), float(G.nodes[n]["y"])) for n in G.nodes()}
+    pos = normalize_pos(pos)
     # 边
     nx.draw_networkx_edges(G, pos, ax=ax, edge_color="#d8d8d8", width=0.45, alpha=0.55)
 

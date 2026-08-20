@@ -1,6 +1,6 @@
 # 历代历史文化名人关系网络
 
-跨朝代的**历史文化名人关系网络**网站与配套数据。以 CBDB（中国历代人物传记资料库）为主要数据源，覆盖 **春秋战国 / 秦汉 / 魏晋南北朝 / 隋唐 / 宋 / 元 / 明 / 清** 8 个朝代档位，构建可筛选、可搜索、可追溯的人物关系网络，并导出符合公众号手机端规范的配图。
+跨朝代的**历史文化名人关系网络**网站与配套数据。以 CBDB（中国历代人物传记资料库）为主要数据源，**不设知名度准入规则、纳入全部有可考社会关系的人物（约 4 万人）**，构建可筛选、可搜索、可追溯的人物关系网络，并导出符合公众号手机端规范的配图。
 
 - **在线访问**：<https://sousekil.github.io/historical-figures-network/>
 - **本地访问**：`python -m http.server` 后打开 <http://localhost:8000/>
@@ -8,12 +8,13 @@
 
 ## 功能特性
 
-- **力导向网络图**（ECharts graph）：节点为人物（中文姓名标签），边标注关系类型
-- **朝代筛选**：8 档朝代，可任意组合开关
+- **全量网络图**（自研 Canvas 渲染 + igraph DrL 预计算布局）：约 4 万人物、7 万条关系，所有节点均显示为点
+- **标签显示滑杆**：6 档（无 / 极少 / 较少 / 中等 / 较多 / 全部），按**度中心性**分位数决定标签密度；度数低的人物不显示标签、颜色更淡
+- **性别区分**：节点形状区分男女（圆 = 男，三角 = 女），颜色按朝代着色
+- **朝代筛选**：10 档（春秋战国 / 秦汉 / 魏晋南北朝 / 隋唐 / 五代十国 / 宋 / 辽金西夏 / 元 / 明 / 清），可任意组合开关；跨朝代人物归入其所属的每个档位
 - **人物搜索**：按姓名 / 字 / 号检索，命中后聚焦该人物及其一阶邻居
-- **节点详情**：点击节点查看生卒年、字、号、类别、简介、关系数与关联人物列表
-- **响应式**：手机浏览器可用（双指缩放 / 平移、窄屏自适应、底部操作提示）
-- **数据可追溯**：每条关系带史料出处（书名 + 页码）与 CBDB 人物 ID
+- **节点详情**：点击查看朝代、性别、生卒年、类别、关系数与关联人物列表
+- **响应式**：手机浏览器可用（双指缩放 / 平移、窄屏自适应）；本地 `python -m http.server` 同样可用
 
 ## 快速开始
 
@@ -22,42 +23,42 @@
 python -m http.server 8000
 # 浏览器打开 http://localhost:8000/
 
-# 2.（可选）重新生成数据 —— 需本地 CBDB 数据库
-pip install -r requirements.txt
-python scripts/extract_cbdb.py --db /path/to/cbdb202409.db
+# 2.（可选）重新生成数据 —— 需本地 CBDB 数据库（含 igraph 布局，约 30s）
+python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
+.venv/bin/python scripts/extract_cbdb.py --db /path/to/cbdb202409.db
 
 # 3.（可选）重新生成公众号配图
-python scripts/generate_images.py
+.venv/bin/python scripts/generate_images.py
 ```
 
 ## 数据
 
 | 文件 | 说明 |
 |------|------|
-| `data/network.json` | 前端直接使用：`nodes`（人物）+ `edges`（关系）+ `metadata` |
-| `data/processed/people.csv` | 人物表（ID、姓名、字、号、朝代、生卒年、类别、度数） |
+| `data/network.json` | 前端直接使用：`nodes`（人物，含 x/y 布局坐标）+ `edges`（关系）+ `metadata`（含出处书名表 `texts`） |
+| `data/processed/people.csv` | 人物表（ID、姓名、字、号、朝代、性别、生卒年、类别、度数、坐标） |
 | `data/processed/relationships.csv` | 关系表（人物对、关系类型、子类型、史料出处、页码） |
-| `data/dictionaries/dynasty_tiers.json` | 朝代档位字典（8 档 ↔ CBDB `c_dy` 代码，便于扩展） |
+| `data/dictionaries/dynasty_tiers.json` | 朝代档位字典（10 档 ↔ CBDB `c_dy` 代码，便于扩展） |
 | `data/dictionaries/relationship_codes.json` | 关系类型字典 |
 
 ### 数据口径（摘要，详见 `docs/methodology.md`）
 
-- **人物范围**：8 个朝代档位内的知名历史文化名人，首版 **189 人**（可经脚本扩展）。
-- **朝代归属**：跨朝代人物（宋元之际、明清之际等）按其生卒区间归入**每一个**所属档位，同一人物在多个朝代筛选下都会出现（详见 `docs/methodology.md`）。
-- **名人筛选**：以「社交关系度」（CBDB `ASSOC_DATA` 中去重后的关联人物数）为主信号——知名度高者往往留下更多可考的师友 / 同僚 / 唱和等社会关系；亲属关系度仅作同分 tiebreaker（亲属数据多为族谱自动生成，不宜单独作为知名度依据）。
-- **关系提取**：仅保留两端都在入选集合内的社交关系（`ASSOC_DATA`）与亲属关系（`KIN_DATA`），按 `(min_id, max_id, 类型, 出处)` 去重。
-- **关系类型**（7 类）：師生 / 好友 / 家族 / 同僚 / 政敵 / 唱和 / 交往，由 CBDB 关系类型（`ASSOC_TYPES`）映射而来；原始关系描述保留在 `subtype` 字段。
-- **人物类别**：由主要社会关系类型推断（文学家 / 学者 / 文人 / 政治家 / 名門士族 / 文化名人），非人工标注。
-- **可追溯性**：每个人物保留 CBDB 人物 ID；每条关系保留史料出处（`source_text`）与页码（`source_pages`）。
+- **人物范围**：不设知名度准入规则，纳入所有「有 ≥1 条可考社会关系」的人物，共 **40,263 人**。
+- **关系范围**：仅社会关系 `ASSOC_DATA`（`KIN_DATA` 亲属数据不纳入，避免族谱稀释语义），按 `(min_id, max_id, 类型)` 去重，共 **72,925 条**。
+- **朝代归属**：10 档；跨朝代人物按生卒区间与大朝代区间交叠归入**每一个**所属档位。
+- **关系类型**（7 类）：師生 / 好友 / 家族 / 同僚 / 政敵 / 唱和 / 交往，由 CBDB 关系类型映射而来。
+- **性别**：`c_female`（1=女，0=男；0 含不详）。
+- **可追溯性**：人物保留 CBDB 人物 ID；关系保留史料出处（JSON 中经 `text_id` → `metadata.texts` 压缩存储）与页码。
 
 ### 当前数据统计
 
-- 人物 **189** 人，关系 **2902** 条，覆盖 **8** 个朝代档位（跨朝代人物 **56** 人，约占 30%）
-- 朝代分布（跨朝代人物计入其所属每个档位）：春秋战国 9 · 秦汉 37 · 魏晋南北朝 21 · 隋唐 36 · 宋 54 · 元 36 · 明 37 · 清 15
-- 关系类型：唱和 2572 · 同僚 95 · 好友 73 · 交往 57 · 師生 54 · 政敵 28 · 家族 23
-- 度中心性 Top 5：朱熹（宋，265）· 蘇軾（宋，159）· 歐陽修（宋，139）· 周必大（宋，135）· 虞集（元，126）
+- 人物 **40,263** 人，关系 **72,925** 条，覆盖 **10** 个朝代档位（跨朝代人物 4,235 人，约占 10.5%）
+- 朝代分布（跨朝代人物计入其所属每个档位）：宋 15,768 · 明 9,742 · 隋唐 6,083 · 元 6,063 · 清 5,771 · 魏晋南北朝 121 · 五代十国 201 · 辽金西夏 60 · 秦汉 40 · 春秋战国 9
+- 性别：男 38,412 / 女 1,851
+- 关系类型：唱和 53,654 · 師生 4,849 · 同僚 4,594 · 交往 4,112 · 好友 3,592 · 政敵 2,040 · 家族 84
+- 度中心性 Top 5：朱熹（宋，1543）· 周必大（宋，575）· 蘇軾（宋，573）· 宋濂（明，540）· 劉克莊（宋，519）
 
-> 注：CBDB 社交关系在唐 / 宋 / 元 / 明 / 清覆盖较丰富，先秦 / 秦汉 / 魏晋南北朝覆盖较薄（传世史料相对少），故早期朝代人数较少；「唱和」占比高，主要因为 CBDB 唐宋部分大量收录《唐五代人交往詩索引》《宋人傳記資料索引》等诗文交往记录。详见 `docs/methodology.md`。
+> 注：CBDB 社会关系在唐 / 宋 / 元 / 明 / 清覆盖较丰富，先秦 / 秦汉 / 魏晋南北朝覆盖较薄（传世史料相对少）；「唱和」占比高，主要因为 CBDB 唐宋部分大量收录《唐五代人交往詩索引》《宋人傳記資料索引》等诗文交往记录。详见 `docs/methodology.md`。
 
 ## 公众号配图规范
 
@@ -65,10 +66,10 @@ python scripts/generate_images.py
 
 1. **尺寸**：横版 16:9 = **1080×608**（用于文章顶部 / 关键图）
 2. **字体**：节点标签 ≥28px、图注 ≥20px，中文水平排列、不重叠
-3. **配色**：浅色底（`#FAFAFA`）、正文深灰 `#333`；节点色板 8 色、色盲友好（Okabe-Ito 系，红 / 绿不并用）
+3. **配色**：浅色底（`#FAFAFA`）、正文深灰 `#333`；节点色板 ≥6 色、色盲友好（Okabe-Ito 系，红 / 绿不并用）
 4. **信息**：右下角标注数据来源（CBDB）与生成日期
 
-生成命令：`python scripts/generate_images.py`（依赖 `requirements.txt`）。
+生成命令：`python scripts/generate_images.py`（依赖 `requirements.txt`）。全量 4 万节点的概览图较密集，建议配合「局部放大」使用。
 
 ## 目录结构
 
@@ -76,15 +77,14 @@ python scripts/generate_images.py
 historical-figures-network/
 ├── index.html                  # 网站入口
 ├── assets/
-│   ├── echarts.min.js          # 本地 vendored ECharts（离线可用）
 │   ├── style.css
-│   └── app.js
+│   └── app.js                  # 自研 Canvas 渲染器
 ├── data/
-│   ├── network.json            # 前端数据（nodes + edges）
+│   ├── network.json            # 前端数据（nodes + edges，含 x/y 布局）
 │   ├── processed/              # people.csv / relationships.csv
 │   └── dictionaries/           # 朝代档位 / 关系类型字典
 ├── scripts/
-│   ├── extract_cbdb.py         # 数据提取管线
+│   ├── extract_cbdb.py         # 数据提取管线（含 igraph DrL 布局）
 │   └── generate_images.py      # 公众号配图生成
 ├── images/                     # 导出配图
 └── docs/                       # methodology.md / data_dictionary.md
@@ -98,3 +98,4 @@ historical-figures-network/
 ## 关联项目
 
 - [poet-life-tang](https://github.com/SousekiL/poet-life-tang)（Tang-networks）：本项目的版式与数据管线参考来源。
+

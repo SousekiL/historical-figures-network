@@ -11,7 +11,7 @@
   <header id="topbar">
     <div id="title-block">
       <h1 id="title">历代历史文化名人关系网络</h1>
-      <p id="subtitle">数据来源：CBDB 中国历代人物传记资料库</p>
+      <p id="subtitle">数据来源：CBDB 中国历代人物传记资料库 · 全量人物</p>
     </div>
     <div id="search-wrap">
       <input id="search" type="search" placeholder="搜索人物姓名 / 字 / 号…" autocomplete="off">
@@ -23,12 +23,16 @@
     </div>
   </header>
 
-  <!-- 朝代筛选 -->
+  <!-- 朝代筛选 + 标签滑杆 -->
   <div id="filter-bar">
     <span class="filter-label">朝代：</span>
     <div id="dynasty-chips"></div>
-    <button id="toggle-labels" class="chip chip-action" type="button">标签</button>
-    <button id="toggle-edgelabels" class="chip chip-action" type="button">关系标注</button>
+    <div id="label-slider-wrap" title="标签显示密度（按中心度）">
+      <span class="filter-label">标签：</span>
+      <input type="range" id="label-slider" min="0" max="5" step="1" value="2" aria-label="标签显示密度">
+      <span id="label-slider-val">较少</span>
+    </div>
+    <button id="reset-view" class="chip chip-action" type="button">重置视图</button>
   </div>
 
   <!-- 图例 -->
@@ -36,8 +40,9 @@
 
   <!-- 画布 -->
   <main id="container">
-    <div id="graph"></div>
-    <p id="hint">拖拽节点 · 滚轮 / 双指缩放 · 空白处拖拽平移 · 点击节点查看详情</p>
+    <canvas id="graph"></canvas>
+    <p id="hint">拖拽平移 · 滚轮 / 双指缩放 · 点击节点查看详情</p>
+    <p id="loading">数据加载中…</p>
   </main>
 
   <!-- 详情面板 -->
@@ -46,7 +51,9 @@
     <div id="detail-body"></div>
   </aside>
 
-  <script src="assets/echarts.min.js"></script>
+  <!-- 悬浮提示 -->
+  <div id="tooltip" class="hidden"></div>
+
   <script src="assets/app.js"></script>
 </body>
 </html>

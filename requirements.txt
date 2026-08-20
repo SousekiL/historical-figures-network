@@ -1,3 +1,4 @@
 # 数据生成 / 配图生成依赖（网站本身为纯静态，无需安装）
 networkx>=3.0
 matplotlib>=3.7
+python-igraph>=0.11
