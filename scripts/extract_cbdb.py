@@ -47,6 +47,20 @@ DYNASTY_TIERS: dict[str, list[int]] = {
     "清": [20],
 }
 
+# 各档位的年代区间（由 DYNASTIES.c_start/c_end 聚合而来）。
+# 用于「跨朝代」判定：人物生卒区间与某档位区间有交叠即归入该档位。
+# 注意：宋/元、明/清 的区间刻意保留交叠，以容纳宋元之际、明清之际的跨朝人物。
+TIER_RANGES: dict[str, tuple[int, int]] = {
+    "春秋战国": (-1100, -206),
+    "秦汉": (-221, 220),
+    "魏晋南北朝": (220, 589),
+    "隋唐": (581, 907),
+    "宋": (960, 1279),
+    "元": (1234, 1367),
+    "明": (1368, 1661),
+    "清": (1644, 1911),
+}
+
 # 每档目标人数（可被数据量限制而低于目标）
 QUOTAS: dict[str, int] = {
     "春秋战国": 15,
@@ -104,6 +118,38 @@ def _tier_of(dy: int | None) -> str | None:
         if dy in dys:
             return tier
     return None
+
+
+def tiers_of_person(dy: int | None, birth: int | None, death: int | None,
+                    index_year: int | None) -> list[str]:
+    """返回该人物所属的所有朝代档位（去重、按档位字典顺序）。
+
+    口径：跨朝代人物归入其生卒区间覆盖的每一个档位（生卒与档位区间有交叠）。
+    - 始终保留 CBDB 主标注 `c_dy` 所属档位（primary），保证年代缺失时仍有归属；
+    - 有生卒年时，用 [生年, 卒年] 与各档位 [start, end] 求交叠，交叠即归入；
+    - 生卒年缺失但有序年 index_year 时，用该点年判定；
+    - 全缺失时仅归 primary。
+    """
+    primary = _tier_of(dy)
+    tiers: list[str] = []
+    if primary:
+        tiers.append(primary)
+
+    lo = hi = None
+    if birth is not None or death is not None:
+        lo = birth if birth is not None else death
+        hi = death if death is not None else birth
+    elif index_year is not None:
+        lo = hi = index_year
+
+    if lo is not None and hi is not None:
+        for tier, (s, e) in TIER_RANGES.items():
+            if tier in tiers:
+                continue
+            if lo <= e and hi >= s:  # 区间交叠
+                tiers.append(tier)
+
+    return tiers if tiers else ([primary] if primary else [])
 
 
 def _simplified_rel_type(assoc_type_id: str | None, is_kin: bool = False) -> str:
@@ -237,15 +283,16 @@ def extract_people(con, selected: set[int], assoc_code_map, dyn_map) -> list[dic
         if row is None:
             continue
         name, index_year, birth, death, dy = row
-        tier = _tier_of(dy)
-        if tier is None:
+        tiers = tiers_of_person(dy, birth, death, index_year)
+        if not tiers:
             continue
         people.append({
             "id": pid,
             "name": name or f"ID{pid}",
             "courtesy_name": courtesy.get(pid, ""),
             "style_name": style.get(pid, ""),
-            "dynasty_tier": tier,
+            "dynasty_tier": tiers[0],           # 主档位（CBDB c_dy 所属），用于节点配色
+            "dynasty_tiers": tiers,             # 全部档位（含跨朝代），用于朝代筛选
             "dynasty": dyn_map.get(dy, ""),
             "birth_year": birth,
             "death_year": death,
@@ -397,12 +444,19 @@ def main() -> int:
     dicts.mkdir(parents=True, exist_ok=True)
 
     people_fields = ["id", "name", "courtesy_name", "style_name", "dynasty_tier",
-                     "dynasty", "birth_year", "death_year", "index_year", "category", "degree"]
+                     "dynasty_tiers", "dynasty", "birth_year", "death_year",
+                     "index_year", "category", "degree"]
     with open(proc / "people.csv", "w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
         w.writerow(people_fields)
         for p in people:
-            w.writerow([p.get(k, "") for k in people_fields])
+            row = []
+            for k in people_fields:
+                v = p.get(k, "")
+                if k == "dynasty_tiers" and isinstance(v, list):
+                    v = "、".join(v)
+                row.append(v)
+            w.writerow(row)
 
     rel_fields = ["source", "target", "type", "subtype", "direction",
                   "source_text", "source_pages", "year", "assoc_code"]
@@ -433,10 +487,16 @@ def main() -> int:
         json.dump(RELATIONSHIP_CODES, f, ensure_ascii=False, indent=2)
 
     # 7) 汇总
-    print("\n=== 朝代分布 ===")
-    dist = Counter(p["dynasty_tier"] for p in people)
+    print("\n=== 朝代分布（跨朝代人物计入其所属的每个档位）===")
+    dist = Counter()
+    multi = 0
+    for p in people:
+        dist.update(p["dynasty_tiers"])
+        if len(p["dynasty_tiers"]) > 1:
+            multi += 1
     for t in DYNASTY_TIERS:
         print(f"  {t}: {dist.get(t, 0)} 人")
+    print(f"  （跨朝代人物 {multi} 人，占 {len(people)} 人的 {multi/len(people)*100:.1f}%）")
     print("\n=== 关系类型分布 ===")
     for t, c in Counter(e["type"] for e in edges).most_common():
         print(f"  {t}: {c}")

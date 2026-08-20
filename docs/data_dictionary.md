@@ -11,6 +11,7 @@
       "courtesy_name": "太白",
       "style_name": "青蓮居士",
       "dynasty_tier": "隋唐",
+      "dynasty_tiers": ["隋唐"],
       "dynasty": "唐",
       "birth_year": 701,
       "death_year": 762,
@@ -50,7 +51,8 @@
 | `name` | str | 中文姓名 |
 | `courtesy_name` | str | 字（`ALTNAME_DATA` 类型 4） |
 | `style_name` | str | 号 / 室名（`ALTNAME_DATA` 类型 5） |
-| `dynasty_tier` | str | 朝代档位（8 档之一） |
+| `dynasty_tier` | str | 主朝代档位（CBDB `c_dy` 所属，8 档之一，用于节点配色） |
+| `dynasty_tiers` | list[str] | 全部所属档位（含跨朝代；朝代筛选以此为准） |
 | `dynasty` | str | CBDB 原朝代名 |
 | `birth_year` | int | 出生年（可空） |
 | `death_year` | int | 卒年（可空） |

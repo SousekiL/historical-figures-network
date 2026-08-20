@@ -107,7 +107,12 @@
   function computeSubgraph() {
     var kept = {};
     NODES.forEach(function (n) {
-      if (activeTiers[n.dynasty_tier]) kept[String(n.id)] = true;
+      var tiers = (n.dynasty_tiers && n.dynasty_tiers.length) ? n.dynasty_tiers : [n.dynasty_tier];
+      var show = false;
+      for (var i = 0; i < tiers.length; i++) {
+        if (activeTiers[tiers[i]]) { show = true; break; }
+      }
+      if (show) kept[String(n.id)] = true;
     });
 
     var q = query.toLowerCase();
@@ -270,8 +275,10 @@
 
       var html = '<h2>' + escapeHtml(person.name) + '</h2>';
       if (alias) html += '<p class="alias">' + escapeHtml(alias) + '</p>';
+      var tierLabel = (person.dynasty_tiers && person.dynasty_tiers.length)
+        ? person.dynasty_tiers.join(' / ') : person.dynasty_tier;
       html += '<div class="kv"><span class="k">朝代</span><span class="v">' +
-        escapeHtml(person.dynasty_tier) + '（' + escapeHtml(person.dynasty || '') + '）</span></div>';
+        escapeHtml(tierLabel) + '（' + escapeHtml(person.dynasty || '') + '）</span></div>';
       html += '<div class="kv"><span class="k">生卒年</span><span class="v">' + escapeHtml(yrs) + '</span></div>';
       html += '<div class="kv"><span class="k">类别</span><span class="v">' + escapeHtml(person.category || '—') + '</span></div>';
       html += '<div class="kv"><span class="k">简介</span><span class="v">' + escapeHtml(person.bio || '—') + '</span></div>';
