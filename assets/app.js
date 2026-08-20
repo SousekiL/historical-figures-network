@@ -16,6 +16,7 @@
     '清': '#44AA99',
     '未詳': '#9AA0A6'
   };
+  var TIER_LIST = Object.keys(DYNASTY_COLORS); // 含「未詳」，用于筛选 chips / 图例 / 初始化
   var EDGE_COLORS = {
     '師生': '#D55E00',
     '好友': '#0072B2',
@@ -61,6 +62,7 @@
   var labelLevel = 2;      // 标签滑杆档位
   var query = '';
   var focus = null;        // { id, neighbors:Set(String(id)) } 或 null
+  var sim = null;          // 当前力导向模拟（d3-force）
 
   // 视图变换：屏幕 = (世界坐标 - center) * scale + 画布中心
   var view = { cx: 0.5, cy: 0.5, scale: 800 };
@@ -82,12 +84,13 @@
         EDGES = data.edges || [];
         NODES.forEach(function (n) {
           nodeById[String(n.id)] = n;
+          n._bx = n.x; n._by = n.y;   // 备份预计算 DrL 坐标（切回全量时恢复）
           if (n.degree > maxDeg) maxDeg = n.degree;
         });
         NODES.sort(function (a, b) { return (b.degree || 0) - (a.degree || 0); });
         computeLabelThresholds();
         activeTiers = {};
-        (META.dynasty_tiers || Object.keys(DYNASTY_COLORS)).forEach(function (t) {
+        TIER_LIST.forEach(function (t) {
           activeTiers[t] = true;
         });
         activeRelGroups = {};
@@ -98,9 +101,8 @@
         setupCanvas();
         setupEvents();
         rebuildActive();
-        fitView();
         $('loading').classList.add('hidden');
-        render();
+        relayout();
       })
       .catch(function (e) {
         $('loading').textContent = '加载失败：' + e.message +
@@ -121,7 +123,7 @@
   function buildChips() {
     var wrap = $('dynasty-chips');
     wrap.innerHTML = '';
-    (META.dynasty_tiers || Object.keys(DYNASTY_COLORS)).forEach(function (tier) {
+    TIER_LIST.forEach(function (tier) {
       var b = document.createElement('button');
       b.type = 'button';
       b.className = 'chip active';
@@ -130,7 +132,7 @@
         activeTiers[tier] = !activeTiers[tier];
         b.classList.toggle('active', activeTiers[tier]);
         rebuildActive();
-        render();
+        relayout();
       });
       wrap.appendChild(b);
     });
@@ -149,7 +151,7 @@
         activeRelGroups[g] = !activeRelGroups[g];
         b.classList.toggle('active', activeRelGroups[g]);
         rebuildActive();
-        render();
+        relayout();
       });
       wrap.appendChild(b);
     });
@@ -158,7 +160,7 @@
   function buildLegend() {
     var el = $('legend');
     var html = '<div class="legend-title">朝代（节点颜色）</div>';
-    (META.dynasty_tiers || Object.keys(DYNASTY_COLORS)).forEach(function (tier) {
+    TIER_LIST.forEach(function (tier) {
       html += '<div class="legend-row"><span class="legend-dot" style="background:' +
         (DYNASTY_COLORS[tier] || '#999') + '"></span>' + tier + '</div>';
     });
@@ -275,6 +277,78 @@
   function edgeTypeOk(e) {
     var g = relTypeToGroup[e.type];
     return g ? activeRelGroups[g] : true;
+  }
+
+  function isFullView() {
+    if (query || focus) return false;
+    var tiersOk = Object.keys(activeTiers).every(function (t) { return activeTiers[t]; });
+    var relOk = REL_GROUP_ORDER.every(function (g) { return activeRelGroups[g]; });
+    return tiersOk && relOk;
+  }
+
+  function resetToPrecomputed() {
+    NODES.forEach(function (n) { n.x = n._bx; n.y = n._by; });
+  }
+
+  function normalizeActive() {
+    if (!activeNodes.length) return;
+    var minx = Infinity, maxx = -Infinity, miny = Infinity, maxy = -Infinity;
+    activeNodes.forEach(function (n) {
+      if (n.x < minx) minx = n.x; if (n.x > maxx) maxx = n.x;
+      if (n.y < miny) miny = n.y; if (n.y > maxy) maxy = n.y;
+    });
+    var w = (maxx - minx) || 1, h = (maxy - miny) || 1;
+    var s = 1 / Math.max(w, h);
+    var cx = (minx + maxx) / 2, cy = (miny + maxy) / 2;
+    activeNodes.forEach(function (n) {
+      n.x = 0.5 + (n.x - cx) * s;
+      n.y = 0.5 + (n.y - cy) * s;
+    });
+  }
+
+  function fitToActive() {
+    if (!activeNodes.length) return;
+    var minx = Infinity, maxx = -Infinity, miny = Infinity, maxy = -Infinity;
+    activeNodes.forEach(function (n) {
+      if (n.x < minx) minx = n.x; if (n.x > maxx) maxx = n.x;
+      if (n.y < miny) miny = n.y; if (n.y > maxy) maxy = n.y;
+    });
+    var w = (maxx - minx) || 1, h = (maxy - miny) || 1;
+    var pad = 0.06;
+    view.cx = (minx + maxx) / 2;
+    view.cy = (miny + maxy) / 2;
+    view.scale = Math.min(W / (w * (1 + 2 * pad)), H / (h * (1 + 2 * pad)));
+    dirty = true;
+  }
+
+  function relayout() {
+    if (sim) { sim.stop(); sim = null; }
+    // 全量（无任何筛选/搜索）：直接用预计算 DrL 布局，不跑力导向
+    if (isFullView()) {
+      resetToPrecomputed();
+      fitView();
+      dirty = true;
+      render();
+      return;
+    }
+    if (!activeNodes.length) { dirty = true; render(); return; }
+    // 筛选后的子图：以预计算坐标为起点，放大到像素尺度跑力导向，结束后归一化回 [0,1] 并适配视图
+    var SCALE0 = 400;
+    activeNodes.forEach(function (n) {
+      n.x = n._bx * SCALE0; n.y = n._by * SCALE0; n.vx = 0; n.vy = 0;
+    });
+    var links = activeEdges.map(function (e) {
+      return { source: String(e.source), target: String(e.target) };
+    });
+    sim = d3.forceSimulation(activeNodes)
+      .force('link', d3.forceLink(links).id(function (d) { return String(d.id); })
+        .distance(30).strength(0.5).iterations(1))
+      .force('charge', d3.forceManyBody().strength(-120).theta(1.2).distanceMax(300))
+      .force('center', d3.forceCenter(SCALE0 / 2, SCALE0 / 2))
+      .alphaDecay(0.05)
+      .velocityDecay(0.3)
+      .on('tick', function () { dirty = true; })
+      .on('end', function () { normalizeActive(); fitToActive(); dirty = true; });
   }
 
   function activeTiersCheck(n) {
@@ -434,15 +508,21 @@
     $('search').addEventListener('input', function (e) {
       query = e.target.value.trim();
       rebuildActive();
-      if (focus) centerOnNode(focus.id);
-      render();
+      relayout();
     });
 
     // 重置视图
     $('reset-view').addEventListener('click', function () {
       $('search').value = '';
       query = '';
+      Object.keys(activeTiers).forEach(function (t) { activeTiers[t] = true; });
+      REL_GROUP_ORDER.forEach(function (g) { activeRelGroups[g] = true; });
+      Array.prototype.forEach.call(
+        document.querySelectorAll('#dynasty-chips .chip, #rel-chips .chip'),
+        function (b) { b.classList.add('active'); }
+      );
       rebuildActive();
+      resetToPrecomputed();
       fitView();
       render();
     });
