@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <title>历代历史文化名人关系网络</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <!-- 顶栏 -->
+  <header id="topbar">
+    <div id="title-block">
+      <h1 id="title">历代历史文化名人关系网络</h1>
+      <p id="subtitle">数据来源：CBDB 中国历代人物传记资料库</p>
+    </div>
+    <div id="search-wrap">
+      <input id="search" type="search" placeholder="搜索人物姓名 / 字 / 号…" autocomplete="off">
+    </div>
+    <div id="stats" class="info-panel">
+      <div class="stat"><span class="stat-num" id="stat-people">–</span><span class="stat-label">人物</span></div>
+      <div class="stat"><span class="stat-num" id="stat-edges">–</span><span class="stat-label">关系</span></div>
+      <div class="stat"><span class="stat-num" id="stat-dynasties">–</span><span class="stat-label">朝代</span></div>
+    </div>
+  </header>
+
+  <!-- 朝代筛选 -->
+  <div id="filter-bar">
+    <span class="filter-label">朝代：</span>
+    <div id="dynasty-chips"></div>
+    <button id="toggle-labels" class="chip chip-action" type="button">标签</button>
+    <button id="toggle-edgelabels" class="chip chip-action" type="button">关系标注</button>
+  </div>
+
+  <!-- 图例 -->
+  <div id="legend"></div>
+
+  <!-- 画布 -->
+  <main id="container">
+    <div id="graph"></div>
+    <p id="hint">拖拽节点 · 滚轮 / 双指缩放 · 空白处拖拽平移 · 点击节点查看详情</p>
+  </main>
+
+  <!-- 详情面板 -->
+  <aside id="detail" class="hidden" aria-live="polite">
+    <button id="detail-close" type="button" aria-label="关闭">×</button>
+    <div id="detail-body"></div>
+  </aside>
+
+  <script src="assets/echarts.min.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>
