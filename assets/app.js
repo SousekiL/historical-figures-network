@@ -62,6 +62,7 @@
   var SONG_TREE_DATA = null;
   var TANG_TREE_DATA = null;
   var MING_TREE_DATA = null;
+  var EDGE_SUBTYPES = {};
   var familyMode = '';
   // Ship the verified hierarchical tree first. The radial prototype remains
   // internal until its generation rings and label collisions are production-ready.
@@ -139,6 +140,9 @@
           });
         }).then(function () {
           buildFamilySelect();
+          fetch('data/edge_subtypes.json').then(function (r) { return r.json(); }).then(function (details) {
+            EDGE_SUBTYPES = details || {};
+          }).catch(function () { EDGE_SUBTYPES = {}; });
         }).catch(function () { buildFamilySelect(); });
       })
       .catch(function (e) {
@@ -742,7 +746,11 @@
       var kids = (children[id] || []).filter(function (child) { return !visited[child.id]; });
       kids.sort(function (a, b) { return (byId[a.id].birth_year || 99999) - (byId[b.id].birth_year || 99999); });
       if (!kids.length) { node._familyLeaf = leafCursor++; return { min: node._familyLeaf, max: node._familyLeaf }; }
-      var bounds = kids.map(function (child) { return layoutTree(byId[child.id], depth + Math.max(1, child.gap)); });
+      var bounds = kids.map(function (child) {
+        var rawGap = Number(child.gap) || 1;
+        var safeGap = rawGap >= 45 ? (rawGap > 70 ? 1 : 2) : Math.max(1, Math.min(rawGap, 4));
+        return layoutTree(byId[child.id], depth + safeGap);
+      });
       node._familyLeaf = bounds.reduce(function (sum, item) { return sum + (item.min + item.max) / 2; }, 0) / bounds.length;
       return { min: bounds[0].min, max: bounds[bounds.length - 1].max };
     }
@@ -1362,6 +1370,10 @@
       relayout();
     });
 
+    // 缩放按钮
+    $('zoom-in').addEventListener('click', function () { zoomAt(W / 2, H / 2, view.scale * 1.25); });
+    $('zoom-out').addEventListener('click', function () { zoomAt(W / 2, H / 2, view.scale / 1.25); });
+
     // 重置视图
     $('reset-view').addEventListener('click', function () {
       if (sim) { sim.stop(); sim = null; }
@@ -1475,6 +1487,52 @@
     dirty = true;
   }
 
+  function edgeRawDetail(e) {
+    var direct = EDGE_SUBTYPES[String(e.source) + '|' + String(e.target)];
+    return direct || EDGE_SUBTYPES[String(e.target) + '|' + String(e.source)] || null;
+  }
+
+  function kinLabel(e) {
+    var code = Number(e.kin_code);
+    var gap = Number(e.generation_gap) || 0;
+    // kin_code 111 = 母系直系（数据实证：全部 gap=1，母→子女）
+    if (code === 111) return gap === 1 ? '母子/母女' : '母系亲缘';
+    // gap>=45 为 CBDB 占位的未知世代（如孔氏世系、同族远亲）
+    if (gap >= 45) return '同族（世代不详）';
+    if (gap === 1) return '父子/父女';
+    if (gap === 2) return '祖孙';
+    if (gap === 3) return '曾祖孙';
+    if (gap >= 4) return '隔' + gap + '代直系';
+    return code != null ? '亲缘（' + code + '）' : '亲缘';
+  }
+
+  function hitTestEdge(px, py) {
+    var best = null, bestD = 8;
+    activeEdges.forEach(function (e) {
+      var a = nodeById[String(e.source)], b = nodeById[String(e.target)];
+      if (!a || !b) return;
+      var x1 = sx(a.x), y1 = sy(a.y), x2 = sx(b.x), y2 = sy(b.y);
+      var dx = x2 - x1, dy = y2 - y1, len2 = dx * dx + dy * dy;
+      var t = len2 ? Math.max(0, Math.min(1, ((px - x1) * dx + (py - y1) * dy) / len2)) : 0;
+      var ddx = px - (x1 + t * dx), ddy = py - (y1 + t * dy), d = Math.sqrt(ddx * ddx + ddy * ddy);
+      if (d < bestD) { bestD = d; best = e; }
+    });
+    return best;
+  }
+
+  function showEdgeTooltip(e, cx, cy) {
+    var a = nodeById[String(e.source)], b = nodeById[String(e.target)], raw = edgeRawDetail(e) || {};
+    var relation = familyMode ? kinLabel(e) : (raw.subtype || e.type || '关系');
+    var source = raw.source_text || raw.source_pages || '';
+    var tt = $('tooltip');
+    tt.innerHTML = '<b>' + escapeHtml(a ? a.name : e.source) + ' ↔ ' + escapeHtml(b ? b.name : e.target) + '</b><br>' + escapeHtml(relation) + (source ? '<br><span>' + escapeHtml(source) + '</span>' : '');
+    tt.classList.remove('hidden');
+    var w = tt.offsetWidth, h = tt.offsetHeight, left = cx + 14, top = cy + 14;
+    if (left + w > window.innerWidth - 8) left = cx - w - 14;
+    if (top + h > window.innerHeight - 8) top = cy - h - 14;
+    tt.style.left = Math.max(4, left) + 'px'; tt.style.top = Math.max(4, top) + 'px';
+  }
+
   function hitTest(px, py) {
     var best = null, bestD = 10; // 命中半径（像素）
     for (var i = 0; i < activeNodes.length; i++) {
@@ -1489,9 +1547,13 @@
 
   function handleHover(e) {
     var rect = canvas.getBoundingClientRect();
-    var n = hitTest(e.clientX - rect.left, e.clientY - rect.top);
+    var px = e.clientX - rect.left, py = e.clientY - rect.top;
+    var n = hitTest(px, py);
     if (n) showTooltip(n, e.clientX, e.clientY);
-    else hideTooltip();
+    else {
+      var edge = hitTestEdge(px, py);
+      if (edge) showEdgeTooltip(edge, e.clientX, e.clientY); else hideTooltip();
+    }
   }
 
   function onClick(e) {
