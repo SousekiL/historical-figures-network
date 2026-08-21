@@ -1373,6 +1373,7 @@
     // 缩放按钮
     $('zoom-in').addEventListener('click', function () { zoomAt(W / 2, H / 2, view.scale * 1.25); });
     $('zoom-out').addEventListener('click', function () { zoomAt(W / 2, H / 2, view.scale / 1.25); });
+    $('zoom-reset').addEventListener('click', function () { fitToActive(); render(); });
 
     // 重置视图
     $('reset-view').addEventListener('click', function () {
