@@ -1,0 +1,24 @@
+{
+  "house": "宋朝皇室赵氏家族",
+  "source_urls": ["https://cbdb.fas.harvard.edu/cbdbapi/person.php?id=0009016&o=json", "https://zh.wikisource.org/wiki/宋史/卷046", "https://zh.wikisource.org/wiki/宋史/卷047"],
+  "members": [
+    {"id":9001,"name":"趙匡胤","temple_name":"宋太祖","reign_start":960,"reign_end":976,"is_emperor":true},
+    {"id":9002,"name":"趙炅","temple_name":"宋太宗","reign_start":976,"reign_end":997,"is_emperor":true},
+    {"id":9003,"name":"趙恆","temple_name":"宋真宗","reign_start":997,"reign_end":1022,"is_emperor":true},
+    {"id":9004,"name":"趙禎","temple_name":"宋仁宗","reign_start":1022,"reign_end":1063,"is_emperor":true},
+    {"id":9005,"name":"趙曙","temple_name":"宋英宗","reign_start":1063,"reign_end":1067,"is_emperor":true},
+    {"id":9006,"name":"趙頊","temple_name":"宋神宗","reign_start":1067,"reign_end":1085,"is_emperor":true},
+    {"id":9007,"name":"趙煦","temple_name":"宋哲宗","reign_start":1085,"reign_end":1100,"is_emperor":true},
+    {"id":9008,"name":"趙佶","temple_name":"宋徽宗","reign_start":1100,"reign_end":1126,"is_emperor":true},
+    {"id":9009,"name":"趙桓","temple_name":"宋欽宗","reign_start":1126,"reign_end":1127,"is_emperor":true},
+    {"id":9010,"name":"趙構","temple_name":"宋高宗","reign_start":1127,"reign_end":1162,"is_emperor":true},
+    {"id":9011,"name":"趙眘","temple_name":"宋孝宗","reign_start":1162,"reign_end":1189,"is_emperor":true},
+    {"id":9012,"name":"趙惇","temple_name":"宋光宗","reign_start":1189,"reign_end":1194,"is_emperor":true},
+    {"id":9013,"name":"趙擴","temple_name":"宋寧宗","reign_start":1194,"reign_end":1224,"is_emperor":true},
+    {"id":9014,"name":"趙昀","temple_name":"宋理宗","reign_start":1224,"reign_end":1264,"is_emperor":true},
+    {"id":9015,"name":"趙禥","temple_name":"宋度宗","reign_start":1264,"reign_end":1274,"is_emperor":true},
+    {"id":9016,"name":"趙㬎","temple_name":"宋恭帝","reign_start":1274,"reign_end":1276,"is_emperor":true,"supplemental":true,"birth_year":1271,"parent_ids":[9015]},
+    {"id":9017,"name":"趙昰","temple_name":"宋端宗","reign_start":1276,"reign_end":1278,"is_emperor":true,"birth_year":1269,"source_note":"补录出生年，待 CBDB 记录进一步核验"},
+    {"id":9018,"name":"趙昺","temple_name":"宋末帝","reign_start":1278,"reign_end":1279,"is_emperor":true,"birth_year":1271}
+  ]
+}
