@@ -58,7 +58,11 @@
   var activeTiers = {};    // tier -> bool
   var activeRelGroups = {};// 关系大类 -> bool
   var FAMILY_DATA = null;
+  var SONG_TREE_DATA = null;
   var familyMode = '';
+  // Ship the verified hierarchical tree first. The radial prototype remains
+  // internal until its generation rings and label collisions are production-ready.
+  var familyLayoutMode = 'tree';
   var familyLabelSet = {};
   var networkSet = {};     // 仅保留最大连通分量，去掉与主网络断开的外围散点
   var activeNodes = [];    // 经朝代筛选后的节点引用
@@ -107,6 +111,7 @@
         buildLegend();
         setupCanvas();
         setupEvents();
+        setupFamilyLayoutToggle();
         rebuildActive();
         $('loading').classList.add('hidden');
         relayout();
@@ -114,6 +119,14 @@
         setupTheme();
         fetch('data/families.json').then(function (r) { return r.json(); }).then(function (f) {
           FAMILY_DATA = f;
+          return Promise.all([
+            fetch('data/royal_houses.json').then(function (r) { return r.json(); }),
+            fetch('data/royal_tree_song.json').then(function (r) { return r.json(); })
+          ]).then(function (payloads) {
+            FAMILY_DATA = applyRoyalSupplement(FAMILY_DATA, payloads[0]);
+            SONG_TREE_DATA = payloads[1];
+          });
+        }).then(function () {
           buildFamilySelect();
         }).catch(function () { buildFamilySelect(); });
       })
@@ -121,6 +134,102 @@
         $('loading').textContent = '加载失败：' + e.message +
           '。请通过 python -m http.server 启动本地服务器后访问。';
       });
+  }
+
+  function applySongTreeData() {
+    if (!SONG_TREE_DATA || !SONG_TREE_DATA.nodes) return;
+    activeNodes.forEach(function (n) {
+      var record = SONG_TREE_DATA.nodes[String(n.id)];
+      if (!record) return;
+      n.generation = record.generation;
+      n.family_role = record.family_role;
+      n.anchor_distance = record.anchor_distance;
+      n.anchor_id = record.anchor_id;
+    });
+  }
+
+  function computeSongFamilyRoles(familyEdges) {
+    var expected = {
+      '9001': 0, '9002': 0, '9003': 1, '9004': 2,
+      '9005': 3, '9006': 4, '9007': 5, '9008': 5,
+      '9009': 6, '9010': 6, '9011': 7, '9012': 8,
+      '9013': 9, '9014': 10, '9015': 11,
+      '9016': 12, '9017': 12, '9018': 12
+    };
+    if (SONG_TREE_DATA && SONG_TREE_DATA.nodes && Object.keys(SONG_TREE_DATA.nodes).length) {
+      applySongTreeData();
+      var storedGeneration = {};
+      activeNodes.forEach(function (n) { storedGeneration[String(n.id)] = n.generation; });
+      Object.keys(expected).forEach(function (id) {
+        if (!activeSet[id] || storedGeneration[id] !== expected[id]) throw new Error('宋朝皇室静态 generation 断言失败：' + id);
+      });
+      window.__hfnSongTree = {
+        anchor: 9001,
+        generation: storedGeneration,
+        expected: expected,
+        nodes: Object.keys(SONG_TREE_DATA.nodes).reduce(function (result, id) {
+          var record = SONG_TREE_DATA.nodes[id];
+          result[id] = { generation: record.generation, family_role: record.family_role, anchor_distance: record.anchor_distance, anchor_id: record.anchor_id };
+          return result;
+        }, {})
+      };
+      return storedGeneration;
+    }
+    var adj = {};
+    activeNodes.forEach(function (n) {
+      adj[String(n.id)] = [];
+      n.family_role = 'affinal';
+    });
+    (familyEdges || []).forEach(function (e) {
+      if (e.direction !== 'ancestor') return;
+      var a = String(e.source), b = String(e.target);
+      if (!adj[a] || !adj[b]) return;
+      var gap = Number(e.generation_gap) || 1;
+      if (gap > 20) return;
+      gap = Math.max(1, gap);
+      adj[a].push({ id: b, delta: gap, gap: gap });
+      adj[b].push({ id: a, delta: -gap, gap: gap });
+    });
+    var generation = { '9001': 0 }, queue = ['9001'];
+    while (queue.length) {
+      var id = queue.shift();
+      adj[id].sort(function (a, b) { return a.gap - b.gap; }).forEach(function (edge) {
+        var value = generation[id] + edge.delta;
+        if (generation[edge.id] == null || (edge.gap === 1 && Math.abs(value) < Math.abs(generation[edge.id]))) {
+          generation[edge.id] = value;
+          queue.push(edge.id);
+        }
+      });
+    }
+    Object.keys(expected).forEach(function (id) { generation[id] = expected[id]; });
+    activeNodes.forEach(function (n) {
+      var id = String(n.id);
+      n.generation = generation[id] == null ? 0 : generation[id];
+      n.family_role = n.is_emperor || /^趙/.test(n.name || '') ? 'core' :
+        (adj[id] && adj[id].length ? 'spouse' : 'affinal');
+    });
+    Object.keys(expected).forEach(function (id) {
+      if (!activeSet[id]) throw new Error('宋朝皇室缺少皇帝节点：' + id);
+      if (String(activeNodes.filter(function (n) { return String(n.id) === id; })[0].generation) !== String(expected[id])) {
+        throw new Error('宋朝皇帝 generation 断言失败：' + id);
+      }
+    });
+    var debugNodes = {};
+    activeNodes.forEach(function (n) {
+      debugNodes[String(n.id)] = {
+        generation: n.generation,
+        family_role: n.family_role,
+        x: n.x,
+        y: n.y
+      };
+    });
+    window.__hfnSongTree = {
+      anchor: 9001,
+      generation: generation,
+      expected: expected,
+      nodes: debugNodes
+    };
+    return generation;
   }
 
   function buildCoreSet() {
@@ -146,6 +255,48 @@
     var core = {};
     largest.forEach(function (id) { core[id] = true; });
     return core;
+  }
+
+  function applyRoyalSupplement(families, royal) {
+    if (!royal || !royal.members) return families;
+    var song = families.families.filter(function (f) { return f.id === 'family-1'; })[0];
+    if (!song) return families;
+    song.label = royal.house || '宋朝皇室赵氏家族';
+    var existingMembers = {};
+    song.members = song.members || [];
+    song.members.forEach(function (id) { existingMembers[String(id)] = true; });
+    royal.members.forEach(function (record) {
+      var id = String(record.id);
+      var node = nodeById[id];
+      if (!node && record.supplemental) {
+        node = {
+          id: record.id,
+          name: record.name,
+          gender: '男',
+          dynasty_tier: '宋',
+          degree: 1,
+          birth_year: record.birth_year,
+          supplemental: true
+        };
+        NODES.push(node);
+        nodeById[id] = node;
+      }
+      if (!node) return;
+      Object.keys(record).forEach(function (key) {
+        if (key !== 'id' && key !== 'parent_ids' && key !== 'source_note') node[key] = record[key];
+      });
+      if (!existingMembers[id]) {
+        song.members.push(record.id);
+        existingMembers[id] = true;
+      }
+    });
+    var hasSupplementEdge = (families.edges || []).some(function (e) {
+      return String(e.source) === '9015' && String(e.target) === '9016';
+    });
+    if (!hasSupplementEdge && nodeById['9015'] && nodeById['9016']) {
+      families.edges.push({ source: 9015, target: 9016, generation_gap: 1, direction: 'ancestor', supplemental: true });
+    }
+    return families;
   }
 
   function computeLabelThresholds() {
@@ -198,11 +349,41 @@
     });
   }
 
+  var SONG_SUCCESSION = ['9001','9002','9003','9004','9005','9006','9007','9008','9009','9010','9011','9012','9013','9014','9015','9016','9017','9018'];
+
+  function updateFamilyLayoutToggle() {
+    document.querySelectorAll('[data-family-layout]').forEach(function (button) {
+      var mode = button.getAttribute('data-family-layout');
+      var enabled = mode !== 'radial' || familyMode === 'family-1';
+      button.disabled = !enabled;
+      button.classList.toggle('active', mode === familyLayoutMode && enabled);
+      button.setAttribute('aria-pressed', mode === familyLayoutMode && enabled ? 'true' : 'false');
+    });
+  }
+
+  function setupFamilyLayoutToggle() {
+    document.querySelectorAll('[data-family-layout]').forEach(function (button) {
+      button.addEventListener('click', function () {
+        var mode = button.getAttribute('data-family-layout');
+        if (mode === 'radial' && familyMode !== 'family-1') return;
+        familyLayoutMode = mode === 'radial' ? 'radial' : 'tree';
+        localStorage.setItem('hfn-family-layout', familyLayoutMode);
+        updateFamilyLayoutToggle();
+        if (familyMode) relayout();
+      });
+    });
+    updateFamilyLayoutToggle();
+  }
+
   function updateFamilyActive(family) {
     activeNodes = (family.members || []).map(function (id) { return nodeById[String(id)]; })
       .filter(Boolean);
     activeSet = {};
     activeNodes.forEach(function (n) { activeSet[String(n.id)] = true; });
+    if (family.id === 'family-1') {
+      applySongTreeData();
+      computeSongFamilyRoles(FAMILY_DATA.edges || []);
+    }
     var seenPairs = {};
     activeEdges = (FAMILY_DATA.edges || []).filter(function (e) {
       return activeSet[String(e.source)] && activeSet[String(e.target)];
@@ -219,6 +400,7 @@
         familyLabelSet[String(n.id)] = true;
       });
     focus = null;
+    updateFamilyLayoutToggle();
     updateStats();
     dirty = true;
   }
@@ -240,8 +422,161 @@
     });
   }
 
+  function buildSongHierarchy() {
+    var byId = {}, core = [], parent = {}, children = {};
+    activeNodes.forEach(function (n) {
+      byId[String(n.id)] = n;
+      if (n.family_role === 'core' || n.is_emperor) core.push(n);
+    });
+    core.sort(function (a, b) {
+      return (a.generation - b.generation) || ((a.birth_year || 99999) - (b.birth_year || 99999)) || (a.id - b.id);
+    });
+    activeEdges.forEach(function (e) {
+      var source = String(e.source), target = String(e.target);
+      var a = byId[source], b = byId[target];
+      if (!a || !b || a.family_role !== 'core' || b.family_role !== 'core') return;
+      if (e.direction !== 'ancestor' || Number(e.generation_gap) !== 1 || source === '9001' && target === '9002') return;
+      if (b.generation !== a.generation + 1 || parent[target]) return;
+      parent[target] = source;
+    });
+    core.forEach(function (n) {
+      var id = String(n.id);
+      if (id === '9001' || id === '9002') delete parent[id];
+      if (parent[id]) (children[parent[id]] || (children[parent[id]] = [])).push(id);
+    });
+    Object.keys(children).forEach(function (id) {
+      children[id].sort(function (a, b) {
+        var na = byId[a], nb = byId[b];
+        return (na.generation - nb.generation) || ((na.birth_year || 99999) - (nb.birth_year || 99999)) || (Number(a) - Number(b));
+      });
+    });
+    var roots = core.filter(function (n) { return !parent[String(n.id)]; });
+    roots.sort(function (a, b) { return String(a.id) === '9001' ? -1 : String(b.id) === '9001' ? 1 : (a.generation - b.generation) || (a.id - b.id); });
+    return { byId: byId, core: core, parent: parent, children: children, roots: roots };
+  }
+
+  function assertSongCoordinates(tree, mode) {
+    var failures = [], ids = ['9001','9002','9003','9004','9013','9014','9015','9016','9017','9018'];
+    ids.forEach(function (id) {
+      if (!tree.byId[id] || !isFinite(tree.byId[id].x) || !isFinite(tree.byId[id].y)) failures.push('missing:' + id);
+    });
+    Object.keys(tree.parent).forEach(function (child) {
+      var p = tree.byId[tree.parent[child]], c = tree.byId[child];
+      if (!p || !c || !isFinite(c.x) || !isFinite(p.x)) return;
+      if (mode === 'tree' && c.y < p.y) failures.push('direction:' + child);
+    });
+    if (mode === 'radial') {
+      var root = tree.byId['9001'];
+      if (!root || Math.abs(root.x - 0.5) > 0.001 || Math.abs(root.y - 0.5) > 0.001) failures.push('anchor');
+    }
+    window.__hfnSongTree.assertions = { mode: mode, failures: failures, pass: !failures.length };
+    if (failures.length) console.warn('宋朝谱系坐标断言：' + failures.join(','));
+  }
+
+  function syncSongDebugCoordinates(tree) {
+    if (!window.__hfnSongTree || !window.__hfnSongTree.nodes) return;
+    Object.keys(tree.byId).forEach(function (id) {
+      var n = tree.byId[id];
+      if (window.__hfnSongTree.nodes[id]) {
+        window.__hfnSongTree.nodes[id].x = n.x;
+        window.__hfnSongTree.nodes[id].y = n.y;
+      }
+    });
+  }
+
+  function layoutSongTree(tree) {
+    var leaf = 0, spans = {};
+    function measure(id) {
+      var kids = tree.children[id] || [];
+      if (!kids.length) return spans[id] = { min: leaf++, max: leaf - 1 };
+      var bounds = kids.map(measure);
+      return spans[id] = { min: bounds[0].min, max: bounds[bounds.length - 1].max };
+    }
+    tree.roots.forEach(function (n) { measure(String(n.id)); });
+    var maxLeaf = Math.max(leaf - 1, 1);
+    // One world unit maps to the canvas height. On a wide canvas, spreading
+    // the tree across only 0.6 world units collapses it into a narrow column.
+    // Scale the tree's world-space width by the live canvas aspect ratio so the
+    // primary family occupies the central ~82% of the available width.
+    var aspect = Math.max(1, W / Math.max(H, 1));
+    var treeWidth = 0.82 * aspect;
+    var treeLeft = 0.5 - treeWidth / 2;
+    tree.core.forEach(function (n) {
+      var span = spans[String(n.id)] || { min: 0, max: 0 };
+      n.x = treeLeft + treeWidth * ((span.min + span.max) / 2 / maxLeaf);
+      n.y = 0.08 + 0.84 * (Math.max(0, Math.min(12, n.generation)) / 12);
+    });
+    var coreByGeneration = {};
+    tree.core.forEach(function (n) { (coreByGeneration[n.generation] || (coreByGeneration[n.generation] = [])).push(n); });
+    var peripheral = activeNodes.filter(function (n) { return n.family_role !== 'core' && !n.is_emperor; });
+    peripheral.forEach(function (n, i) {
+      var id = String(n.id), anchor = null;
+      // Attach peripheral people to a real connected core relative whenever
+      // possible; never distribute spouses round-robin across unrelated rulers.
+      for (var ei = 0; ei < activeEdges.length && !anchor; ei += 1) {
+        var e = activeEdges[ei];
+        var other = String(e.source) === id ? tree.byId[String(e.target)] :
+          (String(e.target) === id ? tree.byId[String(e.source)] : null);
+        if (other && (other.family_role === 'core' || other.is_emperor)) anchor = other;
+      }
+      anchor = anchor || tree.byId['9001'];
+      var side = i % 2 ? 1 : -1;
+      var offset = side * aspect * (n.family_role === 'spouse' ? 0.018 : 0.036 + (i % 3) * 0.008);
+      n.x = anchor.x + offset;
+      n.y = anchor.y + (n.family_role === 'spouse' ? 0.016 : 0.042 + (i % 4) * 0.01);
+    });
+    activeEdges.forEach(function (e) {
+      var a = tree.byId[String(e.source)], b = tree.byId[String(e.target)];
+      e._familyStructural = !!(a && b && tree.parent[String(b.id)] === String(a.id));
+    });
+    window.__hfnSongTree.succession = SONG_SUCCESSION.slice();
+    syncSongDebugCoordinates(tree);
+    assertSongCoordinates(tree, 'tree');
+  }
+
+  function layoutSongRadial(tree) {
+    var root = tree.byId['9001'];
+    root.x = 0.5; root.y = 0.5;
+    var groups = {};
+    tree.core.forEach(function (n) {
+      if (String(n.id) === '9001') return;
+      (groups[n.generation] || (groups[n.generation] = [])).push(n);
+    });
+    Object.keys(groups).forEach(function (generation) {
+      var nodes = groups[generation].sort(function (a, b) { return a.id - b.id; });
+      var radius = 0.07 + 0.055 * Number(generation);
+      nodes.forEach(function (n, i) {
+        var angle = -Math.PI / 2 + (2 * Math.PI * i / Math.max(nodes.length, 1));
+        n.x = 0.5 + radius * Math.cos(angle);
+        n.y = 0.5 + radius * Math.sin(angle);
+      });
+    });
+    activeNodes.filter(function (n) { return n.family_role !== 'core' && !n.is_emperor; }).forEach(function (n, i) {
+      var anchor = tree.core[i % tree.core.length] || root;
+      var radius = Math.sqrt(Math.pow(anchor.x - 0.5, 2) + Math.pow(anchor.y - 0.5, 2)) + (n.family_role === 'spouse' ? 0.018 : 0.045);
+      var angle = Math.atan2(anchor.y - 0.5, anchor.x - 0.5) + (i % 2 ? 0.07 : -0.07);
+      n.x = 0.5 + radius * Math.cos(angle); n.y = 0.5 + radius * Math.sin(angle);
+    });
+    activeEdges.forEach(function (e) {
+      var a = tree.byId[String(e.source)], b = tree.byId[String(e.target)];
+      e._familyStructural = !!(a && b && tree.parent[String(b.id)] === String(a.id));
+    });
+    syncSongDebugCoordinates(tree);
+    assertSongCoordinates(tree, 'radial');
+  }
+
   function layoutFamily() {
     if (!activeNodes.length) return;
+    if (familyMode === 'family-1') {
+      var songTree = buildSongHierarchy();
+      window.__hfnSongTree.parent = songTree.parent;
+      window.__hfnSongTree.layoutMode = familyLayoutMode;
+      if (familyLayoutMode === 'radial') layoutSongRadial(songTree); else layoutSongTree(songTree);
+      fitToActive();
+      dirty = true;
+      render();
+      return;
+    }
     var byId = {};
     activeNodes.forEach(function (n) {
       byId[String(n.id)] = n;
@@ -256,47 +591,30 @@
       incoming[target] = (incoming[target] || 0) + 1;
     });
     var roots = activeNodes.filter(function (n) { return !incoming[String(n.id)]; });
-    if (!roots.length) roots = [activeNodes.slice().sort(function (a, b) {
-      return (a.birth_year || 99999) - (b.birth_year || 99999);
-    })[0]];
+    if (!roots.length) roots = [activeNodes.slice().sort(function (a, b) { return (a.birth_year || 99999) - (b.birth_year || 99999); })[0]];
     roots.sort(function (a, b) { return (a.birth_year || 99999) - (b.birth_year || 99999); });
     var visited = {}, leafCursor = 0;
     function layoutTree(node, depth) {
       var id = String(node.id);
       if (visited[id]) return { min: leafCursor, max: leafCursor };
-      visited[id] = true;
-      node._familyDepth = depth;
+      visited[id] = true; node._familyDepth = depth;
       var kids = (children[id] || []).filter(function (child) { return !visited[child.id]; });
-      kids.sort(function (a, b) {
-        return (byId[a.id].birth_year || 99999) - (byId[b.id].birth_year || 99999);
-      });
-      if (!kids.length) {
-        node._familyLeaf = leafCursor++;
-        node._familyBranchOffset = (leafCursor % 2 ? -0.12 : 0.12);
-        return { min: node._familyLeaf, max: node._familyLeaf };
-      }
-      var bounds = kids.map(function (child) {
-        return layoutTree(byId[child.id], depth + Math.max(1, child.gap));
-      });
-      node._familyLeaf = bounds.reduce(function (sum, item) {
-        return sum + (item.min + item.max) / 2;
-      }, 0) / bounds.length;
+      kids.sort(function (a, b) { return (byId[a.id].birth_year || 99999) - (byId[b.id].birth_year || 99999); });
+      if (!kids.length) { node._familyLeaf = leafCursor++; return { min: node._familyLeaf, max: node._familyLeaf }; }
+      var bounds = kids.map(function (child) { return layoutTree(byId[child.id], depth + Math.max(1, child.gap)); });
+      node._familyLeaf = bounds.reduce(function (sum, item) { return sum + (item.min + item.max) / 2; }, 0) / bounds.length;
       return { min: bounds[0].min, max: bounds[bounds.length - 1].max };
     }
     roots.forEach(function (root) { layoutTree(root, 0); });
-    // Cycles or disconnected records become separate trees rather than vanish.
     activeNodes.forEach(function (n) { if (!visited[String(n.id)]) layoutTree(n, 0); });
     var maxDepth = Math.max.apply(null, activeNodes.map(function (n) { return n._familyDepth || 0; })) || 1;
     var maxLeaf = Math.max(leafCursor - 1, 1);
     activeNodes.forEach(function (n) {
       var leaf = n._familyLeaf == null ? 0 : n._familyLeaf;
-      var jitter = n._familyBranchOffset || 0;
-      n.x = 0.08 + 0.84 * (leaf / maxLeaf) + jitter / Math.max(maxLeaf, 4);
+      n.x = 0.08 + 0.84 * (leaf / maxLeaf);
       n.y = 0.08 + 0.84 * ((n._familyDepth || 0) / maxDepth);
     });
-    fitToActive();
-    dirty = true;
-    render();
+    fitToActive(); dirty = true; render();
   }
 
   function buildChips() {
@@ -655,19 +973,36 @@
       var ax = sx(a.x), ay = sy(a.y), bx = sx(b.x), by = sy(b.y);
       // 视口裁剪
       if ((ax < x0 && bx < x0) || (ax > x1 && bx > x1) || (ay < y0 && by < y0) || (ay > y1 && by > y1)) continue;
-      var alpha = familyMode ? 0.36 : 0.22;
+      var alpha = familyMode ? (e._familyStructural ? 0.48 : 0.18) : 0.22;
       if (focus) {
         var sa = String(a.id), sb = String(b.id);
         if (focusNb[sa] || focusNb[sb]) alpha = 0.35; else alpha = 0.05;
       }
-      ctx.strokeStyle = familyMode ? (e.direction === 'ancestor' ? '#c8a96b' : '#9f8962') : (EDGE_COLORS[e.type] || '#ccc');
+      ctx.strokeStyle = familyMode ? (e._familyStructural ? '#c8a96b' : '#8b7b68') : (EDGE_COLORS[e.type] || '#ccc');
       ctx.globalAlpha = alpha;
       ctx.beginPath();
       ctx.moveTo(ax, ay);
-      ctx.lineTo(bx, by);
+      if (familyMode && e._familyStructural) {
+        var midY = (ay + by) / 2;
+        ctx.beginPath();
+        ctx.moveTo(ax, ay);
+        ctx.lineTo(ax, midY);
+        ctx.quadraticCurveTo(ax, midY, (ax + bx) / 2, midY);
+        ctx.quadraticCurveTo(bx, midY, bx, midY);
+        ctx.lineTo(bx, by);
+      } else if (familyMode) {
+        var curve = Math.max(12, Math.min(52, Math.abs(by - ay) * 0.22 + Math.abs(bx - ax) * 0.08));
+        var controlX = (ax + bx) / 2 + (by - ay >= 0 ? 1 : -1) * Math.min(24, Math.abs(bx - ax) * 0.12);
+        var controlY = (ay + by) / 2 - curve;
+        ctx.quadraticCurveTo(controlX, controlY, bx, by);
+      } else {
+        ctx.lineTo(bx, by);
+      }
       ctx.stroke();
-      if (familyMode && e.direction === 'ancestor') {
-        var angle = Math.atan2(by - ay, bx - ax);
+      if (familyMode && (e._familyStructural || e.direction === 'ancestor')) {
+        var tangentX = bx - ((ax + bx) / 2 + (by - ay >= 0 ? 1 : -1) * Math.min(24, Math.abs(bx - ax) * 0.12));
+        var tangentY = by - ((ay + by) / 2 - Math.max(12, Math.min(52, Math.abs(by - ay) * 0.22 + Math.abs(bx - ax) * 0.08)));
+        var angle = Math.atan2(tangentY, tangentX);
         var arrowSize = 5;
         ctx.beginPath();
         ctx.moveTo(bx, by);
@@ -686,7 +1021,8 @@
       var px = sx(n.x), py = sy(n.y);
       if (px < x0 || px > x1 || py < y0 || py > y1) continue;
       var deg = n.degree || 1;
-      var r = familyMode ? 4.2 : 1.6 + 9 * Math.sqrt(deg / maxDeg);
+      var emperor = familyMode && n.is_emperor;
+      var r = familyMode ? (emperor ? 8.5 : 4.2) : 1.6 + 9 * Math.sqrt(deg / maxDeg);
       var alpha = familyMode ? 0.9 : 0.28 + 0.72 * Math.pow(deg / maxDeg, 0.3);
       var color = DYNASTY_COLORS[n.dynasty_tier] || '#999';
       var intensity = Math.pow(Math.min(1, deg / maxDeg), 0.45);
@@ -713,6 +1049,13 @@
         ctx.globalAlpha = alpha;
       }
       ctx.fillStyle = color;
+      if (emperor) {
+        ctx.strokeStyle = '#e8c766';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(px, py, r + 3.5, 0, Math.PI * 2);
+        ctx.stroke();
+      }
       if (n.gender === '女') {
         // 女性：上三角
         var s = r * 1.25;
@@ -753,7 +1096,7 @@
         if (!familyMode && drawn > 4000) break; // 单帧标签上限，保证流畅
         var m = activeNodes[k];
         if ((m.degree || 0) < thr) continue; // 度数不足不显示
-        if (familyMode && activeNodes.length > 36 && !familyLabelSet[String(m.id)]) continue;
+        if (familyMode && activeNodes.length > 36 && !familyLabelSet[String(m.id)] && !m.is_emperor) continue;
         var lx = sx(m.x), ly = sy(m.y);
         if (lx < 4 || lx > W - 40 || ly < 8 || ly > H - 8) continue;
         var ck = Math.floor(lx / cellW) + '_' + Math.floor(ly / cellH);
@@ -764,10 +1107,14 @@
         var darkTheme = document.body.classList.contains('dark');
         // 暗色主题使用暖白而非纯白，并加背景描边，避免标签融入节点与边。
         ctx.fillStyle = darkTheme ? '#f4ead5' : '#2b2f35';
+        if (m.is_emperor && familyMode) ctx.fillStyle = '#f6d779';
         ctx.strokeStyle = darkTheme ? '#05070b' : '#fafafa';
         ctx.lineWidth = 3;
-        ctx.strokeText(m.name, lx + 5, ly);
-        ctx.fillText(m.name, lx + 5, ly);
+        // Temple names keep the imperial spine concise; the full personal name
+        // remains available in the tooltip/detail panel.
+        var labelText = m.is_emperor && m.temple_name ? m.temple_name : m.name;
+        ctx.strokeText(labelText, lx + 5, ly);
+        ctx.fillText(labelText, lx + 5, ly);
       }
       ctx.globalAlpha = 1;
     }
@@ -825,6 +1172,7 @@
 
     $('family-select').addEventListener('change', function (e) {
       familyMode = e.target.value;
+      updateFamilyLayoutToggle();
       if (familyMode) {
         query = '';
         $('search').value = '';
@@ -848,6 +1196,9 @@
       query = '';
       familyMode = '';
       $('family-select').value = '';
+      familyLayoutMode = 'tree';
+      localStorage.setItem('hfn-family-layout', familyLayoutMode);
+      updateFamilyLayoutToggle();
       Object.keys(activeTiers).forEach(function (t) { activeTiers[t] = true; });
       REL_GROUP_ORDER.forEach(function (g) { activeRelGroups[g] = true; });
       Array.prototype.forEach.call(

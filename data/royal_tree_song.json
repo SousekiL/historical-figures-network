@@ -1,0 +1,2113 @@
+{
+  "anchor": 9001,
+  "generation_definition": "generation_gap=1 paths are preferred; ordinary gaps are fallback; gap>=21 is excluded",
+  "expected_emperor_generations": {
+    "9001": 0,
+    "9002": 0,
+    "9003": 1,
+    "9004": 2,
+    "9005": 3,
+    "9006": 4,
+    "9007": 5,
+    "9008": 5,
+    "9009": 6,
+    "9010": 6,
+    "9011": 7,
+    "9012": 8,
+    "9013": 9,
+    "9014": 10,
+    "9015": 11,
+    "9016": 12,
+    "9017": 12,
+    "9018": 12
+  },
+  "nodes": {
+    "145": {
+      "id": 145,
+      "name": "錢勰",
+      "generation": 3,
+      "family_role": "affinal",
+      "anchor_distance": 9,
+      "anchor_id": 9003
+    },
+    "146": {
+      "id": 146,
+      "name": "錢易",
+      "generation": 2,
+      "family_role": "affinal",
+      "anchor_distance": 8,
+      "anchor_id": 9003
+    },
+    "248": {
+      "id": 248,
+      "name": "張康國",
+      "generation": 5,
+      "family_role": "affinal",
+      "anchor_distance": 10,
+      "anchor_id": 9003
+    },
+    "275": {
+      "id": 275,
+      "name": "張升卿",
+      "generation": 4,
+      "family_role": "affinal",
+      "anchor_distance": 9,
+      "anchor_id": 9003
+    },
+    "364": {
+      "id": 364,
+      "name": "趙公稱",
+      "generation": 6,
+      "family_role": "affinal",
+      "anchor_distance": 4,
+      "anchor_id": 3211
+    },
+    "380": {
+      "id": 380,
+      "name": "趙不棄",
+      "generation": 6,
+      "family_role": "affinal",
+      "anchor_distance": 5,
+      "anchor_id": 16805
+    },
+    "704": {
+      "id": 704,
+      "name": "向傳式",
+      "generation": 2,
+      "family_role": "affinal",
+      "anchor_distance": 6,
+      "anchor_id": 9008
+    },
+    "705": {
+      "id": 705,
+      "name": "向敏中",
+      "generation": 1,
+      "family_role": "affinal",
+      "anchor_distance": 5,
+      "anchor_id": 9008
+    },
+    "706": {
+      "id": 706,
+      "name": "向伯奮",
+      "generation": 0,
+      "family_role": "affinal",
+      "anchor_distance": null,
+      "anchor_id": null
+    },
+    "711": {
+      "id": 711,
+      "name": "向宗道",
+      "generation": 4,
+      "family_role": "affinal",
+      "anchor_distance": 6,
+      "anchor_id": 9008
+    },
+    "714": {
+      "id": 714,
+      "name": "向子忞",
+      "generation": 6,
+      "family_role": "affinal",
+      "anchor_distance": 7,
+      "anchor_id": 9008
+    },
+    "715": {
+      "id": 715,
+      "name": "向子諲",
+      "generation": 5,
+      "family_role": "affinal",
+      "anchor_distance": 6,
+      "anchor_id": 9008
+    },
+    "984": {
+      "id": 984,
+      "name": "李崇矩",
+      "generation": 0,
+      "family_role": "affinal",
+      "anchor_distance": 6,
+      "anchor_id": 41290
+    },
+    "3034": {
+      "id": 3034,
+      "name": "錢晦",
+      "generation": 3,
+      "family_role": "affinal",
+      "anchor_distance": 4,
+      "anchor_id": 9003
+    },
+    "3036": {
+      "id": 3036,
+      "name": "錢鏐",
+      "generation": -1,
+      "family_role": "affinal",
+      "anchor_distance": 7,
+      "anchor_id": 9003
+    },
+    "3037": {
+      "id": 3037,
+      "name": "錢俶",
+      "generation": 1,
+      "family_role": "affinal",
+      "anchor_distance": 6,
+      "anchor_id": 9003
+    },
+    "3039": {
+      "id": 3039,
+      "name": "錢倧",
+      "generation": 1,
+      "family_role": "affinal",
+      "anchor_distance": 8,
+      "anchor_id": 9003
+    },
+    "3042": {
+      "id": 3042,
+      "name": "錢元瓘",
+      "generation": 0,
+      "family_role": "affinal",
+      "anchor_distance": 7,
+      "anchor_id": 9003
+    },
+    "3211": {
+      "id": 3211,
+      "name": "趙廷美",
+      "generation": 0,
+      "family_role": "core",
+      "anchor_distance": 2,
+      "anchor_id": 3211
+    },
+    "3213": {
+      "id": 3213,
+      "name": "趙子崧",
+      "generation": 10,
+      "family_role": "affinal",
+      "anchor_distance": 5,
+      "anchor_id": 42624
+    },
+    "3351": {
+      "id": 3351,
+      "name": "向經",
+      "generation": 3,
+      "family_role": "affinal",
+      "anchor_distance": 5,
+      "anchor_id": 9008
+    },
+    "3352": {
+      "id": 3352,
+      "name": "向仲堪",
+      "generation": 0,
+      "family_role": "affinal",
+      "anchor_distance": null,
+      "anchor_id": null
+    },
+    "3355": {
+      "id": 3355,
+      "name": "向澣",
+      "generation": 6,
+      "family_role": "affinal",
+      "anchor_distance": 6,
+      "anchor_id": 9008
+    },
+    "3356": {
+      "id": 3356,
+      "name": "向紘",
+      "generation": 3,
+      "family_role": "affinal",
+      "anchor_distance": 6,
+      "anchor_id": 9008
+    },
+    "3357": {
+      "id": 3357,
+      "name": "向沈",
+      "generation": 7,
+      "family_role": "affinal",
+      "anchor_distance": 6,
+      "anchor_id": 9008
+    },
+    "3359": {
+      "id": 3359,
+      "name": "向子韶",
+      "generation": 6,
+      "family_role": "affinal",
+      "anchor_distance": 5,
+      "anchor_id": 9008
+    },
+    "3441": {
+      "id": 3441,
+      "name": "高瓊",
+      "generation": 0,
+      "family_role": "affinal",
+      "anchor_distance": 5,
+      "anchor_id": 9006
+    },
+    "3442": {
+      "id": 3442,
+      "name": "高繼勳",
+      "generation": 1,
+      "family_role": "affinal",
+      "anchor_distance": 5,
+      "anchor_id": 9006
+    },
+    "3449": {
+      "id": 3449,
+      "name": "高仕戩",
+      "generation": 3,
+      "family_role": "affinal",
+      "anchor_distance": 6,
+      "anchor_id": 9006
+    },
+    "3521": {
+      "id": 3521,
+      "name": "李孟堅",
+      "generation": 3,
+      "family_role": "affinal",
+      "anchor_distance": 8,
+      "anchor_id": 41290
+    },
+    "3522": {
+      "id": 3522,
+      "name": "李孟傳",
+      "generation": 3,
+      "family_role": "affinal",
+      "anchor_distance": 6,
+      "anchor_id": 41290
+    },
+    "3537": {
+      "id": 3537,
+      "name": "李遵勗",
+      "generation": 1,
+      "family_role": "affinal",
+      "anchor_distance": 5,
+      "anchor_id": 41290
+    },
+    "3543": {
+      "id": 3543,
+      "name": "李端懿",
+      "generation": 2,
+      "family_role": "spouse",
+      "anchor_distance": 4,
+      "anchor_id": 41290
+    },
+    "4156": {
+      "id": 4156,
+      "name": "李繼昌",
+      "generation": 0,
+      "family_role": "affinal",
+      "anchor_distance": 5,
+      "anchor_id": 41290
+    },
+    "4163": {
+      "id": 4163,
+      "name": "向某",
+      "generation": 4,
+      "family_role": "affinal",
+      "anchor_distance": 6,
+      "anchor_id": 9008
+    },
+    "4216": {
+      "id": 4216,
+      "name": "郭氏（趙禎妻）",
+      "generation": 1,
+      "family_role": "spouse",
+      "anchor_distance": 5,
+      "anchor_id": 50082
+    },
+    "4217": {
+      "id": 4217,
+      "name": "向氏(趙頊皇后)",
+      "generation": 4,
+      "family_role": "spouse",
+      "anchor_distance": 4,
+      "anchor_id": 9008
+    },
+    "5004": {
+      "id": 5004,
+      "name": "李氏(錢晦妻)",
+      "generation": 2,
+      "family_role": "affinal",
+      "anchor_distance": 6,
+      "anchor_id": 41290
+    },
+    "5065": {
+      "id": 5065,
+      "name": "張濩",
+      "generation": 6,
+      "family_role": "affinal",
+      "anchor_distance": 11,
+      "anchor_id": 9003
+    },
+    "5318": {
+      "id": 5318,
+      "name": "趙氏(李瑋妻)",
+      "generation": 3,
+      "family_role": "core",
+      "anchor_distance": 5,
+      "anchor_id": 5318
+    },
+    "5413": {
+      "id": 5413,
+      "name": "錢氏(張升卿妻)",
+      "generation": 4,
+      "family_role": "affinal",
+      "anchor_distance": 10,
+      "anchor_id": 9003
+    },
+    "7010": {
+      "id": 7010,
+      "name": "錢彥遠",
+      "generation": 3,
+      "family_role": "affinal",
+      "anchor_distance": 9,
+      "anchor_id": 9003
+    },
+    "7113": {
+      "id": 7113,
+      "name": "高繼宣",
+      "generation": 1,
+      "family_role": "affinal",
+      "anchor_distance": 6,
+      "anchor_id": 9006
+    },
+    "7141": {
+      "id": 7141,
+      "name": "錢景臻",
+      "generation": 4,
+      "family_role": "affinal",
+      "anchor_distance": 7,
+      "anchor_id": 9003
+    },
+    "7142": {
+      "id": 7142,
+      "name": "錢暄",
+      "generation": 3,
+      "family_role": "affinal",
+      "anchor_distance": 6,
+      "anchor_id": 9003
+    },
+    "7160": {
+      "id": 7160,
+      "name": "張磐",
+      "generation": 5,
+      "family_role": "affinal",
+      "anchor_distance": 10,
+      "anchor_id": 9003
+    },
+    "7167": {
+      "id": 7167,
+      "name": "張挺卿",
+      "generation": 5,
+      "family_role": "affinal",
+      "anchor_distance": 10,
+      "anchor_id": 9003
+    },
+    "7170": {
+      "id": 7170,
+      "name": "張宗古",
+      "generation": 3,
+      "family_role": "affinal",
+      "anchor_distance": 10,
+      "anchor_id": 9003
+    },
+    "7238": {
+      "id": 7238,
+      "name": "向傳範",
+      "generation": 2,
+      "family_role": "affinal",
+      "anchor_distance": 6,
+      "anchor_id": 9008
+    },
+    "8006": {
+      "id": 8006,
+      "name": "錢惟演",
+      "generation": 2,
+      "family_role": "affinal",
+      "anchor_distance": 5,
+      "anchor_id": 9003
+    },
+    "8079": {
+      "id": 8079,
+      "name": "李光",
+      "generation": 2,
+      "family_role": "affinal",
+      "anchor_distance": 7,
+      "anchor_id": 41290
+    },
+    "8164": {
+      "id": 8164,
+      "name": "吳廷祚",
+      "generation": -2,
+      "family_role": "affinal",
+      "anchor_distance": 9,
+      "anchor_id": 50082
+    },
+    "9001": {
+      "id": 9001,
+      "name": "趙匡胤",
+      "generation": 0,
+      "family_role": "core",
+      "anchor_distance": 0,
+      "anchor_id": 9001,
+      "temple_name": "宋太祖",
+      "reign_start": 960,
+      "reign_end": 976,
+      "is_emperor": true
+    },
+    "9002": {
+      "id": 9002,
+      "name": "趙炅",
+      "generation": 0,
+      "family_role": "core",
+      "anchor_distance": 2,
+      "anchor_id": 9002,
+      "temple_name": "宋太宗",
+      "reign_start": 976,
+      "reign_end": 997,
+      "is_emperor": true
+    },
+    "9003": {
+      "id": 9003,
+      "name": "趙恆",
+      "generation": 1,
+      "family_role": "core",
+      "anchor_distance": 3,
+      "anchor_id": 9003,
+      "temple_name": "宋真宗",
+      "reign_start": 997,
+      "reign_end": 1022,
+      "is_emperor": true
+    },
+    "9004": {
+      "id": 9004,
+      "name": "趙禎",
+      "generation": 2,
+      "family_role": "core",
+      "anchor_distance": 4,
+      "anchor_id": 9004,
+      "temple_name": "宋仁宗",
+      "reign_start": 1022,
+      "reign_end": 1063,
+      "is_emperor": true
+    },
+    "9005": {
+      "id": 9005,
+      "name": "趙曙",
+      "generation": 3,
+      "family_role": "core",
+      "anchor_distance": 3,
+      "anchor_id": 9005,
+      "temple_name": "宋英宗",
+      "reign_start": 1063,
+      "reign_end": 1067,
+      "is_emperor": true
+    },
+    "9006": {
+      "id": 9006,
+      "name": "趙頊",
+      "generation": 4,
+      "family_role": "core",
+      "anchor_distance": 3,
+      "anchor_id": 9006,
+      "temple_name": "宋神宗",
+      "reign_start": 1067,
+      "reign_end": 1085,
+      "is_emperor": true
+    },
+    "9007": {
+      "id": 9007,
+      "name": "趙煦",
+      "generation": 5,
+      "family_role": "core",
+      "anchor_distance": 4,
+      "anchor_id": 9007,
+      "temple_name": "宋哲宗",
+      "reign_start": 1085,
+      "reign_end": 1100,
+      "is_emperor": true
+    },
+    "9008": {
+      "id": 9008,
+      "name": "趙佶",
+      "generation": 5,
+      "family_role": "core",
+      "anchor_distance": 3,
+      "anchor_id": 9008,
+      "temple_name": "宋徽宗",
+      "reign_start": 1100,
+      "reign_end": 1126,
+      "is_emperor": true
+    },
+    "9009": {
+      "id": 9009,
+      "name": "趙桓",
+      "generation": 6,
+      "family_role": "core",
+      "anchor_distance": 4,
+      "anchor_id": 9009,
+      "temple_name": "宋欽宗",
+      "reign_start": 1126,
+      "reign_end": 1127,
+      "is_emperor": true
+    },
+    "9010": {
+      "id": 9010,
+      "name": "趙構",
+      "generation": 6,
+      "family_role": "core",
+      "anchor_distance": 2,
+      "anchor_id": 9010,
+      "temple_name": "宋高宗",
+      "reign_start": 1127,
+      "reign_end": 1162,
+      "is_emperor": true
+    },
+    "9011": {
+      "id": 9011,
+      "name": "趙眘",
+      "generation": 7,
+      "family_role": "core",
+      "anchor_distance": 1,
+      "anchor_id": 9011,
+      "temple_name": "宋孝宗",
+      "reign_start": 1162,
+      "reign_end": 1189,
+      "is_emperor": true
+    },
+    "9012": {
+      "id": 9012,
+      "name": "趙惇",
+      "generation": 8,
+      "family_role": "core",
+      "anchor_distance": 2,
+      "anchor_id": 9012,
+      "temple_name": "宋光宗",
+      "reign_start": 1189,
+      "reign_end": 1194,
+      "is_emperor": true
+    },
+    "9013": {
+      "id": 9013,
+      "name": "趙擴",
+      "generation": 9,
+      "family_role": "core",
+      "anchor_distance": 2,
+      "anchor_id": 9013,
+      "temple_name": "宋寧宗",
+      "reign_start": 1194,
+      "reign_end": 1224,
+      "is_emperor": true
+    },
+    "9014": {
+      "id": 9014,
+      "name": "趙昀",
+      "generation": 10,
+      "family_role": "core",
+      "anchor_distance": 1,
+      "anchor_id": 9014,
+      "temple_name": "宋理宗",
+      "reign_start": 1224,
+      "reign_end": 1264,
+      "is_emperor": true
+    },
+    "9015": {
+      "id": 9015,
+      "name": "趙禥",
+      "generation": 11,
+      "family_role": "core",
+      "anchor_distance": 1,
+      "anchor_id": 9015,
+      "temple_name": "宋度宗",
+      "reign_start": 1264,
+      "reign_end": 1274,
+      "is_emperor": true
+    },
+    "9016": {
+      "id": 9016,
+      "name": "趙㬎",
+      "generation": 12,
+      "family_role": "core",
+      "anchor_distance": null,
+      "anchor_id": 9016,
+      "temple_name": "宋恭帝",
+      "reign_start": 1274,
+      "reign_end": 1276,
+      "is_emperor": true
+    },
+    "9017": {
+      "id": 9017,
+      "name": "趙昰",
+      "generation": 12,
+      "family_role": "core",
+      "anchor_distance": 2,
+      "anchor_id": 9017,
+      "temple_name": "宋端宗",
+      "reign_start": 1276,
+      "reign_end": 1278,
+      "is_emperor": true
+    },
+    "9018": {
+      "id": 9018,
+      "name": "趙昺",
+      "generation": 12,
+      "family_role": "core",
+      "anchor_distance": 2,
+      "anchor_id": 9018,
+      "temple_name": "宋末帝",
+      "reign_start": 1278,
+      "reign_end": 1279,
+      "is_emperor": true
+    },
+    "10018": {
+      "id": 10018,
+      "name": "錢乙",
+      "generation": 0,
+      "family_role": "affinal",
+      "anchor_distance": null,
+      "anchor_id": null
+    },
+    "10401": {
+      "id": 10401,
+      "name": "吳元載",
+      "generation": -1,
+      "family_role": "affinal",
+      "anchor_distance": 8,
+      "anchor_id": 50082
+    },
+    "10495": {
+      "id": 10495,
+      "name": "趙元份",
+      "generation": 1,
+      "family_role": "core",
+      "anchor_distance": 3,
+      "anchor_id": 10495
+    },
+    "10502": {
+      "id": 10502,
+      "name": "趙允讓",
+      "generation": 2,
+      "family_role": "core",
+      "anchor_distance": 3,
+      "anchor_id": 10502
+    },
+    "10509": {
+      "id": 10509,
+      "name": "趙元傑",
+      "generation": 1,
+      "family_role": "core",
+      "anchor_distance": 3,
+      "anchor_id": 10509
+    },
+    "10510": {
+      "id": 10510,
+      "name": "趙宗望",
+      "generation": 3,
+      "family_role": "affinal",
+      "anchor_distance": 4,
+      "anchor_id": 10509
+    },
+    "10514": {
+      "id": 10514,
+      "name": "趙承慶",
+      "generation": 2,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 3211
+    },
+    "10535": {
+      "id": 10535,
+      "name": "郭崇",
+      "generation": -2,
+      "family_role": "affinal",
+      "anchor_distance": 6,
+      "anchor_id": 50082
+    },
+    "10943": {
+      "id": 10943,
+      "name": "趙宗藎",
+      "generation": 3,
+      "family_role": "core",
+      "anchor_distance": 4,
+      "anchor_id": 10943
+    },
+    "11675": {
+      "id": 11675,
+      "name": "高世吏",
+      "generation": 0,
+      "family_role": "affinal",
+      "anchor_distance": null,
+      "anchor_id": null
+    },
+    "11688": {
+      "id": 11688,
+      "name": "高氏(趙曙妻)",
+      "generation": 3,
+      "family_role": "spouse",
+      "anchor_distance": 4,
+      "anchor_id": 9006
+    },
+    "11697": {
+      "id": 11697,
+      "name": "高遵裕",
+      "generation": 2,
+      "family_role": "affinal",
+      "anchor_distance": 7,
+      "anchor_id": 9006
+    },
+    "13104": {
+      "id": 13104,
+      "name": "錢龢",
+      "generation": 4,
+      "family_role": "affinal",
+      "anchor_distance": 10,
+      "anchor_id": 9003
+    },
+    "13105": {
+      "id": 13105,
+      "name": "錢燮",
+      "generation": 4,
+      "family_role": "affinal",
+      "anchor_distance": 10,
+      "anchor_id": 9003
+    },
+    "13109": {
+      "id": 13109,
+      "name": "錢明逸",
+      "generation": 3,
+      "family_role": "affinal",
+      "anchor_distance": 7,
+      "anchor_id": 9003
+    },
+    "13458": {
+      "id": 13458,
+      "name": "李復",
+      "generation": 5,
+      "family_role": "affinal",
+      "anchor_distance": 8,
+      "anchor_id": 41290
+    },
+    "13607": {
+      "id": 13607,
+      "name": "趙叔寄",
+      "generation": 4,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 3211
+    },
+    "13914": {
+      "id": 13914,
+      "name": "張漴",
+      "generation": 6,
+      "family_role": "affinal",
+      "anchor_distance": 11,
+      "anchor_id": 9003
+    },
+    "14648": {
+      "id": 14648,
+      "name": "杜宗象",
+      "generation": 0,
+      "family_role": "affinal",
+      "anchor_distance": null,
+      "anchor_id": null
+    },
+    "14664": {
+      "id": 14664,
+      "name": "趙田之",
+      "generation": 5,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 3211
+    },
+    "14680": {
+      "id": 14680,
+      "name": "趙彥衛",
+      "generation": 7,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 3211
+    },
+    "14697": {
+      "id": 14697,
+      "name": "錢惟治",
+      "generation": 2,
+      "family_role": "affinal",
+      "anchor_distance": 7,
+      "anchor_id": 9003
+    },
+    "14699": {
+      "id": 14699,
+      "name": "錢惟濟",
+      "generation": 2,
+      "family_role": "affinal",
+      "anchor_distance": 7,
+      "anchor_id": 9003
+    },
+    "14701": {
+      "id": 14701,
+      "name": "錢禹卿",
+      "generation": 4,
+      "family_role": "affinal",
+      "anchor_distance": 8,
+      "anchor_id": 9003
+    },
+    "14750": {
+      "id": 14750,
+      "name": "趙公升",
+      "generation": 0,
+      "family_role": "affinal",
+      "anchor_distance": null,
+      "anchor_id": null
+    },
+    "14790": {
+      "id": 14790,
+      "name": "趙叔近",
+      "generation": 4,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 3211
+    },
+    "14819": {
+      "id": 14819,
+      "name": "趙彥恂",
+      "generation": 7,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 3211
+    },
+    "14821": {
+      "id": 14821,
+      "name": "趙時侃",
+      "generation": 9,
+      "family_role": "affinal",
+      "anchor_distance": 4,
+      "anchor_id": 3211
+    },
+    "14823": {
+      "id": 14823,
+      "name": "趙時佐",
+      "generation": 9,
+      "family_role": "affinal",
+      "anchor_distance": 4,
+      "anchor_id": 3211
+    },
+    "14826": {
+      "id": 14826,
+      "name": "趙若珪",
+      "generation": 10,
+      "family_role": "affinal",
+      "anchor_distance": 5,
+      "anchor_id": 3211
+    },
+    "14903": {
+      "id": 14903,
+      "name": "趙彥逾",
+      "generation": 7,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 3211
+    },
+    "14924": {
+      "id": 14924,
+      "name": "趙尚之",
+      "generation": 5,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 3211
+    },
+    "14952": {
+      "id": 14952,
+      "name": "趙克修",
+      "generation": 3,
+      "family_role": "affinal",
+      "anchor_distance": 4,
+      "anchor_id": 3211
+    },
+    "14953": {
+      "id": 14953,
+      "name": "趙叔干",
+      "generation": 4,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 3211
+    },
+    "14960": {
+      "id": 14960,
+      "name": "趙伸夫",
+      "generation": 7,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 3211
+    },
+    "14993": {
+      "id": 14993,
+      "name": "趙師秀",
+      "generation": 8,
+      "family_role": "affinal",
+      "anchor_distance": 1,
+      "anchor_id": 9001
+    },
+    "15986": {
+      "id": 15986,
+      "name": "趙克蕭",
+      "generation": 3,
+      "family_role": "affinal",
+      "anchor_distance": 4,
+      "anchor_id": 3211
+    },
+    "15987": {
+      "id": 15987,
+      "name": "趙叔慈",
+      "generation": 4,
+      "family_role": "affinal",
+      "anchor_distance": 5,
+      "anchor_id": 3211
+    },
+    "16207": {
+      "id": 16207,
+      "name": "錢文",
+      "generation": 0,
+      "family_role": "affinal",
+      "anchor_distance": null,
+      "anchor_id": null
+    },
+    "16211": {
+      "id": 16211,
+      "name": "錢景諶",
+      "generation": 4,
+      "family_role": "affinal",
+      "anchor_distance": 6,
+      "anchor_id": 9003
+    },
+    "16240": {
+      "id": 16240,
+      "name": "錢伯言",
+      "generation": 4,
+      "family_role": "affinal",
+      "anchor_distance": 10,
+      "anchor_id": 9003
+    },
+    "16284": {
+      "id": 16284,
+      "name": "錢舉",
+      "generation": 0,
+      "family_role": "affinal",
+      "anchor_distance": null,
+      "anchor_id": null
+    },
+    "16805": {
+      "id": 16805,
+      "name": "趙元儼",
+      "generation": 1,
+      "family_role": "core",
+      "anchor_distance": 3,
+      "anchor_id": 16805
+    },
+    "16807": {
+      "id": 16807,
+      "name": "趙允良",
+      "generation": 2,
+      "family_role": "core",
+      "anchor_distance": 4,
+      "anchor_id": 16807
+    },
+    "16808": {
+      "id": 16808,
+      "name": "趙允迪",
+      "generation": 2,
+      "family_role": "core",
+      "anchor_distance": 4,
+      "anchor_id": 16808
+    },
+    "16827": {
+      "id": 16827,
+      "name": "李端愿",
+      "generation": 2,
+      "family_role": "spouse",
+      "anchor_distance": 4,
+      "anchor_id": 41290
+    },
+    "17073": {
+      "id": 17073,
+      "name": "高元之",
+      "generation": 7,
+      "family_role": "affinal",
+      "anchor_distance": 6,
+      "anchor_id": 9006
+    },
+    "17260": {
+      "id": 17260,
+      "name": "趙仲伋",
+      "generation": 4,
+      "family_role": "affinal",
+      "anchor_distance": 4,
+      "anchor_id": 10495
+    },
+    "17291": {
+      "id": 17291,
+      "name": "向傳師",
+      "generation": 2,
+      "family_role": "affinal",
+      "anchor_distance": 6,
+      "anchor_id": 9008
+    },
+    "17296": {
+      "id": 17296,
+      "name": "向宗琦",
+      "generation": 5,
+      "family_role": "affinal",
+      "anchor_distance": 6,
+      "anchor_id": 9008
+    },
+    "17297": {
+      "id": 17297,
+      "name": "向宗回",
+      "generation": 4,
+      "family_role": "affinal",
+      "anchor_distance": 6,
+      "anchor_id": 9008
+    },
+    "17298": {
+      "id": 17298,
+      "name": "向宗良",
+      "generation": 4,
+      "family_role": "affinal",
+      "anchor_distance": 6,
+      "anchor_id": 9008
+    },
+    "17578": {
+      "id": 17578,
+      "name": "向子賁",
+      "generation": 5,
+      "family_role": "affinal",
+      "anchor_distance": 6,
+      "anchor_id": 9008
+    },
+    "17778": {
+      "id": 17778,
+      "name": "趙叔惠",
+      "generation": 4,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 3211
+    },
+    "17827": {
+      "id": 17827,
+      "name": "向浯",
+      "generation": 6,
+      "family_role": "affinal",
+      "anchor_distance": 7,
+      "anchor_id": 9008
+    },
+    "17828": {
+      "id": 17828,
+      "name": "向涪",
+      "generation": 6,
+      "family_role": "affinal",
+      "anchor_distance": 7,
+      "anchor_id": 9008
+    },
+    "17836": {
+      "id": 17836,
+      "name": "向澹",
+      "generation": 6,
+      "family_role": "affinal",
+      "anchor_distance": 7,
+      "anchor_id": 9008
+    },
+    "17849": {
+      "id": 17849,
+      "name": "向公援",
+      "generation": 9,
+      "family_role": "affinal",
+      "anchor_distance": 6,
+      "anchor_id": 9008
+    },
+    "18298": {
+      "id": 18298,
+      "name": "趙克敦",
+      "generation": 3,
+      "family_role": "affinal",
+      "anchor_distance": 4,
+      "anchor_id": 3211
+    },
+    "18299": {
+      "id": 18299,
+      "name": "趙叔盎",
+      "generation": 4,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 3211
+    },
+    "18439": {
+      "id": 18439,
+      "name": "趙仲珣",
+      "generation": 4,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 9002
+    },
+    "19296": {
+      "id": 19296,
+      "name": "趙仲炎",
+      "generation": 4,
+      "family_role": "affinal",
+      "anchor_distance": 5,
+      "anchor_id": 10509
+    },
+    "19415": {
+      "id": 19415,
+      "name": "趙仲爰",
+      "generation": 4,
+      "family_role": "affinal",
+      "anchor_distance": 4,
+      "anchor_id": 10502
+    },
+    "19437": {
+      "id": 19437,
+      "name": "趙宗瑗",
+      "generation": 3,
+      "family_role": "core",
+      "anchor_distance": 4,
+      "anchor_id": 19437
+    },
+    "19465": {
+      "id": 19465,
+      "name": "郭氏(趙眘妻)",
+      "generation": 7,
+      "family_role": "spouse",
+      "anchor_distance": 3,
+      "anchor_id": 9012
+    },
+    "19718": {
+      "id": 19718,
+      "name": "李知微",
+      "generation": 4,
+      "family_role": "affinal",
+      "anchor_distance": 8,
+      "anchor_id": 41290
+    },
+    "19737": {
+      "id": 19737,
+      "name": "李道",
+      "generation": 10,
+      "family_role": "affinal",
+      "anchor_distance": 4,
+      "anchor_id": 9013
+    },
+    "20250": {
+      "id": 20250,
+      "name": "趙希懌",
+      "generation": 9,
+      "family_role": "affinal",
+      "anchor_distance": 2,
+      "anchor_id": 9001
+    },
+    "20251": {
+      "id": 20251,
+      "name": "趙與悊",
+      "generation": 10,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 9001
+    },
+    "20253": {
+      "id": 20253,
+      "name": "趙與𥲅",
+      "generation": 10,
+      "family_role": "affinal",
+      "anchor_distance": 1,
+      "anchor_id": 9001
+    },
+    "20560": {
+      "id": 20560,
+      "name": "趙公衡",
+      "generation": 6,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 3211
+    },
+    "20561": {
+      "id": 20561,
+      "name": "趙彥演",
+      "generation": 7,
+      "family_role": "affinal",
+      "anchor_distance": 4,
+      "anchor_id": 3211
+    },
+    "20564": {
+      "id": 20564,
+      "name": "趙彥璋",
+      "generation": 7,
+      "family_role": "affinal",
+      "anchor_distance": 4,
+      "anchor_id": 3211
+    },
+    "20565": {
+      "id": 20565,
+      "name": "趙彥法",
+      "generation": 7,
+      "family_role": "affinal",
+      "anchor_distance": 4,
+      "anchor_id": 3211
+    },
+    "22167": {
+      "id": 22167,
+      "name": "趙仲甫",
+      "generation": 4,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 9002
+    },
+    "22282": {
+      "id": 22282,
+      "name": "韋氏(趙構母)",
+      "generation": 5,
+      "family_role": "spouse",
+      "anchor_distance": 3,
+      "anchor_id": 9010
+    },
+    "22326": {
+      "id": 22326,
+      "name": "吳昭明",
+      "generation": 0,
+      "family_role": "affinal",
+      "anchor_distance": 7,
+      "anchor_id": 50082
+    },
+    "23542": {
+      "id": 23542,
+      "name": "趙彥齡",
+      "generation": 7,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 3211
+    },
+    "25514": {
+      "id": 25514,
+      "name": "趙訓之",
+      "generation": 5,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 3211
+    },
+    "25516": {
+      "id": 25516,
+      "name": "趙彥橚",
+      "generation": 7,
+      "family_role": "affinal",
+      "anchor_distance": 4,
+      "anchor_id": 3211
+    },
+    "25578": {
+      "id": 25578,
+      "name": "趙彥真",
+      "generation": 7,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 3211
+    },
+    "25635": {
+      "id": 25635,
+      "name": "趙彥端",
+      "generation": 7,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 3211
+    },
+    "25639": {
+      "id": 25639,
+      "name": "趙宗之",
+      "generation": 5,
+      "family_role": "affinal",
+      "anchor_distance": 4,
+      "anchor_id": 3211
+    },
+    "25644": {
+      "id": 25644,
+      "name": "趙公碩",
+      "generation": 6,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 3211
+    },
+    "25645": {
+      "id": 25645,
+      "name": "趙彥綰",
+      "generation": 7,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 3211
+    },
+    "26058": {
+      "id": 26058,
+      "name": "趙庚夫",
+      "generation": 8,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 3211
+    },
+    "26059": {
+      "id": 26059,
+      "name": "趙克頠",
+      "generation": 3,
+      "family_role": "affinal",
+      "anchor_distance": 4,
+      "anchor_id": 3211
+    },
+    "26060": {
+      "id": 26060,
+      "name": "趙叔彖",
+      "generation": 4,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 3211
+    },
+    "26307": {
+      "id": 26307,
+      "name": "趙宗史",
+      "generation": 3,
+      "family_role": "core",
+      "anchor_distance": 5,
+      "anchor_id": 26307
+    },
+    "26320": {
+      "id": 26320,
+      "name": "趙頵",
+      "generation": 4,
+      "family_role": "core",
+      "anchor_distance": 4,
+      "anchor_id": 26320
+    },
+    "26477": {
+      "id": 26477,
+      "name": "趙士倞",
+      "generation": 5,
+      "family_role": "affinal",
+      "anchor_distance": 5,
+      "anchor_id": 10495
+    },
+    "26898": {
+      "id": 26898,
+      "name": "趙彥俉",
+      "generation": 7,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 3211
+    },
+    "27001": {
+      "id": 27001,
+      "name": "趙宗絳",
+      "generation": 3,
+      "family_role": "core",
+      "anchor_distance": 4,
+      "anchor_id": 27001
+    },
+    "27454": {
+      "id": 27454,
+      "name": "趙時通",
+      "generation": 9,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 3211
+    },
+    "27545": {
+      "id": 27545,
+      "name": "趙彥吶",
+      "generation": 8,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 3211
+    },
+    "28046": {
+      "id": 28046,
+      "name": "趙嗣椿",
+      "generation": 12,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 3211
+    },
+    "28058": {
+      "id": 28058,
+      "name": "趙良本",
+      "generation": 12,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 9002
+    },
+    "28061": {
+      "id": 28061,
+      "name": "趙必俊",
+      "generation": 11,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 9002
+    },
+    "28062": {
+      "id": 28062,
+      "name": "趙良賢",
+      "generation": 12,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 9002
+    },
+    "28090": {
+      "id": 28090,
+      "name": "趙良仁",
+      "generation": 12,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 9002
+    },
+    "28091": {
+      "id": 28091,
+      "name": "趙良佐",
+      "generation": 12,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 9002
+    },
+    "28092": {
+      "id": 28092,
+      "name": "趙友同",
+      "generation": 13,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 9002
+    },
+    "29562": {
+      "id": 29562,
+      "name": "趙叔向",
+      "generation": 4,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 3211
+    },
+    "34420": {
+      "id": 34420,
+      "name": "錢宰",
+      "generation": 13,
+      "family_role": "affinal",
+      "anchor_distance": 8,
+      "anchor_id": 9003
+    },
+    "37256": {
+      "id": 37256,
+      "name": "郭氏(趙公碩母)",
+      "generation": 5,
+      "family_role": "affinal",
+      "anchor_distance": 4,
+      "anchor_id": 3211
+    },
+    "37492": {
+      "id": 37492,
+      "name": "李氏(趙宗景妻)",
+      "generation": 3,
+      "family_role": "affinal",
+      "anchor_distance": 5,
+      "anchor_id": 41290
+    },
+    "38027": {
+      "id": 38027,
+      "name": "王氏(趙佶妃)",
+      "generation": 5,
+      "family_role": "spouse",
+      "anchor_distance": 5,
+      "anchor_id": 38031
+    },
+    "38031": {
+      "id": 38031,
+      "name": "趙楷",
+      "generation": 6,
+      "family_role": "core",
+      "anchor_distance": 4,
+      "anchor_id": 38031
+    },
+    "40273": {
+      "id": 40273,
+      "name": "李鳳娘",
+      "generation": 11,
+      "family_role": "spouse",
+      "anchor_distance": 3,
+      "anchor_id": 9013
+    },
+    "40289": {
+      "id": 40289,
+      "name": "杜氏(趙弘殷妻)",
+      "generation": -1,
+      "family_role": "spouse",
+      "anchor_distance": 1,
+      "anchor_id": 3211
+    },
+    "41149": {
+      "id": 41149,
+      "name": "李氏(趙禎母)",
+      "generation": 1,
+      "family_role": "spouse",
+      "anchor_distance": 5,
+      "anchor_id": 9004
+    },
+    "41290": {
+      "id": 41290,
+      "name": "趙氏(李遵勗妻)",
+      "generation": 1,
+      "family_role": "core",
+      "anchor_distance": 3,
+      "anchor_id": 41290
+    },
+    "41723": {
+      "id": 41723,
+      "name": "李氏(趙炅妃)",
+      "generation": 0,
+      "family_role": "spouse",
+      "anchor_distance": 4,
+      "anchor_id": 9003
+    },
+    "41763": {
+      "id": 41763,
+      "name": "吳革",
+      "generation": 15,
+      "family_role": "affinal",
+      "anchor_distance": 10,
+      "anchor_id": 50082
+    },
+    "41925": {
+      "id": 41925,
+      "name": "趙崇嶓",
+      "generation": 9,
+      "family_role": "affinal",
+      "anchor_distance": 4,
+      "anchor_id": 10495
+    },
+    "42624": {
+      "id": 42624,
+      "name": "趙俁",
+      "generation": 5,
+      "family_role": "core",
+      "anchor_distance": 4,
+      "anchor_id": 42624
+    },
+    "42625": {
+      "id": 42625,
+      "name": "趙偲",
+      "generation": 5,
+      "family_role": "core",
+      "anchor_distance": 4,
+      "anchor_id": 42625
+    },
+    "43092": {
+      "id": 43092,
+      "name": "趙愷",
+      "generation": 8,
+      "family_role": "core",
+      "anchor_distance": 2,
+      "anchor_id": 43092
+    },
+    "43643": {
+      "id": 43643,
+      "name": "趙子櫟",
+      "generation": 10,
+      "family_role": "affinal",
+      "anchor_distance": 5,
+      "anchor_id": 42624
+    },
+    "44962": {
+      "id": 44962,
+      "name": "李氏(胡泳妻)",
+      "generation": 4,
+      "family_role": "affinal",
+      "anchor_distance": 8,
+      "anchor_id": 41290
+    },
+    "47214": {
+      "id": 47214,
+      "name": "張康伯",
+      "generation": 5,
+      "family_role": "affinal",
+      "anchor_distance": 10,
+      "anchor_id": 9003
+    },
+    "50050": {
+      "id": 50050,
+      "name": "趙似",
+      "generation": 5,
+      "family_role": "core",
+      "anchor_distance": 4,
+      "anchor_id": 50050
+    },
+    "50068": {
+      "id": 50068,
+      "name": "趙竑",
+      "generation": 10,
+      "family_role": "affinal",
+      "anchor_distance": 1,
+      "anchor_id": 9001
+    },
+    "50082": {
+      "id": 50082,
+      "name": "趙祐",
+      "generation": 2,
+      "family_role": "core",
+      "anchor_distance": 4,
+      "anchor_id": 50082
+    },
+    "50091": {
+      "id": 50091,
+      "name": "趙栩",
+      "generation": 6,
+      "family_role": "core",
+      "anchor_distance": 4,
+      "anchor_id": 50091
+    },
+    "50105": {
+      "id": 50105,
+      "name": "趙旉",
+      "generation": 7,
+      "family_role": "core",
+      "anchor_distance": 3,
+      "anchor_id": 50105
+    },
+    "50136": {
+      "id": 50136,
+      "name": "趙詢",
+      "generation": 11,
+      "family_role": "affinal",
+      "anchor_distance": 1,
+      "anchor_id": 9001
+    },
+    "50145": {
+      "id": 50145,
+      "name": "趙㮙",
+      "generation": 6,
+      "family_role": "core",
+      "anchor_distance": 4,
+      "anchor_id": 50145
+    },
+    "50183": {
+      "id": 50183,
+      "name": "趙諶",
+      "generation": 7,
+      "family_role": "core",
+      "anchor_distance": 4,
+      "anchor_id": 50183
+    },
+    "50210": {
+      "id": 50210,
+      "name": "趙顥",
+      "generation": 4,
+      "family_role": "core",
+      "anchor_distance": 4,
+      "anchor_id": 50210
+    },
+    "50229": {
+      "id": 50229,
+      "name": "趙子琦",
+      "generation": 2,
+      "family_role": "core",
+      "anchor_distance": 4,
+      "anchor_id": 50229
+    },
+    "50283": {
+      "id": 50283,
+      "name": "趙士穎",
+      "generation": 5,
+      "family_role": "affinal",
+      "anchor_distance": 4,
+      "anchor_id": 10502
+    },
+    "50287": {
+      "id": 50287,
+      "name": "趙士薦",
+      "generation": 5,
+      "family_role": "affinal",
+      "anchor_distance": 5,
+      "anchor_id": 10495
+    },
+    "50313": {
+      "id": 50313,
+      "name": "趙不泯",
+      "generation": 6,
+      "family_role": "affinal",
+      "anchor_distance": 4,
+      "anchor_id": 10502
+    },
+    "50316": {
+      "id": 50316,
+      "name": "趙不沴",
+      "generation": 6,
+      "family_role": "affinal",
+      "anchor_distance": 4,
+      "anchor_id": 10495
+    },
+    "50321": {
+      "id": 50321,
+      "name": "趙不群",
+      "generation": 6,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 9002
+    },
+    "50327": {
+      "id": 50327,
+      "name": "趙不獨",
+      "generation": 6,
+      "family_role": "affinal",
+      "anchor_distance": 4,
+      "anchor_id": 10502
+    },
+    "50340": {
+      "id": 50340,
+      "name": "趙允初",
+      "generation": 2,
+      "family_role": "core",
+      "anchor_distance": 4,
+      "anchor_id": 50340
+    },
+    "50344": {
+      "id": 50344,
+      "name": "趙公育",
+      "generation": 6,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 3211
+    },
+    "50346": {
+      "id": 50346,
+      "name": "趙公邁",
+      "generation": 6,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 3211
+    },
+    "50520": {
+      "id": 50520,
+      "name": "趙光贊",
+      "generation": 0,
+      "family_role": "core",
+      "anchor_distance": 2,
+      "anchor_id": 50520
+    },
+    "50531": {
+      "id": 50531,
+      "name": "劉氏（趙仲伋妻）",
+      "generation": 4,
+      "family_role": "affinal",
+      "anchor_distance": 6,
+      "anchor_id": 10495
+    },
+    "50541": {
+      "id": 50541,
+      "name": "趙仲䚮",
+      "generation": 4,
+      "family_role": "core",
+      "anchor_distance": 5,
+      "anchor_id": 50541
+    },
+    "50559": {
+      "id": 50559,
+      "name": "趙仲厥",
+      "generation": 4,
+      "family_role": "affinal",
+      "anchor_distance": 4,
+      "anchor_id": 10502
+    },
+    "50576": {
+      "id": 50576,
+      "name": "趙仲曄",
+      "generation": 4,
+      "family_role": "affinal",
+      "anchor_distance": 4,
+      "anchor_id": 10502
+    },
+    "50578": {
+      "id": 50578,
+      "name": "趙仲鋸",
+      "generation": 4,
+      "family_role": "affinal",
+      "anchor_distance": 5,
+      "anchor_id": 16807
+    },
+    "50582": {
+      "id": 50582,
+      "name": "趙仲儡",
+      "generation": 4,
+      "family_role": "core",
+      "anchor_distance": 5,
+      "anchor_id": 50582
+    },
+    "50629": {
+      "id": 50629,
+      "name": "趙克絢",
+      "generation": 3,
+      "family_role": "affinal",
+      "anchor_distance": 4,
+      "anchor_id": 3211
+    },
+    "50633": {
+      "id": 50633,
+      "name": "趙克賢",
+      "generation": 3,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 3211
+    },
+    "50680": {
+      "id": 50680,
+      "name": "趙宗沔",
+      "generation": 3,
+      "family_role": "core",
+      "anchor_distance": 4,
+      "anchor_id": 50680
+    },
+    "50681": {
+      "id": 50681,
+      "name": "趙宗師",
+      "generation": 3,
+      "family_role": "core",
+      "anchor_distance": 4,
+      "anchor_id": 50681
+    },
+    "50697": {
+      "id": 50697,
+      "name": "趙宗漢",
+      "generation": 3,
+      "family_role": "core",
+      "anchor_distance": 4,
+      "anchor_id": 50697
+    },
+    "50706": {
+      "id": 50706,
+      "name": "趙性夫",
+      "generation": 8,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 3211
+    },
+    "50771": {
+      "id": 50771,
+      "name": "趙叔問",
+      "generation": 4,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 3211
+    },
+    "50791": {
+      "id": 50791,
+      "name": "趙叔藻",
+      "generation": 4,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 3211
+    },
+    "50802": {
+      "id": 50802,
+      "name": "趙彥秬",
+      "generation": 7,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 3211
+    },
+    "50806": {
+      "id": 50806,
+      "name": "趙彥肅",
+      "generation": 7,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 3211
+    },
+    "50807": {
+      "id": 50807,
+      "name": "趙彥博",
+      "generation": 7,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 3211
+    },
+    "50808": {
+      "id": 50808,
+      "name": "趙彥堪",
+      "generation": 7,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 3211
+    },
+    "50811": {
+      "id": 50811,
+      "name": "趙彥稢",
+      "generation": 7,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 3211
+    },
+    "50825": {
+      "id": 50825,
+      "name": "趙若恢",
+      "generation": 10,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 3211
+    },
+    "50832": {
+      "id": 50832,
+      "name": "趙若煥",
+      "generation": 10,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 3211
+    },
+    "50850": {
+      "id": 50850,
+      "name": "趙時逢",
+      "generation": 9,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 3211
+    },
+    "50856": {
+      "id": 50856,
+      "name": "趙時賢",
+      "generation": 9,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 3211
+    },
+    "50857": {
+      "id": 50857,
+      "name": "趙時賞",
+      "generation": 9,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 3211
+    },
+    "50861": {
+      "id": 50861,
+      "name": "趙時錡",
+      "generation": 9,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 3211
+    },
+    "50865": {
+      "id": 50865,
+      "name": "趙時願",
+      "generation": 9,
+      "family_role": "affinal",
+      "anchor_distance": 4,
+      "anchor_id": 3211
+    },
+    "50985": {
+      "id": 50985,
+      "name": "趙睦之",
+      "generation": 5,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 3211
+    },
+    "51058": {
+      "id": 51058,
+      "name": "趙爵之",
+      "generation": 5,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 3211
+    },
+    "51065": {
+      "id": 51065,
+      "name": "趙轔之",
+      "generation": 5,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 3211
+    },
+    "51069": {
+      "id": 51069,
+      "name": "趙鑰夫",
+      "generation": 8,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 3211
+    },
+    "51070": {
+      "id": 51070,
+      "name": "趙䶵之",
+      "generation": 5,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 3211
+    },
+    "52300": {
+      "id": 52300,
+      "name": "錢悅",
+      "generation": 7,
+      "family_role": "affinal",
+      "anchor_distance": 7,
+      "anchor_id": 9003
+    },
+    "110437": {
+      "id": 110437,
+      "name": "趙",
+      "generation": 12,
+      "family_role": "spouse",
+      "anchor_distance": 2,
+      "anchor_id": 9015
+    },
+    "110503": {
+      "id": 110503,
+      "name": "趙大訥",
+      "generation": 11,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 9002
+    },
+    "110561": {
+      "id": 110561,
+      "name": "趙必璇",
+      "generation": 10,
+      "family_role": "affinal",
+      "anchor_distance": 4,
+      "anchor_id": 16805
+    },
+    "110614": {
+      "id": 110614,
+      "name": "趙良恭",
+      "generation": 11,
+      "family_role": "affinal",
+      "anchor_distance": 5,
+      "anchor_id": 16805
+    },
+    "386646": {
+      "id": 386646,
+      "name": "趙若磬",
+      "generation": 10,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 3211
+    },
+    "386734": {
+      "id": 386734,
+      "name": "趙氏(趙嗣開女)",
+      "generation": 9,
+      "family_role": "affinal",
+      "anchor_distance": 3,
+      "anchor_id": 3211
+    },
+    "386740": {
+      "id": 386740,
+      "name": "吳天驥",
+      "generation": 10,
+      "family_role": "affinal",
+      "anchor_distance": 4,
+      "anchor_id": 3211
+    },
+    "572645": {
+      "id": 572645,
+      "name": "杜軫",
+      "generation": 0,
+      "family_role": "affinal",
+      "anchor_distance": null,
+      "anchor_id": null
+    }
+  },
+  "source": "data/families.json + data/network.json + data/royal_houses.json",
+  "metadata": {
+    "family_id": "family-1",
+    "member_count": 251,
+    "excluded_sentinel_edges": "generation_gap >= 21",
+    "role_definition": "core=Zhao bloodline/emperors; spouse=direct one-generation non-core co-parent; affinal=remaining family context"
+  }
+}
