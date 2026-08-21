@@ -324,6 +324,17 @@
     select.innerHTML = '<option value="">不筛选家族</option>';
     if (!FAMILY_DATA || !FAMILY_DATA.families) return;
     FAMILY_DATA.families.forEach(function (family) {
+      if (family.label.indexOf('皇室') < 0) {
+        var representative = (family.members || []).map(function (id) {
+          return nodeById[String(id)];
+        }).filter(Boolean).sort(function (a, b) {
+          return (b.degree || 0) - (a.degree || 0) || Number(a.id) - Number(b.id);
+        })[0];
+        if (representative) {
+          var representativeName = (representative.name || '').replace(/（[^）]*）|\([^)]*\)/g, '');
+          family.label = representativeName + '家族';
+        }
+      }
       var option = document.createElement('option');
       option.value = family.id;
       option.textContent = family.label;
