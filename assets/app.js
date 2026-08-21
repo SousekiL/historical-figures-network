@@ -176,14 +176,23 @@
     var button = $('theme-toggle');
     if (!button || button._themeReady) return;
     button._themeReady = true;
-    var dark = localStorage.getItem('hfn-theme') === 'dark';
-    document.body.classList.toggle('dark', dark);
-    button.textContent = dark ? '亮色' : '暗色';
+    var savedTheme = localStorage.getItem('hfn-theme');
+    var dark = savedTheme ? savedTheme === 'dark' : true;
+
+    function applyTheme() {
+      document.body.classList.toggle('dark', dark);
+      document.documentElement.style.colorScheme = dark ? 'dark' : 'light';
+      var label = button.querySelector('.theme-label');
+      if (label) label.textContent = dark ? '亮色' : '暗色';
+      button.setAttribute('aria-label', dark ? '切换到亮色主题' : '切换到暗色主题');
+      button.setAttribute('title', dark ? '切换到亮色主题' : '切换到暗色主题');
+    }
+
+    applyTheme();
     button.addEventListener('click', function () {
       dark = !dark;
-      document.body.classList.toggle('dark', dark);
       localStorage.setItem('hfn-theme', dark ? 'dark' : 'light');
-      button.textContent = dark ? '亮色' : '暗色';
+      applyTheme();
       dirty = true;
       render();
     });
@@ -721,7 +730,7 @@
       // 聚焦匹配高亮描边
       if (focus && focusMatches && focusMatches[id]) {
         ctx.globalAlpha = 1;
-        ctx.strokeStyle = '#111';
+        ctx.strokeStyle = document.body.classList.contains('dark') ? '#6be1dc' : '#087c84';
         ctx.lineWidth = 2;
         ctx.beginPath();
         ctx.arc(px, py, r + 2.5, 0, Math.PI * 2);
@@ -780,6 +789,22 @@
   // ---------- 交互 ----------
   function setupEvents() {
     window.addEventListener('resize', function () { resize(); render(); });
+    document.addEventListener('keydown', function (e) {
+      var tag = document.activeElement && document.activeElement.tagName;
+      if (e.key === '/' && tag !== 'INPUT' && tag !== 'SELECT' && tag !== 'TEXTAREA') {
+        e.preventDefault();
+        $('search').focus();
+      }
+      if (e.key === 'Escape') {
+        if (!$('detail').classList.contains('hidden')) closeDetail();
+        else if ($('search').value) {
+          $('search').value = '';
+          query = '';
+          rebuildActive();
+          relayout();
+        }
+      }
+    });
 
     // 标签滑杆
     var slider = $('label-slider');

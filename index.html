@@ -3,66 +3,86 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <meta name="theme-color" content="#070a0f">
   <title>历代历史文化名人关系网络</title>
   <link rel="stylesheet" href="assets/style.css">
 </head>
-<body>
-  <!-- 顶栏 -->
+<body class="dark">
+  <a class="skip-link" href="#graph">跳至关系网络</a>
+
   <header id="topbar">
     <div id="title-block">
+      <span class="eyebrow">CBDB · HISTORICAL NETWORK</span>
       <h1 id="title">历代历史文化名人关系网络</h1>
-      <p id="subtitle">数据来源：CBDB 中国历代人物传记资料库 · 关系主网络</p>
+      <p id="subtitle">跨越两千年的人物、时代与社会关系</p>
     </div>
+
     <div id="search-wrap">
-      <input id="search" type="search" placeholder="搜索人物姓名 / 字 / 号…" autocomplete="off">
+      <span class="search-icon" aria-hidden="true"></span>
+      <label class="sr-only" for="search">搜索人物</label>
+      <input id="search" type="search" placeholder="搜索姓名、字或号…" autocomplete="off" spellcheck="false">
+      <kbd class="search-shortcut" aria-hidden="true">/</kbd>
     </div>
-    <div id="stats" class="info-panel">
+
+    <div id="stats" class="info-panel" aria-label="当前网络统计">
       <div class="stat"><span class="stat-num" id="stat-people">–</span><span class="stat-label">人物</span></div>
       <div class="stat"><span class="stat-num" id="stat-edges">–</span><span class="stat-label">关系</span></div>
       <div class="stat"><span class="stat-num" id="stat-dynasties">–</span><span class="stat-label">朝代</span></div>
     </div>
-    <button id="theme-toggle" class="chip chip-action" type="button" aria-label="切换明暗主题">暗色</button>
+    <button id="theme-toggle" class="icon-button" type="button" aria-label="切换明暗主题" title="切换明暗主题">
+      <span class="theme-icon" aria-hidden="true"></span><span class="theme-label">亮色</span>
+    </button>
   </header>
 
-  <!-- 朝代筛选 + 标签滑杆 -->
-  <div id="filter-bar">
-    <span class="filter-label">朝代：</span>
-    <div id="dynasty-chips"></div>
-    <div id="label-slider-wrap" title="标签显示密度（按中心度）">
-      <span class="filter-label">标签：</span>
-      <input type="range" id="label-slider" min="0" max="5" step="1" value="2" aria-label="标签显示密度">
-      <span id="label-slider-val">较少</span>
+  <section class="control-deck" aria-label="网络筛选器">
+    <div id="filter-bar" class="filter-row">
+      <div class="filter-heading"><span class="filter-index">01</span><span class="filter-label">朝代范围</span></div>
+      <div id="dynasty-chips" class="chip-scroller"></div>
+      <div id="label-slider-wrap" title="按人物关系中心度调整标签密度">
+        <label class="filter-label" for="label-slider">标签密度</label>
+        <input type="range" id="label-slider" min="0" max="5" step="1" value="2" aria-label="标签显示密度">
+        <span id="label-slider-val">较少</span>
+      </div>
+      <button id="reset-view" class="chip chip-action" type="button">
+        <span aria-hidden="true">↺</span> 重置
+      </button>
     </div>
-    <button id="reset-view" class="chip chip-action" type="button">重置视图</button>
-  </div>
 
-  <!-- 关系类型筛选 -->
-  <div id="rel-filter-bar">
-    <span class="filter-label">关系：</span>
-    <div id="rel-chips"></div>
-    <label class="family-select-wrap" for="family-select">
-      <span class="filter-label">亲缘谱系：</span>
-      <select id="family-select" aria-label="选择直系亲缘家族"><option value="">加载家族候选…</option></select>
-    </label>
-  </div>
+    <div id="rel-filter-bar" class="filter-row">
+      <div class="filter-heading"><span class="filter-index">02</span><span class="filter-label">关系图层</span></div>
+      <div id="rel-chips" class="chip-scroller"></div>
+      <label class="family-select-wrap" for="family-select">
+        <span class="filter-label">亲缘谱系</span>
+        <span class="select-shell">
+          <select id="family-select" aria-label="选择直系亲缘家族"><option value="">加载家族候选…</option></select>
+        </span>
+      </label>
+    </div>
+  </section>
 
-  <!-- 图例 -->
-  <div id="legend"></div>
-
-  <!-- 画布 -->
   <main id="container">
-    <canvas id="graph"></canvas>
-    <p id="loading">数据加载中…</p>
+    <canvas id="graph" tabindex="0" aria-label="历史人物关系网络画布；拖动平移，滚轮缩放，点击节点查看人物详情"></canvas>
+    <div class="canvas-vignette" aria-hidden="true"></div>
+
+    <div class="network-hud" aria-hidden="true">
+      <span class="live-dot"></span>
+      <span>RELATION MAP</span>
+      <span class="hud-divider"></span>
+      <span>拖动平移 · 滚轮缩放 · 点击探索</span>
+    </div>
+
+    <div id="legend"></div>
+    <p id="loading"><span class="loading-spinner" aria-hidden="true"></span>正在构建人物关系网络…</p>
   </main>
 
-  <!-- 详情面板 -->
-  <aside id="detail" class="hidden" aria-live="polite">
-    <button id="detail-close" type="button" aria-label="关闭">×</button>
+  <aside id="detail" class="hidden" aria-live="polite" aria-label="人物详情">
+    <div class="detail-rail" aria-hidden="true"></div>
+    <p class="detail-kicker">人物档案 · PERSON DOSSIER</p>
+    <button id="detail-close" type="button" aria-label="关闭人物详情">×</button>
     <div id="detail-body"></div>
   </aside>
 
-  <!-- 悬浮提示 -->
-  <div id="tooltip" class="hidden"></div>
+  <div id="tooltip" class="hidden" role="tooltip"></div>
 
   <script src="assets/vendor/d3-quadtree.min.js"></script>
   <script src="assets/vendor/d3-dispatch.min.js"></script>
