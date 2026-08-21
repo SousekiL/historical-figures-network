@@ -519,12 +519,12 @@
       n.x = treeLeft + treeWidth * ((span.min + span.max) / 2 / maxLeaf);
       n.y = 0.08 + 0.84 * (Math.max(0, Math.min(12, n.generation)) / 12);
     });
-    // The late-Song biological branch was absent from the exported dataset.
-    // Keep its restored chain (赵希瓐 → 赵与芮 → 宋度宗) beside 理宗 rather
-    // than treating it as a remote forest root on the opposite side.
-    var biologicalRoot = tree.byId['15685'], lizong = tree.byId['9014'];
-    if (biologicalRoot && lizong) {
-      var branchShift = lizong.x + aspect * 0.09 - biologicalRoot.x;
+    // 度宗是太祖十一世孙。把补回的生物学支系
+    // （赵希瓐 → 赵与芮 → 宋度宗）放在太祖一侧；理宗与度宗的
+    // 血缘连线仍保留，但不再把这支误放到太宗主干的另一端。
+    var biologicalRoot = tree.byId['15685'], taizu = tree.byId['9001'];
+    if (biologicalRoot && taizu) {
+      var branchShift = taizu.x + aspect * 0.10 - biologicalRoot.x;
       var shifted = {};
       function shiftBranch(id) {
         if (shifted[id] || !tree.byId[id]) return;
