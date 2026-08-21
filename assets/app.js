@@ -261,11 +261,16 @@
     if (!royal || !royal.members) return families;
     var song = families.families.filter(function (f) { return f.id === 'family-1'; })[0];
     if (!song) return families;
+    (royal.family_labels ? Object.keys(royal.family_labels) : []).forEach(function (familyId) {
+      var item = families.families.filter(function (f) { return f.id === familyId; })[0];
+      if (item) item.label = royal.family_labels[familyId];
+    });
     song.label = royal.house || '宋朝皇室赵氏家族';
     var existingMembers = {};
     song.members = song.members || [];
     song.members.forEach(function (id) { existingMembers[String(id)] = true; });
-    royal.members.forEach(function (record) {
+    var royalPeople = royal.members.concat(royal.supplemental_people || []);
+    royalPeople.forEach(function (record) {
       var id = String(record.id);
       var node = nodeById[id];
       if (!node && record.supplemental) {
@@ -290,12 +295,15 @@
         existingMembers[id] = true;
       }
     });
-    var hasSupplementEdge = (families.edges || []).some(function (e) {
-      return String(e.source) === '9015' && String(e.target) === '9016';
+    families.edges = families.edges || [];
+    (royal.relationships || []).forEach(function (relationship) {
+      if (!nodeById[String(relationship.source)] || !nodeById[String(relationship.target)]) return;
+      var exists = families.edges.some(function (e) {
+        return String(e.source) === String(relationship.source) &&
+          String(e.target) === String(relationship.target);
+      });
+      if (!exists) families.edges.push(Object.assign({ supplemental: true }, relationship));
     });
-    if (!hasSupplementEdge && nodeById['9015'] && nodeById['9016']) {
-      families.edges.push({ source: 9015, target: 9016, generation_gap: 1, direction: 'ancestor', supplemental: true });
-    }
     return families;
   }
 
@@ -506,6 +514,21 @@
       n.x = treeLeft + treeWidth * ((span.min + span.max) / 2 / maxLeaf);
       n.y = 0.08 + 0.84 * (Math.max(0, Math.min(12, n.generation)) / 12);
     });
+    // The late-Song biological branch was absent from the exported dataset.
+    // Keep its restored chain (赵希瓐 → 赵与芮 → 宋度宗) beside 理宗 rather
+    // than treating it as a remote forest root on the opposite side.
+    var biologicalRoot = tree.byId['15685'], lizong = tree.byId['9014'];
+    if (biologicalRoot && lizong) {
+      var branchShift = lizong.x + aspect * 0.09 - biologicalRoot.x;
+      var shifted = {};
+      function shiftBranch(id) {
+        if (shifted[id] || !tree.byId[id]) return;
+        shifted[id] = true;
+        tree.byId[id].x += branchShift;
+        (tree.children[id] || []).forEach(shiftBranch);
+      }
+      shiftBranch('15685');
+    }
     var coreByGeneration = {};
     tree.core.forEach(function (n) { (coreByGeneration[n.generation] || (coreByGeneration[n.generation] = [])).push(n); });
     var peripheral = activeNodes.filter(function (n) { return n.family_role !== 'core' && !n.is_emperor; });

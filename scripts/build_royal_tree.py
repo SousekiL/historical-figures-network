@@ -52,13 +52,14 @@ def build(families_path: Path, network_path: Path, royal_path: Path) -> dict[str
     royal = load(royal_path)
     family = next(item for item in families["families"] if item["id"] == "family-1")
     member_ids = {int(value) for value in family["members"]}
-    royal_by_id = {int(item["id"]): item for item in royal["members"]}
-    for item in royal["members"]:
+    royal_people = royal["members"] + royal.get("supplemental_people", [])
+    royal_by_id = {int(item["id"]): item for item in royal_people}
+    for item in royal_people:
         if item.get("supplemental"):
             member_ids.add(int(item["id"]))
 
     people = {int(item["id"]): item for item in network["nodes"]}
-    for item in royal["members"]:
+    for item in royal_people:
         people.setdefault(int(item["id"]), item)
 
     edges = []
@@ -72,6 +73,13 @@ def build(families_path: Path, network_path: Path, royal_path: Path) -> dict[str
         if gap < 1 or gap > MAX_NORMAL_GAP:
             continue
         edges.append({"source": source, "target": target, "gap": gap})
+    for edge in royal.get("relationships", []):
+        source, target = int(edge["source"]), int(edge["target"])
+        gap = int(edge.get("generation_gap") or 1)
+        if source in member_ids and target in member_ids and 1 <= gap <= MAX_NORMAL_GAP:
+            candidate = {"source": source, "target": target, "gap": gap}
+            if candidate not in edges:
+                edges.append(candidate)
 
     # A directed edge source -> target means descendant generation + gap.
     adjacency: dict[int, list[tuple[int, int]]] = collections.defaultdict(list)
@@ -99,6 +107,9 @@ def build(families_path: Path, network_path: Path, royal_path: Path) -> dict[str
     # layer jump.  The confirmed emperor generations are authoritative.
     for member_id in sorted(member_ids):
         generation.setdefault(member_id, 0)
+    for item in royal.get("supplemental_people", []):
+        if item.get("generation") is not None:
+            generation[int(item["id"])] = int(item["generation"])
     generation.update(EXPECTED)
 
     # Build a trusted one-generation reachability set. Surname alone is not

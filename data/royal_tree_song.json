@@ -623,7 +623,7 @@
       "name": "趙㬎",
       "generation": 12,
       "family_role": "core",
-      "anchor_distance": null,
+      "anchor_distance": 2,
       "anchor_id": 9016,
       "temple_name": "宋恭帝",
       "reign_start": 1274,
@@ -941,6 +941,14 @@
       "family_role": "affinal",
       "anchor_distance": 1,
       "anchor_id": 9001
+    },
+    "15685": {
+      "id": 15685,
+      "name": "趙希瓐",
+      "generation": 9,
+      "family_role": "core",
+      "anchor_distance": 2,
+      "anchor_id": 15685
     },
     "15986": {
       "id": 15986,
@@ -1998,6 +2006,14 @@
       "anchor_distance": 3,
       "anchor_id": 3211
     },
+    "50998": {
+      "id": 50998,
+      "name": "趙與芮",
+      "generation": 10,
+      "family_role": "core",
+      "anchor_distance": 2,
+      "anchor_id": 50998
+    },
     "51058": {
       "id": 51058,
       "name": "趙爵之",
@@ -2042,9 +2058,9 @@
       "id": 110437,
       "name": "趙",
       "generation": 12,
-      "family_role": "spouse",
+      "family_role": "core",
       "anchor_distance": 2,
-      "anchor_id": 9015
+      "anchor_id": 110437
     },
     "110503": {
       "id": 110503,
@@ -2106,7 +2122,7 @@
   "source": "data/families.json + data/network.json + data/royal_houses.json",
   "metadata": {
     "family_id": "family-1",
-    "member_count": 251,
+    "member_count": 253,
     "excluded_sentinel_edges": "generation_gap >= 21",
     "role_definition": "core=Zhao bloodline/emperors; spouse=direct one-generation non-core co-parent; affinal=remaining family context"
   }

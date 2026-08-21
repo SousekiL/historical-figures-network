@@ -1,6 +1,7 @@
 {
   "house": "宋朝皇室赵氏家族",
-  "source_urls": ["https://cbdb.fas.harvard.edu/cbdbapi/person.php?id=0009016&o=json", "https://zh.wikisource.org/wiki/宋史/卷046", "https://zh.wikisource.org/wiki/宋史/卷047"],
+  "source_urls": ["https://cbdb.fas.harvard.edu/cbdbapi/person.php?id=0009016&o=json", "https://cbdb.fas.harvard.edu/cbdbapi/person.php?id=0050998&o=json", "https://cbdb.fas.harvard.edu/cbdbapi/person.php?id=0015685&o=json", "https://zh.wikisource.org/wiki/宋史/卷046", "https://zh.wikisource.org/wiki/宋史/卷047"],
+  "family_labels": {"family-1":"宋朝皇室赵氏家族","family-2":"唐朝皇室李氏家族"},
   "members": [
     {"id":9001,"name":"趙匡胤","temple_name":"宋太祖","reign_start":960,"reign_end":976,"is_emperor":true},
     {"id":9002,"name":"趙炅","temple_name":"宋太宗","reign_start":976,"reign_end":997,"is_emperor":true},
@@ -20,5 +21,15 @@
     {"id":9016,"name":"趙㬎","temple_name":"宋恭帝","reign_start":1274,"reign_end":1276,"is_emperor":true,"supplemental":true,"birth_year":1271,"parent_ids":[9015]},
     {"id":9017,"name":"趙昰","temple_name":"宋端宗","reign_start":1276,"reign_end":1278,"is_emperor":true,"birth_year":1269,"source_note":"补录出生年，待 CBDB 记录进一步核验"},
     {"id":9018,"name":"趙昺","temple_name":"宋末帝","reign_start":1278,"reign_end":1279,"is_emperor":true,"birth_year":1271}
+  ],
+  "supplemental_people": [
+    {"id":15685,"name":"趙希瓐","birth_year":1175,"generation":9,"family_role":"core","supplemental":true,"source_url":"https://cbdb.fas.harvard.edu/cbdbapi/person.php?id=0015685&o=json"},
+    {"id":50998,"name":"趙與芮","birth_year":1205,"generation":10,"family_role":"core","supplemental":true,"source_url":"https://cbdb.fas.harvard.edu/cbdbapi/person.php?id=0050998&o=json"}
+  ],
+  "relationships": [
+    {"source":15685,"target":9014,"generation_gap":1,"direction":"ancestor","relation":"父子","source_ref":"CBDB"},
+    {"source":15685,"target":50998,"generation_gap":1,"direction":"ancestor","relation":"父子","source_ref":"CBDB"},
+    {"source":50998,"target":9015,"generation_gap":1,"direction":"ancestor","relation":"父子","source_ref":"宋史卷046","source_note":"《宋史》载度宗之父为嗣荣王赵与芮；此关系覆盖CBDB导出中的冲突记录"},
+    {"source":9015,"target":9016,"generation_gap":1,"direction":"ancestor","relation":"父子","source_ref":"CBDB/宋史卷047"}
   ]
 }
