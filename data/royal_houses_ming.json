@@ -1,0 +1,48 @@
+{
+  "house": "明朝皇室朱氏家族",
+  "family_id": "family-ming",
+  "anchor": 30148,
+  "source_urls": [
+    "https://zh.wikipedia.org/wiki/明朝君主世系图",
+    "https://zh.wikisource.org/wiki/明史"
+  ],
+  "members": [
+    {"id":30148,"name":"朱元璋","temple_name":"明太祖","reign_start":1368,"reign_end":1398,"is_emperor":true,"parent_ids":[]},
+    {"id":-30001,"name":"朱标","temple_name":"懿文太子","reign_start":null,"reign_end":null,"is_emperor":false,"supplemental":true,"parent_ids":[30148]},
+    {"id":-30002,"name":"朱允炆","temple_name":"明惠宗","reign_start":1398,"reign_end":1402,"is_emperor":true,"supplemental":true,"parent_ids":[-30001]},
+    {"id":30151,"name":"朱棣","temple_name":"明成祖","reign_start":1402,"reign_end":1424,"is_emperor":true,"parent_ids":[30148]},
+    {"id":-30003,"name":"朱高炽","temple_name":"明仁宗","reign_start":1424,"reign_end":1425,"is_emperor":true,"supplemental":true,"parent_ids":[30151]},
+    {"id":-30004,"name":"朱瞻基","temple_name":"明宣宗","reign_start":1425,"reign_end":1435,"is_emperor":true,"supplemental":true,"parent_ids":[-30003]},
+    {"id":30154,"name":"朱祁镇","temple_name":"明英宗","reign_start":1435,"reign_end":1449,"reign_end_2":1464,"is_emperor":true,"parent_ids":[-30004]},
+    {"id":30155,"name":"朱祁钰","temple_name":"明代宗","reign_start":1449,"reign_end":1457,"is_emperor":true,"parent_ids":[-30004]},
+    {"id":-30005,"name":"朱见深","temple_name":"明宪宗","reign_start":1464,"reign_end":1487,"is_emperor":true,"supplemental":true,"parent_ids":[30154]},
+    {"id":30157,"name":"朱祐樘","temple_name":"明孝宗","reign_start":1487,"reign_end":1505,"is_emperor":true,"parent_ids":[-30005]},
+    {"id":30158,"name":"朱厚照","temple_name":"明武宗","reign_start":1505,"reign_end":1521,"is_emperor":true,"parent_ids":[30157]},
+    {"id":-30006,"name":"朱祐杬","temple_name":"兴献王","reign_start":null,"reign_end":null,"is_emperor":false,"supplemental":true,"parent_ids":[-30005]},
+    {"id":30160,"name":"朱厚熜","temple_name":"明世宗","reign_start":1521,"reign_end":1567,"is_emperor":true,"parent_ids":[-30006]},
+    {"id":-30007,"name":"朱载坖","temple_name":"明穆宗","reign_start":1567,"reign_end":1572,"is_emperor":true,"supplemental":true,"parent_ids":[30160]},
+    {"id":-30008,"name":"朱翊钧","temple_name":"明神宗","reign_start":1572,"reign_end":1620,"is_emperor":true,"supplemental":true,"parent_ids":[-30007]},
+    {"id":30163,"name":"朱常洛","temple_name":"明光宗","reign_start":1620,"reign_end":1620,"is_emperor":true,"parent_ids":[-30008]},
+    {"id":30164,"name":"朱由校","temple_name":"明熹宗","reign_start":1620,"reign_end":1627,"is_emperor":true,"parent_ids":[30163]},
+    {"id":-30009,"name":"朱由检","temple_name":"明思宗","reign_start":1627,"reign_end":1644,"is_emperor":true,"supplemental":true,"parent_ids":[30163]}
+  ],
+  "relationships": [
+    {"source":30148,"target":-30001,"kin_code":75,"generation_gap":1,"direction":"ancestor","supplemental":true},
+    {"source":-30001,"target":-30002,"kin_code":75,"generation_gap":1,"direction":"ancestor","supplemental":true},
+    {"source":30148,"target":30151,"kin_code":75,"generation_gap":1,"direction":"ancestor","supplemental":true},
+    {"source":30151,"target":-30003,"kin_code":75,"generation_gap":1,"direction":"ancestor","supplemental":true},
+    {"source":-30003,"target":-30004,"kin_code":75,"generation_gap":1,"direction":"ancestor","supplemental":true},
+    {"source":-30004,"target":30154,"kin_code":75,"generation_gap":1,"direction":"ancestor","supplemental":true},
+    {"source":-30004,"target":30155,"kin_code":75,"generation_gap":1,"direction":"ancestor","supplemental":true},
+    {"source":30154,"target":-30005,"kin_code":75,"generation_gap":1,"direction":"ancestor","supplemental":true},
+    {"source":-30005,"target":30157,"kin_code":75,"generation_gap":1,"direction":"ancestor","supplemental":true},
+    {"source":30157,"target":30158,"kin_code":75,"generation_gap":1,"direction":"ancestor","supplemental":true},
+    {"source":-30005,"target":-30006,"kin_code":75,"generation_gap":1,"direction":"ancestor","supplemental":true},
+    {"source":-30006,"target":30160,"kin_code":75,"generation_gap":1,"direction":"ancestor","supplemental":true},
+    {"source":30160,"target":-30007,"kin_code":75,"generation_gap":1,"direction":"ancestor","supplemental":true},
+    {"source":-30007,"target":-30008,"kin_code":75,"generation_gap":1,"direction":"ancestor","supplemental":true},
+    {"source":-30008,"target":30163,"kin_code":75,"generation_gap":1,"direction":"ancestor","supplemental":true},
+    {"source":30163,"target":30164,"kin_code":75,"generation_gap":1,"direction":"ancestor","supplemental":true},
+    {"source":30163,"target":-30009,"kin_code":75,"generation_gap":1,"direction":"ancestor","supplemental":true}
+  ]
+}

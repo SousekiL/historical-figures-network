@@ -61,6 +61,7 @@
   var FAMILY_DATA = null;
   var SONG_TREE_DATA = null;
   var TANG_TREE_DATA = null;
+  var MING_TREE_DATA = null;
   var familyMode = '';
   // Ship the verified hierarchical tree first. The radial prototype remains
   // internal until its generation rings and label collisions are production-ready.
@@ -125,12 +126,16 @@
             fetch('data/royal_houses.json').then(function (r) { return r.json(); }),
             fetch('data/royal_tree_song.json').then(function (r) { return r.json(); }),
             fetch('data/royal_houses_tang.json').then(function (r) { return r.json(); }),
-            fetch('data/royal_tree_tang.json').then(function (r) { return r.json(); })
+            fetch('data/royal_tree_tang.json').then(function (r) { return r.json(); }),
+            fetch('data/royal_houses_ming.json').then(function (r) { return r.json(); }),
+            fetch('data/royal_tree_ming.json').then(function (r) { return r.json(); })
           ]).then(function (payloads) {
             FAMILY_DATA = applyRoyalSupplement(FAMILY_DATA, payloads[0]);
             SONG_TREE_DATA = payloads[1];
             TANG_TREE_DATA = payloads[3];
             FAMILY_DATA = applyRoyalSupplement(FAMILY_DATA, payloads[2]);
+            MING_TREE_DATA = payloads[5];
+            FAMILY_DATA = applyRoyalSupplement(FAMILY_DATA, payloads[4]);
           });
         }).then(function () {
           buildFamilySelect();
@@ -183,6 +188,28 @@
 
   function computeTangFamilyRoles() {
     if (TANG_TREE_DATA && TANG_TREE_DATA.nodes) { applyTangTreeData(); return; }
+    activeNodes.forEach(function (n) { n.generation = 0; n.family_role = n.is_emperor ? 'core' : 'affinal'; });
+  }
+
+  function applyMingTreeData() {
+    if (!MING_TREE_DATA || !MING_TREE_DATA.nodes) return;
+    activeNodes.forEach(function (n) {
+      var record = MING_TREE_DATA.nodes[String(n.id)];
+      if (!record) return;
+      n.generation = record.generation; n.family_role = record.family_role;
+      n.anchor_distance = record.anchor_distance; n.anchor_id = record.anchor_id;
+      if (record.is_emperor) n.is_emperor = true;
+      if (record.temple_name) n.temple_name = record.temple_name;
+    });
+    window.__hfnMingTree = { anchor: 30148, generation: {}, expected: MING_TREE_DATA.expected_emperor_generations || {}, nodes: {} };
+    activeNodes.forEach(function (n) {
+      window.__hfnMingTree.generation[String(n.id)] = n.generation;
+      window.__hfnMingTree.nodes[String(n.id)] = { generation: n.generation, family_role: n.family_role, anchor_id: n.anchor_id, is_emperor: !!n.is_emperor };
+    });
+  }
+
+  function computeMingFamilyRoles() {
+    if (MING_TREE_DATA && MING_TREE_DATA.nodes) { applyMingTreeData(); return; }
     activeNodes.forEach(function (n) { n.generation = 0; n.family_role = n.is_emperor ? 'core' : 'affinal'; });
   }
 
@@ -297,8 +324,12 @@
 
   function applyRoyalSupplement(families, royal) {
     if (!royal || !royal.members) return families;
-    var familyId = royal.family_id || (royal.house && royal.house.indexOf('唐') >= 0 ? 'family-2' : 'family-1');
+    var familyId = royal.family_id || (royal.house && royal.house.indexOf('唐') >= 0 ? 'family-2' : royal.house && royal.house.indexOf('明') >= 0 ? 'family-ming' : 'family-1');
     var houseFamily = families.families.filter(function (f) { return f.id === familyId; })[0];
+    if (!houseFamily && familyId === 'family-ming') {
+      houseFamily = { id: familyId, label: royal.house || '明朝皇室朱氏家族', members: [] };
+      families.families.push(houseFamily);
+    }
     if (!houseFamily) return families;
     houseFamily.label = royal.house || houseFamily.label;
     var existingMembers = {};
@@ -308,7 +339,7 @@
     royalPeople.forEach(function (record) {
       var id = String(record.id), node = nodeById[id];
       if (!node) {
-        node = { id: record.id, name: record.name, gender: '男', dynasty_tier: familyId === 'family-2' ? '隋唐' : '宋', degree: 1, birth_year: record.birth_year, supplemental: true };
+        node = { id: record.id, name: record.name, gender: '男', dynasty_tier: familyId === 'family-2' ? '隋唐' : familyId === 'family-ming' ? '明' : '宋', degree: 1, birth_year: record.birth_year, supplemental: true };
         NODES.push(node); nodeById[id] = node;
       }
       Object.keys(record).forEach(function (key) {
@@ -422,6 +453,8 @@
       computeSongFamilyRoles(FAMILY_DATA.edges || []);
     } else if (family.id === 'family-2') {
       computeTangFamilyRoles();
+    } else if (family.id === 'family-ming') {
+      computeMingFamilyRoles();
     }
     var seenPairs = {};
     activeEdges = (FAMILY_DATA.edges || []).filter(function (e) {
@@ -607,6 +640,25 @@
       });
       window.__hfnTangTree.parent = tree.parent;
       window.__hfnTangTree.assertions = { mode: 'tree', failures: tangFailures, pass: !tangFailures.length };
+    } else if (familyMode === 'family-ming' && window.__hfnMingTree) {
+      var mingFailures = [];
+      Object.keys(tree.byId).forEach(function (id) {
+        var node = tree.byId[id];
+        if (window.__hfnMingTree.nodes[id]) {
+          window.__hfnMingTree.nodes[id].x = node.x;
+          window.__hfnMingTree.nodes[id].y = node.y;
+        }
+      });
+      Object.keys(window.__hfnMingTree.expected || {}).forEach(function (id) {
+        var emperor = tree.byId[id];
+        if (!emperor || !isFinite(emperor.x) || !isFinite(emperor.y)) mingFailures.push('missing:' + id);
+      });
+      Object.keys(tree.parent).forEach(function (child) {
+        var parentNode = tree.byId[tree.parent[child]], childNode = tree.byId[child];
+        if (parentNode && childNode && childNode.y < parentNode.y) mingFailures.push('direction:' + child);
+      });
+      window.__hfnMingTree.parent = tree.parent;
+      window.__hfnMingTree.assertions = { mode: 'tree', failures: mingFailures, pass: !mingFailures.length };
     }
   }
 
@@ -643,10 +695,13 @@
 
   function layoutFamily() {
     if (!activeNodes.length) return;
-    if (familyMode === 'family-1' || familyMode === 'family-2') {
-      var songTree = buildSongHierarchy(familyMode === 'family-2' ? '13059' : '9001', familyMode === 'family-2' ? ['13059'] : ['9001', '9002']);
+    if (familyMode === 'family-1' || familyMode === 'family-2' || familyMode === 'family-ming') {
+      var treeAnchor = familyMode === 'family-1' ? '9001' : familyMode === 'family-2' ? '13059' : '30148';
+      var cohort = familyMode === 'family-1' ? ['9001', '9002'] : [treeAnchor];
+      var songTree = buildSongHierarchy(treeAnchor, cohort);
       if (familyMode === 'family-1') window.__hfnSongTree.parent = songTree.parent;
-      else window.__hfnTangTree.parent = songTree.parent;
+      else if (familyMode === 'family-2') window.__hfnTangTree.parent = songTree.parent;
+      else window.__hfnMingTree.parent = songTree.parent;
       if (familyMode === 'family-1') window.__hfnSongTree.layoutMode = familyLayoutMode;
       if (familyLayoutMode === 'radial' && familyMode === 'family-1') layoutSongRadial(songTree); else layoutSongTree(songTree);
       fitToActive(); dirty = true; render(); return;
