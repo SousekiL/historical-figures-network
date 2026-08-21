@@ -43,6 +43,7 @@
   // 标签滑杆档位文案与度数阈值（阈值在加载数据后按分位数计算）
   var LABEL_LEVEL_NAMES = ['无', '极少', '较少', '中等', '较多', '尽量多'];
   var LABEL_LEVEL_PCT = [Infinity, 0.995, 0.98, 0.92, 0.75, 1]; // 0 档永远不显示
+  var FAMILY_LABEL_LIMITS = [0, 8, 24, 60, 120, Infinity];
 
   var $ = function (id) { return document.getElementById(id); };
 
@@ -403,10 +404,14 @@
       return true;
     });
     familyLabelSet = {};
-    activeNodes.slice().sort(function (a, b) { return (b.degree || 0) - (a.degree || 0); })
-      .slice(0, Math.min(28, activeNodes.length)).forEach(function (n) {
+    activeNodes.slice().sort(function (a, b) {
+      return Number(!!b.is_emperor) - Number(!!a.is_emperor) ||
+        (b.degree || 0) - (a.degree || 0);
+    }).forEach(function (n, index) {
+      n._familyLabelRank = index;
+      if (index >= Math.min(FAMILY_LABEL_LIMITS[2], activeNodes.length)) return;
         familyLabelSet[String(n.id)] = true;
-      });
+    });
     focus = null;
     updateFamilyLayoutToggle();
     updateStats();
@@ -1119,7 +1124,11 @@
         if (!familyMode && drawn > 4000) break; // 单帧标签上限，保证流畅
         var m = activeNodes[k];
         if ((m.degree || 0) < thr) continue; // 度数不足不显示
-        if (familyMode && activeNodes.length > 36 && !familyLabelSet[String(m.id)] && !m.is_emperor) continue;
+        if (familyMode) {
+          var familyLimit = FAMILY_LABEL_LIMITS[labelLevel];
+          if (familyLimit === 0) continue;
+          if (!m.is_emperor && (m._familyLabelRank == null || m._familyLabelRank >= familyLimit)) continue;
+        }
         var lx = sx(m.x), ly = sy(m.y);
         if (lx < 4 || lx > W - 40 || ly < 8 || ly > H - 8) continue;
         var ck = Math.floor(lx / cellW) + '_' + Math.floor(ly / cellH);
@@ -1139,6 +1148,7 @@
         ctx.strokeText(labelText, lx + 5, ly);
         ctx.fillText(labelText, lx + 5, ly);
       }
+      window.__hfnLastLabelCount = drawn;
       ctx.globalAlpha = 1;
     }
   }
