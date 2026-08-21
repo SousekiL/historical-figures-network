@@ -1233,23 +1233,15 @@
       ctx.textAlign = 'left';
       ctx.textBaseline = 'middle';
       var drawn = 0;
-      for (var k = 0; k < activeNodes.length; k++) {
-        if (!familyMode && drawn > 4000) break; // 单帧标签上限，保证流畅
-        var m = activeNodes[k];
-        if ((m.degree || 0) < thr) continue; // 度数不足不显示
-        if (familyMode) {
-          var familyLimit = FAMILY_LABEL_LIMITS[labelLevel];
-          if (familyLimit === 0) continue;
-          if (!m.is_emperor && (m._familyLabelRank == null || m._familyLabelRank >= familyLimit)) continue;
-        }
+      var darkTheme = document.body.classList.contains('dark');
+      function drawLabel(m) {
         var lx = sx(m.x), ly = sy(m.y);
-        if (lx < 4 || lx > W - 40 || ly < 8 || ly > H - 8) continue;
+        if (lx < 4 || lx > W - 40 || ly < 8 || ly > H - 8) return false;
         var ck = Math.floor(lx / cellW) + '_' + Math.floor(ly / cellH);
-        if (occupied[ck]) continue;
+        if (occupied[ck]) return false;
         occupied[ck] = true;
         drawn++;
         ctx.globalAlpha = focus && !focusNb[String(m.id)] ? 0.3 : 0.9;
-        var darkTheme = document.body.classList.contains('dark');
         // 暗色主题使用暖白而非纯白，并加背景描边，避免标签融入节点与边。
         ctx.fillStyle = darkTheme ? '#f4ead5' : '#2b2f35';
         if (m.is_emperor && familyMode) ctx.fillStyle = '#f6d779';
@@ -1260,6 +1252,41 @@
         var labelText = m.is_emperor && m.temple_name ? m.temple_name : m.name;
         ctx.strokeText(labelText, lx + 5, ly);
         ctx.fillText(labelText, lx + 5, ly);
+        return true;
+      }
+      if (familyMode) {
+        var familyLimit = FAMILY_LABEL_LIMITS[labelLevel];
+        if (familyLimit !== 0) {
+          // 第一轮：所有皇帝庙号/谥号（仅视口裁剪，不参与防重叠，保证全量显示）
+          activeNodes.forEach(function (m) {
+            if (!m.is_emperor) return;
+            var lx = sx(m.x), ly = sy(m.y);
+            if (lx < 4 || lx > W - 40 || ly < 8 || ly > H - 8) return;
+            var ck = Math.floor(lx / cellW) + '_' + Math.floor(ly / cellH);
+            occupied[ck] = true; // 占位，让普通亲属标签避让
+            drawn++;
+            ctx.globalAlpha = focus && !focusNb[String(m.id)] ? 0.3 : 0.9;
+            ctx.fillStyle = '#f6d779';
+            ctx.strokeStyle = darkTheme ? '#05070b' : '#fafafa';
+            ctx.lineWidth = 3;
+            var labelText = m.temple_name || m.name;
+            ctx.strokeText(labelText, lx + 5, ly);
+            ctx.fillText(labelText, lx + 5, ly);
+          });
+          // 第二轮：普通亲属标签（受密度档位 + 防重叠限制）
+          activeNodes.forEach(function (m) {
+            if (m.is_emperor) return;
+            if (m._familyLabelRank == null || m._familyLabelRank >= familyLimit) return;
+            drawLabel(m);
+          });
+        }
+      } else {
+        for (var k = 0; k < activeNodes.length; k++) {
+          if (drawn > 4000) break; // 单帧标签上限，保证流畅
+          var m = activeNodes[k];
+          if ((m.degree || 0) < thr) continue; // 度数不足不显示
+          drawLabel(m);
+        }
       }
       window.__hfnLastLabelCount = drawn;
       ctx.globalAlpha = 1;
