@@ -60,6 +60,7 @@
   var activeRelGroups = {};// 关系大类 -> bool
   var FAMILY_DATA = null;
   var SONG_TREE_DATA = null;
+  var TANG_TREE_DATA = null;
   var familyMode = '';
   // Ship the verified hierarchical tree first. The radial prototype remains
   // internal until its generation rings and label collisions are production-ready.
@@ -122,10 +123,14 @@
           FAMILY_DATA = f;
           return Promise.all([
             fetch('data/royal_houses.json').then(function (r) { return r.json(); }),
-            fetch('data/royal_tree_song.json').then(function (r) { return r.json(); })
+            fetch('data/royal_tree_song.json').then(function (r) { return r.json(); }),
+            fetch('data/royal_houses_tang.json').then(function (r) { return r.json(); }),
+            fetch('data/royal_tree_tang.json').then(function (r) { return r.json(); })
           ]).then(function (payloads) {
             FAMILY_DATA = applyRoyalSupplement(FAMILY_DATA, payloads[0]);
             SONG_TREE_DATA = payloads[1];
+            TANG_TREE_DATA = payloads[3];
+            FAMILY_DATA = applyRoyalSupplement(FAMILY_DATA, payloads[2]);
           });
         }).then(function () {
           buildFamilySelect();
@@ -147,6 +152,38 @@
       n.anchor_distance = record.anchor_distance;
       n.anchor_id = record.anchor_id;
     });
+  }
+
+  function applyTangTreeData() {
+    if (!TANG_TREE_DATA || !TANG_TREE_DATA.nodes) return;
+    activeNodes.forEach(function (n) {
+      var record = TANG_TREE_DATA.nodes[String(n.id)];
+      if (!record) return;
+      n.generation = record.generation; n.family_role = record.family_role;
+      n.anchor_distance = record.anchor_distance; n.anchor_id = record.anchor_id;
+      if (record.is_emperor) n.is_emperor = true;
+      if (record.temple_name) n.temple_name = record.temple_name;
+    });
+    window.__hfnTangTree = {
+      anchor: 13059,
+      generation: {},
+      expected: TANG_TREE_DATA.expected_emperor_generations || {},
+      nodes: {}
+    };
+    activeNodes.forEach(function (n) {
+      window.__hfnTangTree.generation[String(n.id)] = n.generation;
+      window.__hfnTangTree.nodes[String(n.id)] = {
+        generation: n.generation,
+        family_role: n.family_role,
+        anchor_id: n.anchor_id,
+        is_emperor: !!n.is_emperor
+      };
+    });
+  }
+
+  function computeTangFamilyRoles() {
+    if (TANG_TREE_DATA && TANG_TREE_DATA.nodes) { applyTangTreeData(); return; }
+    activeNodes.forEach(function (n) { n.generation = 0; n.family_role = n.is_emperor ? 'core' : 'affinal'; });
   }
 
   function computeSongFamilyRoles(familyEdges) {
@@ -260,49 +297,29 @@
 
   function applyRoyalSupplement(families, royal) {
     if (!royal || !royal.members) return families;
-    var song = families.families.filter(function (f) { return f.id === 'family-1'; })[0];
-    if (!song) return families;
-    (royal.family_labels ? Object.keys(royal.family_labels) : []).forEach(function (familyId) {
-      var item = families.families.filter(function (f) { return f.id === familyId; })[0];
-      if (item) item.label = royal.family_labels[familyId];
-    });
-    song.label = royal.house || '宋朝皇室赵氏家族';
+    var familyId = royal.family_id || (royal.house && royal.house.indexOf('唐') >= 0 ? 'family-2' : 'family-1');
+    var houseFamily = families.families.filter(function (f) { return f.id === familyId; })[0];
+    if (!houseFamily) return families;
+    houseFamily.label = royal.house || houseFamily.label;
     var existingMembers = {};
-    song.members = song.members || [];
-    song.members.forEach(function (id) { existingMembers[String(id)] = true; });
+    houseFamily.members = houseFamily.members || [];
+    houseFamily.members.forEach(function (id) { existingMembers[String(id)] = true; });
     var royalPeople = royal.members.concat(royal.supplemental_people || []);
     royalPeople.forEach(function (record) {
-      var id = String(record.id);
-      var node = nodeById[id];
-      if (!node && record.supplemental) {
-        node = {
-          id: record.id,
-          name: record.name,
-          gender: '男',
-          dynasty_tier: '宋',
-          degree: 1,
-          birth_year: record.birth_year,
-          supplemental: true
-        };
-        NODES.push(node);
-        nodeById[id] = node;
+      var id = String(record.id), node = nodeById[id];
+      if (!node) {
+        node = { id: record.id, name: record.name, gender: '男', dynasty_tier: familyId === 'family-2' ? '隋唐' : '宋', degree: 1, birth_year: record.birth_year, supplemental: true };
+        NODES.push(node); nodeById[id] = node;
       }
-      if (!node) return;
       Object.keys(record).forEach(function (key) {
-        if (key !== 'id' && key !== 'parent_ids' && key !== 'source_note') node[key] = record[key];
+        if (key !== 'id' && key !== 'parent_ids' && key !== 'spouse_of' && key !== 'source_note') node[key] = record[key];
       });
-      if (!existingMembers[id]) {
-        song.members.push(record.id);
-        existingMembers[id] = true;
-      }
+      if (!existingMembers[id]) { houseFamily.members.push(record.id); existingMembers[id] = true; }
     });
     families.edges = families.edges || [];
     (royal.relationships || []).forEach(function (relationship) {
       if (!nodeById[String(relationship.source)] || !nodeById[String(relationship.target)]) return;
-      var exists = families.edges.some(function (e) {
-        return String(e.source) === String(relationship.source) &&
-          String(e.target) === String(relationship.target);
-      });
+      var exists = families.edges.some(function (e) { return String(e.source) === String(relationship.source) && String(e.target) === String(relationship.target); });
       if (!exists) families.edges.push(Object.assign({ supplemental: true }, relationship));
     });
     return families;
@@ -403,6 +420,8 @@
     if (family.id === 'family-1') {
       applySongTreeData();
       computeSongFamilyRoles(FAMILY_DATA.edges || []);
+    } else if (family.id === 'family-2') {
+      computeTangFamilyRoles();
     }
     var seenPairs = {};
     activeEdges = (FAMILY_DATA.edges || []).filter(function (e) {
@@ -446,7 +465,9 @@
     });
   }
 
-  function buildSongHierarchy() {
+  function buildSongHierarchy(anchorId, cohortIds) {
+    anchorId = String(anchorId || '9001');
+    cohortIds = cohortIds || ['9001', '9002'];
     var byId = {}, core = [], parent = {}, children = {};
     activeNodes.forEach(function (n) {
       byId[String(n.id)] = n;
@@ -459,24 +480,19 @@
       var source = String(e.source), target = String(e.target);
       var a = byId[source], b = byId[target];
       if (!a || !b || a.family_role !== 'core' || b.family_role !== 'core') return;
-      if (e.direction !== 'ancestor' || Number(e.generation_gap) !== 1 || source === '9001' && target === '9002') return;
+      if (e.direction !== 'ancestor' || Number(e.generation_gap) !== 1 || (cohortIds.indexOf(source) >= 0 && cohortIds.indexOf(target) >= 0)) return;
       if (b.generation !== a.generation + 1 || parent[target]) return;
       parent[target] = source;
     });
     core.forEach(function (n) {
       var id = String(n.id);
-      if (id === '9001' || id === '9002') delete parent[id];
+      if (cohortIds.indexOf(id) >= 0 && id !== anchorId) delete parent[id];
       if (parent[id]) (children[parent[id]] || (children[parent[id]] = [])).push(id);
     });
-    Object.keys(children).forEach(function (id) {
-      children[id].sort(function (a, b) {
-        var na = byId[a], nb = byId[b];
-        return (na.generation - nb.generation) || ((na.birth_year || 99999) - (nb.birth_year || 99999)) || (Number(a) - Number(b));
-      });
-    });
+    Object.keys(children).forEach(function (id) { children[id].sort(function (a, b) { return Number(a) - Number(b); }); });
     var roots = core.filter(function (n) { return !parent[String(n.id)]; });
-    roots.sort(function (a, b) { return String(a.id) === '9001' ? -1 : String(b.id) === '9001' ? 1 : (a.generation - b.generation) || (a.id - b.id); });
-    return { byId: byId, core: core, parent: parent, children: children, roots: roots };
+    roots.sort(function (a, b) { return String(a.id) === anchorId ? -1 : String(b.id) === anchorId ? 1 : (a.generation - b.generation) || (a.id - b.id); });
+    return { byId: byId, core: core, parent: parent, children: children, roots: roots, anchorId: anchorId };
   }
 
   function assertSongCoordinates(tree, mode) {
@@ -558,7 +574,7 @@
           (String(e.target) === id ? tree.byId[String(e.source)] : null);
         if (other && (other.family_role === 'core' || other.is_emperor)) anchor = other;
       }
-      anchor = anchor || tree.byId['9001'];
+      anchor = anchor || tree.byId[tree.anchorId];
       var side = i % 2 ? 1 : -1;
       var offset = side * aspect * (n.family_role === 'spouse' ? 0.018 : 0.036 + (i % 3) * 0.008);
       n.x = anchor.x + offset;
@@ -568,9 +584,30 @@
       var a = tree.byId[String(e.source)], b = tree.byId[String(e.target)];
       e._familyStructural = !!(a && b && tree.parent[String(b.id)] === String(a.id));
     });
-    window.__hfnSongTree.succession = SONG_SUCCESSION.slice();
-    syncSongDebugCoordinates(tree);
-    assertSongCoordinates(tree, 'tree');
+    if (familyMode === 'family-1') {
+      window.__hfnSongTree.succession = SONG_SUCCESSION.slice();
+      syncSongDebugCoordinates(tree);
+      assertSongCoordinates(tree, 'tree');
+    } else if (familyMode === 'family-2' && window.__hfnTangTree) {
+      var tangFailures = [];
+      Object.keys(tree.byId).forEach(function (id) {
+        var node = tree.byId[id];
+        if (window.__hfnTangTree.nodes[id]) {
+          window.__hfnTangTree.nodes[id].x = node.x;
+          window.__hfnTangTree.nodes[id].y = node.y;
+        }
+      });
+      Object.keys(window.__hfnTangTree.expected || {}).forEach(function (id) {
+        var emperor = tree.byId[id];
+        if (!emperor || !isFinite(emperor.x) || !isFinite(emperor.y)) tangFailures.push('missing:' + id);
+      });
+      Object.keys(tree.parent).forEach(function (child) {
+        var parentNode = tree.byId[tree.parent[child]], childNode = tree.byId[child];
+        if (parentNode && childNode && childNode.y < parentNode.y) tangFailures.push('direction:' + child);
+      });
+      window.__hfnTangTree.parent = tree.parent;
+      window.__hfnTangTree.assertions = { mode: 'tree', failures: tangFailures, pass: !tangFailures.length };
+    }
   }
 
   function layoutSongRadial(tree) {
@@ -606,15 +643,13 @@
 
   function layoutFamily() {
     if (!activeNodes.length) return;
-    if (familyMode === 'family-1') {
-      var songTree = buildSongHierarchy();
-      window.__hfnSongTree.parent = songTree.parent;
-      window.__hfnSongTree.layoutMode = familyLayoutMode;
-      if (familyLayoutMode === 'radial') layoutSongRadial(songTree); else layoutSongTree(songTree);
-      fitToActive();
-      dirty = true;
-      render();
-      return;
+    if (familyMode === 'family-1' || familyMode === 'family-2') {
+      var songTree = buildSongHierarchy(familyMode === 'family-2' ? '13059' : '9001', familyMode === 'family-2' ? ['13059'] : ['9001', '9002']);
+      if (familyMode === 'family-1') window.__hfnSongTree.parent = songTree.parent;
+      else window.__hfnTangTree.parent = songTree.parent;
+      if (familyMode === 'family-1') window.__hfnSongTree.layoutMode = familyLayoutMode;
+      if (familyLayoutMode === 'radial' && familyMode === 'family-1') layoutSongRadial(songTree); else layoutSongTree(songTree);
+      fitToActive(); dirty = true; render(); return;
     }
     var byId = {};
     activeNodes.forEach(function (n) {

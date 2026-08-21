@@ -1,0 +1,730 @@
+{
+  "anchor": 13059,
+  "expected_emperor_generations": {
+    "13059": 0,
+    "13060": 1,
+    "19241": 2,
+    "93663": 2,
+    "19242": 3,
+    "19243": 3,
+    "92998": 4,
+    "19244": 4,
+    "19245": 5,
+    "19246": 6,
+    "19247": 7,
+    "447735": 8,
+    "166933": 9,
+    "189264": 10,
+    "-20001": 11,
+    "-20002": 11,
+    "-20003": 11,
+    "19254": 12,
+    "93105": 13,
+    "-20004": 14,
+    "189298": 14,
+    "339634": 15
+  },
+  "nodes": {
+    "-20004": {
+      "id": -20004,
+      "name": "李儇",
+      "generation": 14,
+      "family_role": "core",
+      "anchor_distance": 12,
+      "anchor_id": -20004,
+      "temple_name": "唐僖宗",
+      "reign_start": 873,
+      "reign_end": 888,
+      "is_emperor": true
+    },
+    "-20003": {
+      "id": -20003,
+      "name": "李炎",
+      "generation": 11,
+      "family_role": "core",
+      "anchor_distance": 11,
+      "anchor_id": -20003,
+      "temple_name": "唐武宗",
+      "reign_start": 840,
+      "reign_end": 846,
+      "is_emperor": true
+    },
+    "-20002": {
+      "id": -20002,
+      "name": "李昂",
+      "generation": 11,
+      "family_role": "core",
+      "anchor_distance": 11,
+      "anchor_id": -20002,
+      "temple_name": "唐文宗",
+      "reign_start": 827,
+      "reign_end": 840,
+      "is_emperor": true
+    },
+    "-20001": {
+      "id": -20001,
+      "name": "李湛",
+      "generation": 11,
+      "family_role": "core",
+      "anchor_distance": 11,
+      "anchor_id": -20001,
+      "temple_name": "唐敬宗",
+      "reign_start": 824,
+      "reign_end": 826,
+      "is_emperor": true
+    },
+    "13059": {
+      "id": 13059,
+      "name": "李淵（唐高祖）",
+      "generation": 0,
+      "family_role": "core",
+      "anchor_distance": 0,
+      "anchor_id": 13059,
+      "temple_name": "唐高祖",
+      "reign_start": 618,
+      "reign_end": 626,
+      "is_emperor": true
+    },
+    "13060": {
+      "id": 13060,
+      "name": "李世民（唐太宗）",
+      "generation": 1,
+      "family_role": "core",
+      "anchor_distance": 1,
+      "anchor_id": 13060,
+      "temple_name": "唐太宗",
+      "reign_start": 626,
+      "reign_end": 649,
+      "is_emperor": true
+    },
+    "16630": {
+      "id": 16630,
+      "name": "劉德威",
+      "generation": 1,
+      "family_role": "affinal",
+      "anchor_distance": 6,
+      "anchor_id": 339631
+    },
+    "19241": {
+      "id": 19241,
+      "name": "李治（唐高宗）",
+      "generation": 2,
+      "family_role": "core",
+      "anchor_distance": 2,
+      "anchor_id": 19241,
+      "temple_name": "唐高宗",
+      "reign_start": 649,
+      "reign_end": 683,
+      "is_emperor": true
+    },
+    "19242": {
+      "id": 19242,
+      "name": "李顯（唐中宗）",
+      "generation": 3,
+      "family_role": "core",
+      "anchor_distance": 2,
+      "anchor_id": 19242,
+      "temple_name": "唐中宗",
+      "reign_start": 684,
+      "reign_end": 710,
+      "is_emperor": true
+    },
+    "19243": {
+      "id": 19243,
+      "name": "李旦（唐睿宗）",
+      "generation": 3,
+      "family_role": "core",
+      "anchor_distance": 3,
+      "anchor_id": 19243,
+      "temple_name": "唐睿宗",
+      "reign_start": 684,
+      "reign_end": 712,
+      "is_emperor": true
+    },
+    "19244": {
+      "id": 19244,
+      "name": "李隆基（唐玄宗）",
+      "generation": 4,
+      "family_role": "core",
+      "anchor_distance": 4,
+      "anchor_id": 19244,
+      "temple_name": "唐玄宗",
+      "reign_start": 712,
+      "reign_end": 756,
+      "is_emperor": true
+    },
+    "19245": {
+      "id": 19245,
+      "name": "李亨（唐肅宗）",
+      "generation": 5,
+      "family_role": "core",
+      "anchor_distance": 5,
+      "anchor_id": 19245,
+      "temple_name": "唐肅宗",
+      "reign_start": 756,
+      "reign_end": 762,
+      "is_emperor": true
+    },
+    "19246": {
+      "id": 19246,
+      "name": "李豫（唐代宗）",
+      "generation": 6,
+      "family_role": "core",
+      "anchor_distance": 6,
+      "anchor_id": 19246,
+      "temple_name": "唐代宗",
+      "reign_start": 762,
+      "reign_end": 779,
+      "is_emperor": true
+    },
+    "19247": {
+      "id": 19247,
+      "name": "李适（唐德宗）",
+      "generation": 7,
+      "family_role": "core",
+      "anchor_distance": 7,
+      "anchor_id": 19247,
+      "temple_name": "唐德宗",
+      "reign_start": 779,
+      "reign_end": 805,
+      "is_emperor": true
+    },
+    "19254": {
+      "id": 19254,
+      "name": "李忱（唐宣宗）",
+      "generation": 12,
+      "family_role": "core",
+      "anchor_distance": 10,
+      "anchor_id": 19254,
+      "temple_name": "唐宣宗",
+      "reign_start": 846,
+      "reign_end": 859,
+      "is_emperor": true
+    },
+    "31066": {
+      "id": 31066,
+      "name": "長孫氏（李世民妻）",
+      "generation": 1,
+      "family_role": "spouse",
+      "anchor_distance": 3,
+      "anchor_id": 19241
+    },
+    "31176": {
+      "id": 31176,
+      "name": "李元吉",
+      "generation": 1,
+      "family_role": "core",
+      "anchor_distance": 1,
+      "anchor_id": 31176
+    },
+    "31212": {
+      "id": 31212,
+      "name": "楊氏（元獻皇后）",
+      "generation": 4,
+      "family_role": "spouse",
+      "anchor_distance": 6,
+      "anchor_id": 19245
+    },
+    "31303": {
+      "id": 31303,
+      "name": "李元嘉",
+      "generation": 1,
+      "family_role": "core",
+      "anchor_distance": 1,
+      "anchor_id": 31303
+    },
+    "31304": {
+      "id": 31304,
+      "name": "李譔",
+      "generation": 2,
+      "family_role": "core",
+      "anchor_distance": 2,
+      "anchor_id": 31304
+    },
+    "31546": {
+      "id": 31546,
+      "name": "楊氏（武士彠妻）",
+      "generation": 1,
+      "family_role": "spouse",
+      "anchor_distance": 4,
+      "anchor_id": 93663
+    },
+    "32010": {
+      "id": 32010,
+      "name": "竇氏（昭成皇后）",
+      "generation": 3,
+      "family_role": "spouse",
+      "anchor_distance": 5,
+      "anchor_id": 19244
+    },
+    "32522": {
+      "id": 32522,
+      "name": "李氏（和政公主）",
+      "generation": 6,
+      "family_role": "core",
+      "anchor_distance": 6,
+      "anchor_id": 32522
+    },
+    "92870": {
+      "id": 92870,
+      "name": "李元軌",
+      "generation": 1,
+      "family_role": "core",
+      "anchor_distance": 1,
+      "anchor_id": 92870
+    },
+    "92959": {
+      "id": 92959,
+      "name": "李賢",
+      "generation": 3,
+      "family_role": "core",
+      "anchor_distance": 2,
+      "anchor_id": 92959
+    },
+    "92998": {
+      "id": 92998,
+      "name": "李重茂",
+      "generation": 4,
+      "family_role": "core",
+      "anchor_distance": 3,
+      "anchor_id": 92998,
+      "temple_name": "唐殤帝",
+      "reign_start": 710,
+      "reign_end": 710,
+      "is_emperor": true
+    },
+    "93013": {
+      "id": 93013,
+      "name": "李泰",
+      "generation": 2,
+      "family_role": "core",
+      "anchor_distance": 2,
+      "anchor_id": 93013
+    },
+    "93105": {
+      "id": 93105,
+      "name": "李漼",
+      "generation": 13,
+      "family_role": "core",
+      "anchor_distance": 11,
+      "anchor_id": 93105,
+      "temple_name": "唐懿宗",
+      "reign_start": 859,
+      "reign_end": 873,
+      "is_emperor": true
+    },
+    "93663": {
+      "id": 93663,
+      "name": "武曌（武則天）",
+      "generation": 2,
+      "family_role": "core",
+      "anchor_distance": 3,
+      "anchor_id": 93663,
+      "temple_name": "武則天",
+      "reign_start": 690,
+      "reign_end": 705,
+      "is_emperor": true
+    },
+    "139916": {
+      "id": 139916,
+      "name": "薛氏（薛紹女）",
+      "generation": 4,
+      "family_role": "spouse",
+      "anchor_distance": 4,
+      "anchor_id": 444850
+    },
+    "140204": {
+      "id": 140204,
+      "name": "李仙蕙（永泰公主）",
+      "generation": 4,
+      "family_role": "core",
+      "anchor_distance": 1,
+      "anchor_id": 140204
+    },
+    "140340": {
+      "id": 140340,
+      "name": "李貞",
+      "generation": 2,
+      "family_role": "core",
+      "anchor_distance": 1,
+      "anchor_id": 140340
+    },
+    "141062": {
+      "id": 141062,
+      "name": "李氏（唐玄宗孫女）",
+      "generation": 2,
+      "family_role": "affinal",
+      "anchor_distance": 5,
+      "anchor_id": 19244
+    },
+    "141444": {
+      "id": 141444,
+      "name": "李纁",
+      "generation": 9,
+      "family_role": "affinal",
+      "anchor_distance": 8,
+      "anchor_id": 19247
+    },
+    "142921": {
+      "id": 142921,
+      "name": "李訥",
+      "generation": 2,
+      "family_role": "core",
+      "anchor_distance": 2,
+      "anchor_id": 142921
+    },
+    "145494": {
+      "id": 145494,
+      "name": "李洪",
+      "generation": 5,
+      "family_role": "core",
+      "anchor_distance": 4,
+      "anchor_id": 145494
+    },
+    "150959": {
+      "id": 150959,
+      "name": "李守禮",
+      "generation": 4,
+      "family_role": "core",
+      "anchor_distance": 3,
+      "anchor_id": 150959
+    },
+    "151339": {
+      "id": 151339,
+      "name": "李沖",
+      "generation": 3,
+      "family_role": "core",
+      "anchor_distance": 2,
+      "anchor_id": 151339
+    },
+    "166933": {
+      "id": 166933,
+      "name": "李純（唐憲宗）",
+      "generation": 9,
+      "family_role": "core",
+      "anchor_distance": 9,
+      "anchor_id": 166933,
+      "temple_name": "唐憲宗",
+      "reign_start": 806,
+      "reign_end": 820,
+      "is_emperor": true
+    },
+    "187923": {
+      "id": 187923,
+      "name": "李建成",
+      "generation": 0,
+      "family_role": "affinal",
+      "anchor_distance": null,
+      "anchor_id": null
+    },
+    "187928": {
+      "id": 187928,
+      "name": "李元景",
+      "generation": 1,
+      "family_role": "core",
+      "anchor_distance": 1,
+      "anchor_id": 187928
+    },
+    "188063": {
+      "id": 188063,
+      "name": "李靈夔",
+      "generation": 1,
+      "family_role": "core",
+      "anchor_distance": 1,
+      "anchor_id": 188063
+    },
+    "188233": {
+      "id": 188233,
+      "name": "李元嬰",
+      "generation": 0,
+      "family_role": "affinal",
+      "anchor_distance": null,
+      "anchor_id": null
+    },
+    "188867": {
+      "id": 188867,
+      "name": "李上金",
+      "generation": 0,
+      "family_role": "affinal",
+      "anchor_distance": null,
+      "anchor_id": null
+    },
+    "188879": {
+      "id": 188879,
+      "name": "李素節",
+      "generation": 3,
+      "family_role": "core",
+      "anchor_distance": 5,
+      "anchor_id": 188879
+    },
+    "188880": {
+      "id": 188880,
+      "name": "李琪",
+      "generation": 4,
+      "family_role": "core",
+      "anchor_distance": 6,
+      "anchor_id": 188880
+    },
+    "188925": {
+      "id": 188925,
+      "name": "李重俊",
+      "generation": 4,
+      "family_role": "core",
+      "anchor_distance": 3,
+      "anchor_id": 188925
+    },
+    "188968": {
+      "id": 188968,
+      "name": "李琳",
+      "generation": 5,
+      "family_role": "core",
+      "anchor_distance": 5,
+      "anchor_id": 188968
+    },
+    "189077": {
+      "id": 189077,
+      "name": "李璘",
+      "generation": 5,
+      "family_role": "core",
+      "anchor_distance": 5,
+      "anchor_id": 189077
+    },
+    "189147": {
+      "id": 189147,
+      "name": "李倓",
+      "generation": 6,
+      "family_role": "core",
+      "anchor_distance": 6,
+      "anchor_id": 189147
+    },
+    "189264": {
+      "id": 189264,
+      "name": "李恆（唐穆宗）",
+      "generation": 10,
+      "family_role": "core",
+      "anchor_distance": 10,
+      "anchor_id": 189264,
+      "temple_name": "唐穆宗",
+      "reign_start": 821,
+      "reign_end": 824,
+      "is_emperor": true
+    },
+    "189298": {
+      "id": 189298,
+      "name": "李曄（唐昭宗）",
+      "generation": 14,
+      "family_role": "core",
+      "anchor_distance": 12,
+      "anchor_id": 189298,
+      "temple_name": "唐昭宗",
+      "reign_start": 888,
+      "reign_end": 904,
+      "is_emperor": true
+    },
+    "339626": {
+      "id": 339626,
+      "name": "李弘",
+      "generation": 3,
+      "family_role": "core",
+      "anchor_distance": 3,
+      "anchor_id": 339626
+    },
+    "339631": {
+      "id": 339631,
+      "name": "李憲（唐讓皇帝）",
+      "generation": 4,
+      "family_role": "core",
+      "anchor_distance": 4,
+      "anchor_id": 339631
+    },
+    "339634": {
+      "id": 339634,
+      "name": "李柷（唐哀宗）",
+      "generation": 15,
+      "family_role": "core",
+      "anchor_distance": 13,
+      "anchor_id": 339634,
+      "temple_name": "唐哀帝",
+      "reign_start": 904,
+      "reign_end": 907,
+      "is_emperor": true
+    },
+    "444817": {
+      "id": 444817,
+      "name": "韋氏（中宗韋后）",
+      "generation": 3,
+      "family_role": "spouse",
+      "anchor_distance": 4,
+      "anchor_id": 444827
+    },
+    "444827": {
+      "id": 444827,
+      "name": "李氏（長寧公主）",
+      "generation": 4,
+      "family_role": "core",
+      "anchor_distance": 3,
+      "anchor_id": 444827
+    },
+    "444850": {
+      "id": 444850,
+      "name": "李氏（太平公主）",
+      "generation": 3,
+      "family_role": "core",
+      "anchor_distance": 3,
+      "anchor_id": 444850
+    },
+    "444876": {
+      "id": 444876,
+      "name": "李氏（玉真公主）",
+      "generation": 4,
+      "family_role": "core",
+      "anchor_distance": 4,
+      "anchor_id": 444876
+    },
+    "444899": {
+      "id": 444899,
+      "name": "劉氏（肅明順聖皇后）",
+      "generation": 3,
+      "family_role": "spouse",
+      "anchor_distance": 5,
+      "anchor_id": 339631
+    },
+    "444934": {
+      "id": 444934,
+      "name": "李重潤",
+      "generation": 4,
+      "family_role": "core",
+      "anchor_distance": 3,
+      "anchor_id": 444934
+    },
+    "444948": {
+      "id": 444948,
+      "name": "蕭氏（高宗良娣）",
+      "generation": 2,
+      "family_role": "spouse",
+      "anchor_distance": 4,
+      "anchor_id": 188879
+    },
+    "445121": {
+      "id": 445121,
+      "name": "李氏（高密公主）",
+      "generation": 1,
+      "family_role": "core",
+      "anchor_distance": 1,
+      "anchor_id": 445121
+    },
+    "445211": {
+      "id": 445211,
+      "name": "李氏(李隆基女)",
+      "generation": 3,
+      "family_role": "core",
+      "anchor_distance": 5,
+      "anchor_id": 445211
+    },
+    "447275": {
+      "id": 447275,
+      "name": "李氏(李隆基女)",
+      "generation": 3,
+      "family_role": "core",
+      "anchor_distance": 5,
+      "anchor_id": 447275
+    },
+    "447292": {
+      "id": 447292,
+      "name": "李裹兒（安樂公主）",
+      "generation": 4,
+      "family_role": "core",
+      "anchor_distance": 3,
+      "anchor_id": 447292
+    },
+    "447735": {
+      "id": 447735,
+      "name": "李誦",
+      "generation": 8,
+      "family_role": "core",
+      "anchor_distance": 8,
+      "anchor_id": 447735,
+      "temple_name": "唐順宗",
+      "reign_start": 805,
+      "reign_end": 805,
+      "is_emperor": true
+    },
+    "448454": {
+      "id": 448454,
+      "name": "李蟲娘(李隆基女)",
+      "generation": 3,
+      "family_role": "core",
+      "anchor_distance": 5,
+      "anchor_id": 448454
+    },
+    "449420": {
+      "id": 449420,
+      "name": "李氏(李适女)",
+      "generation": 6,
+      "family_role": "core",
+      "anchor_distance": 8,
+      "anchor_id": 449420
+    },
+    "449499": {
+      "id": 449499,
+      "name": "李氏(李豫女)",
+      "generation": 5,
+      "family_role": "core",
+      "anchor_distance": 7,
+      "anchor_id": 449499
+    },
+    "449688": {
+      "id": 449688,
+      "name": "李氏(李豫女)",
+      "generation": 5,
+      "family_role": "core",
+      "anchor_distance": 7,
+      "anchor_id": 449688
+    },
+    "450146": {
+      "id": 450146,
+      "name": "李氏(李守禮女)",
+      "generation": 3,
+      "family_role": "core",
+      "anchor_distance": 4,
+      "anchor_id": 450146
+    },
+    "450208": {
+      "id": 450208,
+      "name": "李下玉（義陽公主）",
+      "generation": 3,
+      "family_role": "core",
+      "anchor_distance": 3,
+      "anchor_id": 450208
+    },
+    "450211": {
+      "id": 450211,
+      "name": "李氏(李豫女)",
+      "generation": 5,
+      "family_role": "core",
+      "anchor_distance": 7,
+      "anchor_id": 450211
+    },
+    "512517": {
+      "id": 512517,
+      "name": "李氏（唐太宗東陽公主）",
+      "generation": 2,
+      "family_role": "core",
+      "anchor_distance": 2,
+      "anchor_id": 512517
+    },
+    "512557": {
+      "id": 512557,
+      "name": "李祐",
+      "generation": 2,
+      "family_role": "core",
+      "anchor_distance": 2,
+      "anchor_id": 512557
+    }
+  },
+  "source": "data/families.json + data/network.json + data/royal_houses_tang.json",
+  "metadata": {
+    "family_id": "family-2",
+    "member_count": 76
+  }
+}
