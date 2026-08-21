@@ -371,18 +371,30 @@
     if (!select) return;
     select.innerHTML = '<option value="">不筛选家族</option>';
     if (!FAMILY_DATA || !FAMILY_DATA.families) return;
-    FAMILY_DATA.families.forEach(function (family) {
-      if (family.label.indexOf('皇室') < 0) {
-        var representative = (family.members || []).map(function (id) {
-          return nodeById[String(id)];
-        }).filter(Boolean).sort(function (a, b) {
-          return (b.degree || 0) - (a.degree || 0) || Number(a.id) - Number(b.id);
-        })[0];
-        if (representative) {
-          var representativeName = (representative.name || '').replace(/（[^）]*）|\([^)]*\)/g, '');
-          family.label = representativeName + '家族';
+    // 知名度兜底：CBDB 中 degree 偏低但家喻户晓的军事/忠义名人
+    var FAMOUS_FALLBACK = { '岳飛': true, '楊業': true };
+    var families = FAMILY_DATA.families.map(function (family) {
+      var members = family.members || [];
+      var maxDeg = 0, representativeName = '';
+      members.forEach(function (id) {
+        var nd = nodeById[String(id)];
+        if (nd && (nd.degree || 0) > maxDeg) {
+          maxDeg = nd.degree || 0;
+          representativeName = (nd.name || '').replace(/（[^）]*）|\([^)]*\)/g, '');
         }
-      }
+      });
+      var isRoyal = family.label.indexOf('皇室') >= 0;
+      var keep = isRoyal || members.length >= 15 || maxDeg >= 150 || !!FAMOUS_FALLBACK[representativeName];
+      return { family: family, count: members.length, maxDeg: maxDeg, isRoyal: isRoyal, keep: keep, representativeName: representativeName };
+    });
+    families = families.filter(function (f) { return f.keep; });
+    families.sort(function (a, b) {
+      if (a.isRoyal !== b.isRoyal) return a.isRoyal ? -1 : 1;
+      return b.count - a.count || b.maxDeg - a.maxDeg;
+    });
+    families.forEach(function (f) {
+      var family = f.family;
+      if (!f.isRoyal && f.representativeName) family.label = f.representativeName + '家族';
       var option = document.createElement('option');
       option.value = family.id;
       option.textContent = family.label;
