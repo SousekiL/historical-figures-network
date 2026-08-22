@@ -1,0 +1,1674 @@
+{
+  "house": "孔氏家族（孔子世家大宗草案）",
+  "family_id": "family-kong",
+  "anchor": "kong-15887",
+  "status": "draft",
+  "source_urls": [
+    "https://zh.wikipedia.org/wiki/孔子世家大宗世系",
+    "https://zh.wikisource.org/wiki/史記/卷047",
+    "https://zh.wikisource.org/wiki/漢書/卷053"
+  ],
+  "members": [
+    {
+      "id": "kong-15887",
+      "name": "孔丘（孔子）",
+      "generation": 0,
+      "family_role": "core",
+      "confidence": "identity",
+      "evidence_type": "CBDB + Wiki",
+      "source_id": 15887
+    },
+    {
+      "id": "kong-g01",
+      "name": "孔鲤",
+      "generation": 1,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g02",
+      "name": "孔伋（子思）",
+      "generation": 2,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g03",
+      "name": "孔白",
+      "generation": 3,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g04",
+      "name": "孔求",
+      "generation": 4,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g05",
+      "name": "孔箕",
+      "generation": 5,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g06",
+      "name": "孔穿",
+      "generation": 6,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g07",
+      "name": "孔谦",
+      "generation": 7,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g08",
+      "name": "孔腾",
+      "generation": 8,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g09",
+      "name": "孔忠",
+      "generation": 9,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g10",
+      "name": "孔武",
+      "generation": 10,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g11",
+      "name": "孔延年",
+      "generation": 11,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g12",
+      "name": "孔霸",
+      "generation": 12,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g13",
+      "name": "孔福",
+      "generation": 13,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g14",
+      "name": "孔房",
+      "generation": 14,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g15",
+      "name": "孔均",
+      "generation": 15,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g16",
+      "name": "孔志",
+      "generation": 16,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g17",
+      "name": "孔损",
+      "generation": 17,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g18",
+      "name": "孔曜",
+      "generation": 18,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g19",
+      "name": "孔完",
+      "generation": 19,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g20",
+      "name": "孔羨",
+      "generation": 20,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g21",
+      "name": "孔震",
+      "generation": 21,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g22",
+      "name": "孔嶷",
+      "generation": 22,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g23",
+      "name": "孔抚",
+      "generation": 23,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g24",
+      "name": "孔懿",
+      "generation": 24,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g25",
+      "name": "孔鲜",
+      "generation": 25,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g26",
+      "name": "孔乘",
+      "generation": 26,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g27",
+      "name": "孔灵珍",
+      "generation": 27,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g28",
+      "name": "孔文泰",
+      "generation": 28,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g29",
+      "name": "孔渠",
+      "generation": 29,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g30",
+      "name": "孔长孙",
+      "generation": 30,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g31",
+      "name": "孔英悊",
+      "generation": 31,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g32",
+      "name": "孔德伦",
+      "generation": 32,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g33",
+      "name": "孔崇基",
+      "generation": 33,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g34",
+      "name": "孔璲之",
+      "generation": 34,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g35",
+      "name": "孔萱",
+      "generation": 35,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g36",
+      "name": "孔齐卿",
+      "generation": 36,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g37",
+      "name": "孔惟晊",
+      "generation": 37,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g38",
+      "name": "孔策",
+      "generation": 38,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g39",
+      "name": "孔振",
+      "generation": 39,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g40",
+      "name": "孔昭俭",
+      "generation": 40,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g41",
+      "name": "孔光嗣",
+      "generation": 41,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g42",
+      "name": "孔仁玉",
+      "generation": 42,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g43",
+      "name": "孔宜",
+      "generation": 43,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g44",
+      "name": "孔延世",
+      "generation": 44,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g45",
+      "name": "孔圣佑",
+      "generation": 45,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g46",
+      "name": "孔宗愿",
+      "generation": 46,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g47",
+      "name": "孔若蒙",
+      "generation": 47,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g48",
+      "name": "孔端友",
+      "generation": 48,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g49",
+      "name": "孔玠",
+      "generation": 49,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g50",
+      "name": "孔搢",
+      "generation": 50,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g51",
+      "name": "孔文远",
+      "generation": 51,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g52",
+      "name": "孔万春",
+      "generation": 52,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g53",
+      "name": "孔洙",
+      "generation": 53,
+      "family_role": "core",
+      "confidence": "cbdb_match",
+      "evidence_type": "CBDB + Wiki",
+      "source_id": 100411
+    },
+    {
+      "id": "kong-g54",
+      "name": "孔思晦",
+      "generation": 54,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g55",
+      "name": "孔克坚",
+      "generation": 55,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g56",
+      "name": "孔希学",
+      "generation": 56,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g57",
+      "name": "孔讷",
+      "generation": 57,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g58",
+      "name": "孔公鉴",
+      "generation": 58,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g59",
+      "name": "孔彦缙",
+      "generation": 59,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g60",
+      "name": "孔承庆",
+      "generation": 60,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g61",
+      "name": "孔弘绪",
+      "generation": 61,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g62",
+      "name": "孔闻韶",
+      "generation": 62,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g63",
+      "name": "孔贞干",
+      "generation": 63,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g64",
+      "name": "孔尚贤",
+      "generation": 64,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g65",
+      "name": "孔胤植",
+      "generation": 65,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g66",
+      "name": "孔兴燮",
+      "generation": 66,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g67",
+      "name": "孔毓圻",
+      "generation": 67,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g68",
+      "name": "孔传铎",
+      "generation": 68,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g69",
+      "name": "孔继濩",
+      "generation": 69,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g70",
+      "name": "孔广棨",
+      "generation": 70,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g71",
+      "name": "孔昭焕",
+      "generation": 71,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g72",
+      "name": "孔宪培",
+      "generation": 72,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g73",
+      "name": "孔庆镕",
+      "generation": 73,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g74",
+      "name": "孔繁灏",
+      "generation": 74,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g75",
+      "name": "孔祥珂",
+      "generation": 75,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-g76",
+      "name": "孔令贻",
+      "generation": 76,
+      "family_role": "core",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki 孔子世家大宗世系"
+    },
+    {
+      "id": "kong-branch-kongfu",
+      "name": "孔鲋",
+      "generation": 8,
+      "note": "旁支",
+      "family_role": "affinal",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki/CBDB branch",
+      "anchor_id": "kong-15887",
+      "anchor_distance": null
+    },
+    {
+      "id": "kong-branch-kongji",
+      "name": "孔吉",
+      "generation": 13,
+      "note": "旁支",
+      "family_role": "affinal",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki/CBDB branch",
+      "anchor_id": "kong-15887",
+      "anchor_distance": null
+    },
+    {
+      "id": "kong-branch-kongruo",
+      "name": "孔若虚",
+      "generation": 47,
+      "note": "旁支",
+      "family_role": "affinal",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki/CBDB branch",
+      "anchor_id": "kong-15887",
+      "anchor_distance": null
+    },
+    {
+      "id": "kong-branch-kongduancao",
+      "name": "孔端操",
+      "generation": 48,
+      "note": "旁支",
+      "family_role": "affinal",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki/CBDB branch",
+      "anchor_id": "kong-15887",
+      "anchor_distance": null
+    },
+    {
+      "id": "kong-branch-kongfan",
+      "name": "孔璠",
+      "generation": 49,
+      "note": "支系候选",
+      "family_role": "affinal",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki/CBDB branch",
+      "anchor_id": "kong-15887",
+      "anchor_distance": null
+    },
+    {
+      "id": "kong-branch-kongzong",
+      "name": "孔总",
+      "generation": 50,
+      "note": "支系候选",
+      "family_role": "affinal",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki/CBDB branch",
+      "anchor_id": "kong-15887",
+      "anchor_distance": null
+    },
+    {
+      "id": "kong-branch-kongyuan",
+      "name": "孔元措",
+      "generation": 51,
+      "note": "支系候选",
+      "family_role": "affinal",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki/CBDB branch",
+      "anchor_id": "kong-15887",
+      "anchor_distance": null
+    },
+    {
+      "id": "kong-branch-kongzhi",
+      "source_id": 100409,
+      "name": "孔治",
+      "generation": null,
+      "note": "CBDB支线，非大宗结构",
+      "family_role": "affinal",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki/CBDB branch",
+      "anchor_id": "kong-15887",
+      "anchor_distance": null
+    },
+    {
+      "id": "kong-branch-kongdao",
+      "source_id": 15939,
+      "name": "孔道辅",
+      "generation": null,
+      "note": "CBDB后世支线，代数待核",
+      "family_role": "affinal",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki/CBDB branch",
+      "anchor_id": "kong-15887",
+      "anchor_distance": null
+    },
+    {
+      "id": "kong-branch-kongzonghan",
+      "source_id": 15941,
+      "name": "孔宗翰",
+      "generation": null,
+      "note": "CBDB后世支线，代数待核",
+      "family_role": "affinal",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki/CBDB branch",
+      "anchor_id": "kong-15887",
+      "anchor_distance": null
+    },
+    {
+      "id": "kong-branch-kongyuanlong",
+      "source_id": 37725,
+      "name": "孔元龙",
+      "generation": null,
+      "note": "CBDB gap99支线，非逐代结构",
+      "family_role": "affinal",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki/CBDB branch",
+      "anchor_id": "kong-15887",
+      "anchor_distance": null
+    },
+    {
+      "id": "kong-branch-kongrong",
+      "name": "孔融",
+      "generation": null,
+      "note": "旁支；无已确认CBDB ID",
+      "family_role": "affinal",
+      "confidence": "source_claim",
+      "evidence_type": "Wiki/CBDB branch",
+      "anchor_id": "kong-15887",
+      "anchor_distance": null
+    }
+  ],
+  "relationships": [
+    {
+      "source": "kong-15887",
+      "target": "kong-g01",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g01",
+      "target": "kong-g02",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g02",
+      "target": "kong-g03",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g03",
+      "target": "kong-g04",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g04",
+      "target": "kong-g05",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g05",
+      "target": "kong-g06",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g06",
+      "target": "kong-g07",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g07",
+      "target": "kong-g08",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g08",
+      "target": "kong-g09",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g09",
+      "target": "kong-g10",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g10",
+      "target": "kong-g11",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g11",
+      "target": "kong-g12",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g12",
+      "target": "kong-g13",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g13",
+      "target": "kong-g14",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g14",
+      "target": "kong-g15",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g15",
+      "target": "kong-g16",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g16",
+      "target": "kong-g17",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g17",
+      "target": "kong-g18",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g18",
+      "target": "kong-g19",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g19",
+      "target": "kong-g20",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g20",
+      "target": "kong-g21",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g21",
+      "target": "kong-g22",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g22",
+      "target": "kong-g23",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g23",
+      "target": "kong-g24",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g24",
+      "target": "kong-g25",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g25",
+      "target": "kong-g26",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g26",
+      "target": "kong-g27",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g27",
+      "target": "kong-g28",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g28",
+      "target": "kong-g29",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g29",
+      "target": "kong-g30",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g30",
+      "target": "kong-g31",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g31",
+      "target": "kong-g32",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g32",
+      "target": "kong-g33",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g33",
+      "target": "kong-g34",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g34",
+      "target": "kong-g35",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g35",
+      "target": "kong-g36",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g36",
+      "target": "kong-g37",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g37",
+      "target": "kong-g38",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g38",
+      "target": "kong-g39",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g39",
+      "target": "kong-g40",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g40",
+      "target": "kong-g41",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g41",
+      "target": "kong-g42",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g42",
+      "target": "kong-g43",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g43",
+      "target": "kong-g44",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g44",
+      "target": "kong-g45",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g45",
+      "target": "kong-g46",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g46",
+      "target": "kong-g47",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g47",
+      "target": "kong-g48",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g48",
+      "target": "kong-g49",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g49",
+      "target": "kong-g50",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g50",
+      "target": "kong-g51",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g51",
+      "target": "kong-g52",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g52",
+      "target": "kong-g53",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g53",
+      "target": "kong-g54",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g54",
+      "target": "kong-g55",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g55",
+      "target": "kong-g56",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g56",
+      "target": "kong-g57",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g57",
+      "target": "kong-g58",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g58",
+      "target": "kong-g59",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g59",
+      "target": "kong-g60",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g60",
+      "target": "kong-g61",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g61",
+      "target": "kong-g62",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g62",
+      "target": "kong-g63",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g63",
+      "target": "kong-g64",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g64",
+      "target": "kong-g65",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g65",
+      "target": "kong-g66",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g66",
+      "target": "kong-g67",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g67",
+      "target": "kong-g68",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g68",
+      "target": "kong-g69",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g69",
+      "target": "kong-g70",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g70",
+      "target": "kong-g71",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g71",
+      "target": "kong-g72",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g72",
+      "target": "kong-g73",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g73",
+      "target": "kong-g74",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g74",
+      "target": "kong-g75",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    },
+    {
+      "source": "kong-g75",
+      "target": "kong-g76",
+      "relation": "父子/大宗承接",
+      "direction": "ancestor",
+      "generation_gap": 1,
+      "structural": true,
+      "confidence": "source_claim",
+      "evidence_type": "Wiki世系页"
+    }
+  ],
+  "support_edges": [
+    {
+      "source": 15887,
+      "target": 15941,
+      "kin_code": 360,
+      "generation_gap": 46,
+      "direction": "ancestor",
+      "structural": false,
+      "evidence_type": "CBDB family edge"
+    },
+    {
+      "source": 15887,
+      "target": 100409,
+      "kin_code": 548,
+      "generation_gap": 53,
+      "direction": "ancestor",
+      "structural": false,
+      "evidence_type": "CBDB family edge"
+    },
+    {
+      "source": 15887,
+      "target": 100411,
+      "kin_code": 548,
+      "generation_gap": 53,
+      "direction": "ancestor",
+      "structural": false,
+      "evidence_type": "CBDB family edge"
+    },
+    {
+      "source": 15887,
+      "target": 100428,
+      "kin_code": 549,
+      "generation_gap": 54,
+      "direction": "ancestor",
+      "structural": false,
+      "evidence_type": "CBDB family edge"
+    },
+    {
+      "source": 15887,
+      "target": 100429,
+      "kin_code": 549,
+      "generation_gap": 54,
+      "direction": "ancestor",
+      "structural": false,
+      "evidence_type": "CBDB family edge"
+    },
+    {
+      "source": 15887,
+      "target": 100431,
+      "kin_code": 549,
+      "generation_gap": 54,
+      "direction": "ancestor",
+      "structural": false,
+      "evidence_type": "CBDB family edge"
+    },
+    {
+      "source": 15887,
+      "target": 100443,
+      "kin_code": 550,
+      "generation_gap": 55,
+      "direction": "ancestor",
+      "structural": false,
+      "evidence_type": "CBDB family edge"
+    },
+    {
+      "source": 15887,
+      "target": 100448,
+      "kin_code": 550,
+      "generation_gap": 55,
+      "direction": "ancestor",
+      "structural": false,
+      "evidence_type": "CBDB family edge"
+    },
+    {
+      "source": 15887,
+      "target": 100456,
+      "kin_code": 549,
+      "generation_gap": 54,
+      "direction": "ancestor",
+      "structural": false,
+      "evidence_type": "CBDB family edge"
+    },
+    {
+      "source": 15887,
+      "target": 100458,
+      "kin_code": 549,
+      "generation_gap": 54,
+      "direction": "ancestor",
+      "structural": false,
+      "evidence_type": "CBDB family edge"
+    },
+    {
+      "source": 15887,
+      "target": 15939,
+      "kin_code": 391,
+      "generation_gap": 45,
+      "direction": "ancestor",
+      "structural": false,
+      "evidence_type": "CBDB family edge"
+    },
+    {
+      "source": 15939,
+      "target": 15941,
+      "kin_code": 75,
+      "generation_gap": 1,
+      "direction": "ancestor",
+      "structural": false,
+      "evidence_type": "CBDB family edge"
+    },
+    {
+      "source": 15887,
+      "target": 15946,
+      "kin_code": 360,
+      "generation_gap": 46,
+      "direction": "ancestor",
+      "structural": false,
+      "evidence_type": "CBDB family edge"
+    },
+    {
+      "source": 15887,
+      "target": 37719,
+      "kin_code": 360,
+      "generation_gap": 46,
+      "direction": "ancestor",
+      "structural": false,
+      "evidence_type": "CBDB family edge"
+    },
+    {
+      "source": 15887,
+      "target": 37725,
+      "kin_code": 2,
+      "generation_gap": 99,
+      "direction": "ancestor",
+      "structural": false,
+      "evidence_type": "CBDB family edge"
+    }
+  ],
+  "metadata": {
+    "mainline_count": 77,
+    "mainline_generation_range": [
+      0,
+      76
+    ],
+    "note": "主线按Wiki世系编号草案逐代连接，仍需版本卷页核验；CBDB gap45/99仅辅助。"
+  }
+}

@@ -62,6 +62,7 @@
   var SONG_TREE_DATA = null;
   var TANG_TREE_DATA = null;
   var MING_TREE_DATA = null;
+  var KONG_TREE_DATA = null;
   var EDGE_SUBTYPES = {};
   var familyMode = '';
   // Ship the verified hierarchical tree first. The radial prototype remains
@@ -129,7 +130,9 @@
             fetch('data/royal_houses_tang.json').then(function (r) { return r.json(); }),
             fetch('data/royal_tree_tang.json').then(function (r) { return r.json(); }),
             fetch('data/royal_houses_ming.json').then(function (r) { return r.json(); }),
-            fetch('data/royal_tree_ming.json').then(function (r) { return r.json(); })
+            fetch('data/royal_tree_ming.json').then(function (r) { return r.json(); }),
+            fetch('data/royal_houses_kong.json').then(function (r) { return r.json(); }),
+            fetch('data/royal_tree_kong.json').then(function (r) { return r.json(); })
           ]).then(function (payloads) {
             FAMILY_DATA = applyRoyalSupplement(FAMILY_DATA, payloads[0]);
             SONG_TREE_DATA = payloads[1];
@@ -137,6 +140,9 @@
             FAMILY_DATA = applyRoyalSupplement(FAMILY_DATA, payloads[2]);
             MING_TREE_DATA = payloads[5];
             FAMILY_DATA = applyRoyalSupplement(FAMILY_DATA, payloads[4]);
+            KONG_TREE_DATA = payloads[7];
+            FAMILY_DATA = applyRoyalSupplement(FAMILY_DATA, payloads[6]);
+            injectTreeSupportEdges(KONG_TREE_DATA);
           });
         }).then(function () {
           buildFamilySelect();
@@ -193,6 +199,18 @@
   function computeTangFamilyRoles() {
     if (TANG_TREE_DATA && TANG_TREE_DATA.nodes) { applyTangTreeData(); return; }
     activeNodes.forEach(function (n) { n.generation = 0; n.family_role = n.is_emperor ? 'core' : 'affinal'; });
+  }
+
+  function computeKongFamilyRoles() {
+    if (!KONG_TREE_DATA || !KONG_TREE_DATA.nodes) return;
+    activeNodes.forEach(function (n) {
+      var record = KONG_TREE_DATA.nodes[String(n.id)];
+      if (!record) return;
+      n.generation = record.generation; n.family_role = record.family_role;
+      n.anchor_id = record.anchor_id; n.anchor_distance = record.anchor_distance;
+    });
+    window.__hfnKongTree = { anchor: 'kong-15887', generation: {}, nodes: {}, expected: {} };
+    activeNodes.forEach(function (n) { window.__hfnKongTree.generation[String(n.id)] = n.generation; window.__hfnKongTree.nodes[String(n.id)] = { generation: n.generation, family_role: n.family_role, anchor_id: n.anchor_id }; });
   }
 
   function applyMingTreeData() {
@@ -330,8 +348,8 @@
     if (!royal || !royal.members) return families;
     var familyId = royal.family_id || (royal.house && royal.house.indexOf('唐') >= 0 ? 'family-2' : royal.house && royal.house.indexOf('明') >= 0 ? 'family-ming' : 'family-1');
     var houseFamily = families.families.filter(function (f) { return f.id === familyId; })[0];
-    if (!houseFamily && familyId === 'family-ming') {
-      houseFamily = { id: familyId, label: royal.house || '明朝皇室朱氏家族', members: [] };
+    if (!houseFamily && (familyId === 'family-ming' || familyId === 'family-kong')) {
+      houseFamily = { id: familyId, label: royal.house || (familyId === 'family-kong' ? '孔氏家族' : '明朝皇室朱氏家族'), members: [] };
       families.families.push(houseFamily);
     }
     if (!houseFamily) return families;
@@ -360,6 +378,33 @@
     return families;
   }
 
+  function injectTreeSupportEdges(treeData) {
+    if (!treeData || !treeData.support_edges || !FAMILY_DATA) return;
+    FAMILY_DATA.edges = FAMILY_DATA.edges || [];
+    var kongFamily = FAMILY_DATA.families && FAMILY_DATA.families.filter(function (family) {
+      return family.id === 'family-kong';
+    })[0];
+    var sourceIdMap = {};
+    Object.keys(treeData.nodes || {}).forEach(function (id) {
+      var record = treeData.nodes[id];
+      if (record.source_id != null) sourceIdMap[String(record.source_id)] = id;
+    });
+    treeData.support_edges.forEach(function (edge) {
+      var source = sourceIdMap[String(edge.source)] || String(edge.source);
+      var target = sourceIdMap[String(edge.target)] || String(edge.target);
+      if (!nodeById[source] || !nodeById[target]) return;
+      var exists = FAMILY_DATA.edges.some(function (item) {
+        return String(item.source) === source && String(item.target) === target && item.support_edge;
+      });
+      if (!exists) FAMILY_DATA.edges.push(Object.assign({}, edge, {
+        source: nodeById[source].id,
+        target: nodeById[target].id,
+        supplemental: true,
+        support_edge: true,
+        structural: false
+      }));
+    });
+  }
   function computeLabelThresholds() {
     var degs = NODES.map(function (n) { return n.degree || 1; }).sort(function (a, b) { return a - b; });
     labelThresholds = LABEL_LEVEL_PCT.map(function (p) {
@@ -387,7 +432,7 @@
           representativeName = (nd.name || '').replace(/（[^）]*）|\([^)]*\)/g, '');
         }
       });
-      var isRoyal = family.label.indexOf('皇室') >= 0;
+      var isRoyal = family.label.indexOf('皇室') >= 0 || family.id === 'family-kong';
       var keep = isRoyal || members.length >= 15 || maxDeg >= 150 || !!FAMOUS_FALLBACK[representativeName];
       return { family: family, count: members.length, maxDeg: maxDeg, isRoyal: isRoyal, keep: keep, representativeName: representativeName };
     });
@@ -471,6 +516,8 @@
       computeTangFamilyRoles();
     } else if (family.id === 'family-ming') {
       computeMingFamilyRoles();
+    } else if (family.id === 'family-kong') {
+      computeKongFamilyRoles();
     }
     var seenPairs = {};
     activeEdges = (FAMILY_DATA.edges || []).filter(function (e) {
@@ -482,6 +529,18 @@
       seenPairs[key] = true;
       return true;
     });
+    if (family.id === 'family-kong' && window.__hfnKongTree) {
+      window.__hfnKongTree.activeSummary = {
+        nodes: activeNodes.length,
+        edges: activeEdges.length,
+        structural: activeEdges.filter(function (e) { return e.structural && !e.support_edge; }).length,
+        support: activeEdges.filter(function (e) { return e.support_edge; }).length,
+        supportTotal: KONG_TREE_DATA && KONG_TREE_DATA.support_edges ? KONG_TREE_DATA.support_edges.length : 0,
+        supportUnavailable: KONG_TREE_DATA && KONG_TREE_DATA.support_edges ? KONG_TREE_DATA.support_edges.filter(function (e) {
+          return !activeSet[String(e.source)] || !activeSet[String(e.target)];
+        }).length : 0
+      };
+    }
     familyLabelSet = {};
     activeNodes.slice().sort(function (a, b) {
       return Number(!!b.is_emperor) - Number(!!a.is_emperor) ||
@@ -590,10 +649,17 @@
     var aspect = Math.max(1, W / Math.max(H, 1));
     var treeWidth = 0.82 * aspect;
     var treeLeft = 0.5 - treeWidth / 2;
+    var maxGeneration = familyMode === 'family-kong'
+      ? tree.core.reduce(function (max, n) {
+        return Math.max(max, Number.isFinite(Number(n.generation)) ? Number(n.generation) : 0);
+      }, 0)
+      : 12;
+    maxGeneration = Math.max(1, maxGeneration);
     tree.core.forEach(function (n) {
       var span = spans[String(n.id)] || { min: 0, max: 0 };
+      var generation = Number.isFinite(Number(n.generation)) ? Number(n.generation) : 0;
       n.x = treeLeft + treeWidth * ((span.min + span.max) / 2 / maxLeaf);
-      n.y = 0.08 + 0.84 * (Math.max(0, Math.min(12, n.generation)) / 12);
+      n.y = 0.08 + 0.84 * (Math.max(0, Math.min(maxGeneration, generation)) / maxGeneration);
     });
     // 度宗是太祖十一世孙。把补回的生物学支系
     // （赵希瓐 → 赵与芮 → 宋度宗）放在太祖一侧；理宗与度宗的
@@ -675,6 +741,18 @@
       });
       window.__hfnMingTree.parent = tree.parent;
       window.__hfnMingTree.assertions = { mode: 'tree', failures: mingFailures, pass: !mingFailures.length };
+    } else if (familyMode === 'family-kong' && window.__hfnKongTree) {
+      var kongFailures = [];
+      Object.keys(tree.byId).forEach(function (id) {
+        var node = tree.byId[id];
+        if (window.__hfnKongTree.nodes[id]) { window.__hfnKongTree.nodes[id].x = node.x; window.__hfnKongTree.nodes[id].y = node.y; }
+      });
+      Object.keys(tree.parent).forEach(function (child) {
+        var parentNode = tree.byId[tree.parent[child]], childNode = tree.byId[child];
+        if (parentNode && childNode && childNode.y < parentNode.y) kongFailures.push('direction:' + child);
+      });
+      window.__hfnKongTree.parent = tree.parent;
+      window.__hfnKongTree.assertions = { mode: 'tree', failures: kongFailures, pass: !kongFailures.length };
     }
   }
 
@@ -711,13 +789,14 @@
 
   function layoutFamily() {
     if (!activeNodes.length) return;
-    if (familyMode === 'family-1' || familyMode === 'family-2' || familyMode === 'family-ming') {
-      var treeAnchor = familyMode === 'family-1' ? '9001' : familyMode === 'family-2' ? '13059' : '30148';
+    if (familyMode === 'family-1' || familyMode === 'family-2' || familyMode === 'family-ming' || familyMode === 'family-kong') {
+      var treeAnchor = familyMode === 'family-1' ? '9001' : familyMode === 'family-2' ? '13059' : familyMode === 'family-ming' ? '30148' : 'kong-15887';
       var cohort = familyMode === 'family-1' ? ['9001', '9002'] : [treeAnchor];
       var songTree = buildSongHierarchy(treeAnchor, cohort);
       if (familyMode === 'family-1') window.__hfnSongTree.parent = songTree.parent;
       else if (familyMode === 'family-2') window.__hfnTangTree.parent = songTree.parent;
-      else window.__hfnMingTree.parent = songTree.parent;
+      else if (familyMode === 'family-ming') window.__hfnMingTree.parent = songTree.parent;
+      else window.__hfnKongTree.parent = songTree.parent;
       if (familyMode === 'family-1') window.__hfnSongTree.layoutMode = familyLayoutMode;
       if (familyLayoutMode === 'radial' && familyMode === 'family-1') layoutSongRadial(songTree); else layoutSongTree(songTree);
       fitToActive(); dirty = true; render(); return;
