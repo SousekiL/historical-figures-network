@@ -331,7 +331,7 @@
     var familyId = royal.family_id || (royal.house && royal.house.indexOf('唐') >= 0 ? 'family-2' : royal.house && royal.house.indexOf('明') >= 0 ? 'family-ming' : 'family-1');
     var houseFamily = families.families.filter(function (f) { return f.id === familyId; })[0];
     if (!houseFamily && (familyId === 'family-ming')) {
-      houseFamily = { id: familyId, label: royal.house || (familyId === 'family-kong' ? '孔氏家族' : '明朝皇室朱氏家族'), members: [] };
+      houseFamily = { id: familyId, label: royal.house || '明朝皇室朱氏家族', members: [] };
       families.families.push(houseFamily);
     }
     if (!houseFamily) return families;
