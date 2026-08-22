@@ -1231,23 +1231,45 @@
     }
     ctx.globalAlpha = 1;
 
-    // --- 标签（按度数阈值 + 视口裁剪 + 防重叠） ---
+    // --- 标签（按度数阈值 + 视口裁剪 + 精确防重叠） ---
     var thr = familyMode ? 0 : labelThresholds[labelLevel];
     if (thr !== Infinity) {
-      var cellW = familyMode ? 150 : 135, cellH = familyMode ? 30 : 27;
-      var occupied = {};
       ctx.font = familyMode ? '19px -apple-system, "PingFang SC", "Hiragino Sans GB", sans-serif'
         : '17px -apple-system, "PingFang SC", "Hiragino Sans GB", sans-serif';
       ctx.textAlign = 'left';
       ctx.textBaseline = 'middle';
       var drawn = 0;
       var darkTheme = document.body.classList.contains('dark');
-      function drawLabel(m) {
+      // 精确防重叠：按标签文字实际宽度做 bounding box 碰撞，细粒度空间哈希加速
+      var cellW = 60, cellH = 16, halfH = familyMode ? 12 : 11;
+      var occupied = {}; // "cx_cy" -> [bbox, ...]
+      function labelTextOf(m) {
+        return (m.is_emperor && m.temple_name) ? m.temple_name : m.name;
+      }
+      function boxesOverlap(a, b) {
+        return a.x0 < b.x1 && a.x1 > b.x0 && a.y0 < b.y1 && a.y1 > b.y0;
+      }
+      function tryDrawLabel(m, force) {
         var lx = sx(m.x), ly = sy(m.y);
         if (lx < 4 || lx > W - 40 || ly < 8 || ly > H - 8) return false;
-        var ck = Math.floor(lx / cellW) + '_' + Math.floor(ly / cellH);
-        if (occupied[ck]) return false;
-        occupied[ck] = true;
+        var text = labelTextOf(m);
+        var tw = ctx.measureText(text).width;
+        var bbox = { x0: lx + 4, y0: ly - halfH, x1: lx + 6 + tw, y1: ly + halfH };
+        var cx0 = Math.floor(bbox.x0 / cellW), cx1 = Math.floor(bbox.x1 / cellW);
+        var cy0 = Math.floor(bbox.y0 / cellH), cy1 = Math.floor(bbox.y1 / cellH);
+        if (!force) {
+          for (var cy = cy0; cy <= cy1; cy++) {
+            for (var cx = cx0; cx <= cx1; cx++) {
+              var list = occupied[cx + '_' + cy];
+              if (list) { for (var i = 0; i < list.length; i++) { if (boxesOverlap(bbox, list[i])) return false; } }
+            }
+          }
+        }
+        for (var cy2 = cy0; cy2 <= cy1; cy2++) {
+          for (var cx2 = cx0; cx2 <= cx1; cx2++) {
+            (occupied[cx2 + '_' + cy2] || (occupied[cx2 + '_' + cy2] = [])).push(bbox);
+          }
+        }
         drawn++;
         ctx.globalAlpha = focus && !focusNb[String(m.id)] ? 0.3 : 0.9;
         // 暗色主题使用暖白而非纯白，并加背景描边，避免标签融入节点与边。
@@ -1255,37 +1277,20 @@
         if (m.is_emperor && familyMode) ctx.fillStyle = '#f6d779';
         ctx.strokeStyle = darkTheme ? '#05070b' : '#fafafa';
         ctx.lineWidth = 3;
-        // Temple names keep the imperial spine concise; the full personal name
-        // remains available in the tooltip/detail panel.
-        var labelText = m.is_emperor && m.temple_name ? m.temple_name : m.name;
-        ctx.strokeText(labelText, lx + 5, ly);
-        ctx.fillText(labelText, lx + 5, ly);
+        ctx.strokeText(text, lx + 5, ly);
+        ctx.fillText(text, lx + 5, ly);
         return true;
       }
       if (familyMode) {
         var familyLimit = FAMILY_LABEL_LIMITS[labelLevel];
         if (familyLimit !== 0) {
-          // 第一轮：所有皇帝庙号/谥号（仅视口裁剪，不参与防重叠，保证全量显示）
-          activeNodes.forEach(function (m) {
-            if (!m.is_emperor) return;
-            var lx = sx(m.x), ly = sy(m.y);
-            if (lx < 4 || lx > W - 40 || ly < 8 || ly > H - 8) return;
-            var ck = Math.floor(lx / cellW) + '_' + Math.floor(ly / cellH);
-            occupied[ck] = true; // 占位，让普通亲属标签避让
-            drawn++;
-            ctx.globalAlpha = focus && !focusNb[String(m.id)] ? 0.3 : 0.9;
-            ctx.fillStyle = '#f6d779';
-            ctx.strokeStyle = darkTheme ? '#05070b' : '#fafafa';
-            ctx.lineWidth = 3;
-            var labelText = m.temple_name || m.name;
-            ctx.strokeText(labelText, lx + 5, ly);
-            ctx.fillText(labelText, lx + 5, ly);
-          });
-          // 第二轮：普通亲属标签（受密度档位 + 防重叠限制）
+          // 第一轮：皇帝庙号/谥号（优先占位，精确防重叠）
+          activeNodes.forEach(function (m) { if (m.is_emperor) tryDrawLabel(m, true); });
+          // 第二轮：普通亲属标签（受密度档位限制）
           activeNodes.forEach(function (m) {
             if (m.is_emperor) return;
             if (m._familyLabelRank == null || m._familyLabelRank >= familyLimit) return;
-            drawLabel(m);
+            tryDrawLabel(m);
           });
         }
       } else {
@@ -1293,7 +1298,7 @@
           if (drawn > 4000) break; // 单帧标签上限，保证流畅
           var m = activeNodes[k];
           if ((m.degree || 0) < thr) continue; // 度数不足不显示
-          drawLabel(m);
+          tryDrawLabel(m);
         }
       }
       window.__hfnLastLabelCount = drawn;
