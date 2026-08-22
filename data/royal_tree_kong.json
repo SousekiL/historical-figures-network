@@ -991,8 +991,8 @@
   },
   "support_edges": [
     {
-      "source": 15887,
-      "target": 15941,
+      "source": "kong-15887",
+      "target": "kong-branch-kongzonghan",
       "kin_code": 360,
       "generation_gap": 46,
       "direction": "ancestor",
@@ -1000,8 +1000,8 @@
       "evidence_type": "CBDB family edge"
     },
     {
-      "source": 15887,
-      "target": 100409,
+      "source": "kong-15887",
+      "target": "kong-branch-kongzhi",
       "kin_code": 548,
       "generation_gap": 53,
       "direction": "ancestor",
@@ -1009,8 +1009,8 @@
       "evidence_type": "CBDB family edge"
     },
     {
-      "source": 15887,
-      "target": 100411,
+      "source": "kong-15887",
+      "target": "kong-g53",
       "kin_code": 548,
       "generation_gap": 53,
       "direction": "ancestor",
@@ -1018,71 +1018,8 @@
       "evidence_type": "CBDB family edge"
     },
     {
-      "source": 15887,
-      "target": 100428,
-      "kin_code": 549,
-      "generation_gap": 54,
-      "direction": "ancestor",
-      "structural": false,
-      "evidence_type": "CBDB family edge"
-    },
-    {
-      "source": 15887,
-      "target": 100429,
-      "kin_code": 549,
-      "generation_gap": 54,
-      "direction": "ancestor",
-      "structural": false,
-      "evidence_type": "CBDB family edge"
-    },
-    {
-      "source": 15887,
-      "target": 100431,
-      "kin_code": 549,
-      "generation_gap": 54,
-      "direction": "ancestor",
-      "structural": false,
-      "evidence_type": "CBDB family edge"
-    },
-    {
-      "source": 15887,
-      "target": 100443,
-      "kin_code": 550,
-      "generation_gap": 55,
-      "direction": "ancestor",
-      "structural": false,
-      "evidence_type": "CBDB family edge"
-    },
-    {
-      "source": 15887,
-      "target": 100448,
-      "kin_code": 550,
-      "generation_gap": 55,
-      "direction": "ancestor",
-      "structural": false,
-      "evidence_type": "CBDB family edge"
-    },
-    {
-      "source": 15887,
-      "target": 100456,
-      "kin_code": 549,
-      "generation_gap": 54,
-      "direction": "ancestor",
-      "structural": false,
-      "evidence_type": "CBDB family edge"
-    },
-    {
-      "source": 15887,
-      "target": 100458,
-      "kin_code": 549,
-      "generation_gap": 54,
-      "direction": "ancestor",
-      "structural": false,
-      "evidence_type": "CBDB family edge"
-    },
-    {
-      "source": 15887,
-      "target": 15939,
+      "source": "kong-15887",
+      "target": "kong-branch-kongdao",
       "kin_code": 391,
       "generation_gap": 45,
       "direction": "ancestor",
@@ -1090,8 +1027,8 @@
       "evidence_type": "CBDB family edge"
     },
     {
-      "source": 15939,
-      "target": 15941,
+      "source": "kong-branch-kongdao",
+      "target": "kong-branch-kongzonghan",
       "kin_code": 75,
       "generation_gap": 1,
       "direction": "ancestor",
@@ -1099,26 +1036,8 @@
       "evidence_type": "CBDB family edge"
     },
     {
-      "source": 15887,
-      "target": 15946,
-      "kin_code": 360,
-      "generation_gap": 46,
-      "direction": "ancestor",
-      "structural": false,
-      "evidence_type": "CBDB family edge"
-    },
-    {
-      "source": 15887,
-      "target": 37719,
-      "kin_code": 360,
-      "generation_gap": 46,
-      "direction": "ancestor",
-      "structural": false,
-      "evidence_type": "CBDB family edge"
-    },
-    {
-      "source": 15887,
-      "target": 37725,
+      "source": "kong-15887",
+      "target": "kong-branch-kongyuanlong",
       "kin_code": 2,
       "generation_gap": 99,
       "direction": "ancestor",
